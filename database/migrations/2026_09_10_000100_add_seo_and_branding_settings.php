@@ -21,7 +21,7 @@ return new class extends Migration
             'site_author' => 'Dormansyah Pasaribu',
             'site_favicon' => 'assets/media/branding/favicon.ico',
             'site_og_image' => 'assets/media/branding/og-image.png',
-            'site_theme_color' => '#4f46e5',
+            'site_theme_color' => '#06060c',
             'seo_robots' => 'noindex, nofollow',
             'seo_twitter_handle' => '',
             'seo_google_verification' => '',

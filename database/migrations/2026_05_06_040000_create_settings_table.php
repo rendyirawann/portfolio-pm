@@ -18,7 +18,7 @@ return new class extends Migration
 
         // Seed default settings
         $defaults = [
-            ['key' => 'site_logo', 'value' => 'base-logo.png'],
+            ['key' => 'site_logo', 'value' => 'assets/media/branding/logo-tile.png'],
             ['key' => 'site_name', 'value' => 'Dormansyah Pasaribu'],
             ['key' => 'site_font', 'value' => 'Plus Jakarta Sans'],
 
