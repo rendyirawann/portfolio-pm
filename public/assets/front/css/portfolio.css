@@ -506,6 +506,11 @@ ul, ol { margin: 0; padding: 0; list-style: none; }
     .hero__grid { grid-template-columns: 1fr; }
     .hero__visual { justify-self: center; max-width: 520px; order: -1; }
     .hero__frame { aspect-ratio: 4 / 3.4; }
+    /* Di layar sempit bingkainya jadi jauh lebih pendek (4/3.4 dari 5/6),
+       sehingga `object-position: center top` memotong terlalu banyak bagian
+       bawah dan wajahnya terdorong ke bawah. Menggeser titik fokusnya turun
+       ke 16% membuat gambarnya naik sedikit di dalam bingkai. */
+    .hero__img { object-position: center 16%; }
     .hero__copy { text-align: left; }
     .hero__footer { flex-direction: column-reverse; align-items: stretch; }
     .hero__cards { grid-auto-flow: row; grid-template-columns: 1fr 1fr; }
