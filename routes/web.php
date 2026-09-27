@@ -66,6 +66,7 @@ Route::middleware(['auth', 'forbid-banned-user'])->group(function () {
     Route::prefix('admin/portfolio')->name('pf.')->middleware('can:manage_portfolio')->group(function () {
         Route::get('content', [PageContentController::class, 'index'])->name('content.index');
         Route::get('export', [PageContentController::class, 'export'])->name('export');
+        Route::get('login-preview', [PageContentController::class, 'loginPreview'])->name('login-preview');
         Route::get('messages', [MessageController::class, 'index'])->name('messages.index');
         Route::get('messages/{message}', [MessageController::class, 'show'])->name('messages.show');
 

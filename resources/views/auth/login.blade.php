@@ -40,15 +40,15 @@
 
         {{-- Brand block — only shown when the story panel is hidden (mobile). --}}
         <div class="auth-card__brand">
-            <img src="{{ $brand['logo_url'] }}" alt="" width="56" height="56" />
+            <img src="{{ $login['logo'] }}" alt="" width="56" height="56" />
             <div>
-                <div class="auth-card__title mb-0">{{ $brand['name'] }}</div>
-                <div class="auth-card__subtitle mb-0">{{ $brand['tagline'] }}</div>
+                <div class="auth-card__title mb-0">{{ $login['name'] }}</div>
+                <div class="auth-card__subtitle mb-0">{{ $login['tagline'] }}</div>
             </div>
         </div>
 
-        <h1 class="auth-card__title">Selamat datang kembali</h1>
-        <p class="auth-card__subtitle">Masuk untuk melanjutkan ke dashboard.</p>
+        <h1 class="auth-card__title" data-pf="login_card_title">{{ $login['card_title'] }}</h1>
+        <p class="auth-card__subtitle" data-pf="login_card_subtitle">{{ $login['card_subtitle'] }}</p>
 
         {{-- Accounts previously used on THIS device. Only the identifier is
              kept (in localStorage) — never a password. Populated and rendered
@@ -113,9 +113,9 @@
                 <span class="auth-hint">Tetap masuk di perangkat ini</span>
             </div>
 
-            <button type="submit" class="auth-submit" data-auth-submit data-label-idle="Masuk">
+            <button type="submit" class="auth-submit" data-auth-submit data-label-idle="{{ $login['button'] }}" data-label-busy="{{ $login['button_busy'] }}">
                 <span class="auth-submit__spinner" aria-hidden="true"></span>
-                <span data-label>Masuk</span>
+                <span data-label data-pf="login_button">{{ $login['button'] }}</span>
             </button>
         </form>
 
@@ -132,8 +132,6 @@
             </div>
         @endif
 
-        <p class="auth-foot">
-            Butuh akses? Hubungi administrator sistem Anda.
-        </p>
+        <p class="auth-foot" data-pf="login_foot">{{ $login['foot'] }}</p>
     </div>
 @endsection

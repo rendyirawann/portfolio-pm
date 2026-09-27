@@ -37,6 +37,8 @@
         if (!ctx) return;
 
         var COLORS = ['255,45,85', '59,108,255', '164,59,255', '255,255,255'];
+        // The neutral particle flips to ink on the light theme.
+        function tone(c) { return c === '255,255,255' && document.documentElement.getAttribute('data-theme') === 'light' ? '18,20,39' : c; }
         var dpr = Math.min(window.devicePixelRatio || 1, 2);
         var w, h, dots = [], link = 130;
         var mouse = { x: -9999, y: -9999 };
@@ -76,14 +78,14 @@
                 for (var j = i + 1; j < dots.length; j++) {
                     var e = dots[j], dx = d.x - e.x, dy = d.y - e.y, dist = Math.sqrt(dx * dx + dy * dy);
                     if (dist < link) {
-                        ctx.strokeStyle = 'rgba(' + d.c + ',' + (1 - dist / link) * .35 + ')';
+                        ctx.strokeStyle = 'rgba(' + tone(d.c) + ',' + (1 - dist / link) * .35 + ')';
                         ctx.lineWidth = .7;
                         ctx.beginPath(); ctx.moveTo(d.x, d.y); ctx.lineTo(e.x, e.y); ctx.stroke();
                     }
                 }
 
-                ctx.fillStyle = 'rgba(' + d.c + ',.85)';
-                ctx.shadowColor = 'rgba(' + d.c + ',.9)';
+                ctx.fillStyle = 'rgba(' + tone(d.c) + ',.85)';
+                ctx.shadowColor = 'rgba(' + tone(d.c) + ',.9)';
                 ctx.shadowBlur = 8;
                 ctx.beginPath(); ctx.arc(d.x, d.y, d.r, 0, Math.PI * 2); ctx.fill();
                 ctx.shadowBlur = 0;
@@ -102,6 +104,17 @@
             if (!document.hidden && !reduce) raf = requestAnimationFrame(frame);
         });
     })();
+
+    // --- Light / dark theme (same storage key as the admin panel) ---
+    document.querySelectorAll('[data-theme-toggle]').forEach(function (btn) {
+        btn.addEventListener('click', function () {
+            var next = document.documentElement.getAttribute('data-theme') === 'light' ? 'dark' : 'light';
+            document.documentElement.setAttribute('data-theme', next);
+            try { localStorage.setItem('data-bs-theme', next); } catch (e) {}
+            var meta = document.querySelector('meta[name="theme-color"]');
+            if (meta) meta.setAttribute('content', next === 'light' ? '#f5f6fa' : '#07070d');
+        });
+    });
 
     // --- Navbar dropdown (Category) ---
     document.querySelectorAll('[data-dropdown]').forEach(function (dd) {

@@ -126,7 +126,7 @@
 
     <script>
         // Click-jacking backstop for browsers that ignore X-Frame-Options.
-        if (window.top !== window.self) {
+        if (window.top !== window.self && !@json(request()->boolean('pf_preview'))) {
             window.top.location.replace(window.self.location.href);
         }
     </script>
@@ -161,10 +161,10 @@
                         </button>
 
                         <a href="{{ route('dashboard') }}" class="app-brand">
-                            <img src="{{ $chrome['logo'] }}" alt="" class="app-brand__mark" width="34" height="34" />
+                            <img src="{{ $chrome['logo'] }}" data-pf-img="admin_logo" alt="" class="app-brand__mark" width="34" height="34" />
                             <span class="min-w-0">
-                                <span class="app-brand__name d-block">{{ $chrome['name'] }}</span>
-                                <span class="app-brand__tagline">{{ $chrome['tagline'] }}</span>
+                                <span class="app-brand__name d-block" data-pf="admin_brand_name">{{ $chrome['name'] }}</span>
+                                <span class="app-brand__tagline" data-pf="admin_brand_tagline">{{ $chrome['tagline'] }}</span>
                             </span>
                         </a>
                     </div>
@@ -253,6 +253,10 @@
     </script>
     @stack('scripts')
     <!--end::Javascript-->
+
+    @if (request()->boolean('pf_preview'))
+        <script src="{{ asset('assets/front/js/preview.js') }}?v={{ filemtime(public_path('assets/front/js/preview.js')) }}" defer></script>
+    @endif
 
     @include('partials._rt')
 </body>

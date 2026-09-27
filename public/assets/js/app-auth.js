@@ -443,7 +443,7 @@
             var label = button.querySelector('[data-label]');
 
             if (label) {
-                label.textContent = state ? 'Memverifikasi...' : button.getAttribute('data-label-idle');
+                label.textContent = state ? (button.getAttribute('data-label-busy') || 'Memverifikasi...') : button.getAttribute('data-label-idle');
             }
         }
 
@@ -580,7 +580,11 @@
                     rememberCredentials(form).then(function () {
                         if (overlay) {
                             overlay.run(
-                                ['Kredensial terverifikasi', 'Menyiapkan sesi aman', 'Membuka dashboard'],
+                                (function () {
+                                    // Steps are edited in admin (Halaman Login & Loader).
+                                    try { var s = JSON.parse(document.getElementById('auth-progress').dataset.steps || '[]'); if (s.length) return s; } catch (e) {}
+                                    return ['Kredensial terverifikasi', 'Menyiapkan sesi aman', 'Membuka dashboard'];
+                                })(),
                                 finish
                             );
                         } else {

@@ -16,7 +16,7 @@
         'subheading' => 'Semua teks & gambar di halaman depan. Pilih tab, ubah, lalu simpan per tab.',
     ])
 
-    @php $targets = ['brand' => '#home', 'hero' => '#home', 'about' => '#about', 'sections' => '#services', 'contact' => '#contact', 'footer' => '#footer', 'seo' => '#home', 'admin' => null]; @endphp
+    @php $targets = ['brand' => '#home', 'hero' => '#home', 'about' => '#about', 'sections' => '#services', 'contact' => '#contact', 'footer' => '#footer', 'seo' => '#home', 'admin' => 'admin', 'login' => 'login']; @endphp
     <div class="d-grid gap-6">
         <div>
             <div class="card card-flush shadow-sm">
@@ -110,7 +110,10 @@
             </form>
 
             @if ($targets[$tab] ?? false)
-                @include('backend.portfolio._preview', ['target' => $targets[$tab]])
+                @include('backend.portfolio._preview', $tab === 'login'
+                    ? ['url' => route('pf.login-preview'), 'target' => '']
+                    : ($tab === 'admin' ? ['url' => route('dashboard'), 'target' => '']
+                    : ['target' => $targets[$tab]]))
             @else
                 <div class="card card-flush shadow-sm"><div class="card-body py-10 text-center text-muted"><i class="ki-outline ki-information-5 fs-2x d-block mb-3"></i>Pengaturan ini tampil di navbar &amp; footer <b>panel admin</b>. Simpan lalu lihat perubahan di atas dan bawah halaman ini.</div></div>
             @endif

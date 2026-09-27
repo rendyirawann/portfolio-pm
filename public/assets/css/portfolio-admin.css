@@ -42,7 +42,7 @@
 /* --- Live preview panel --- */
 .pf-split { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: 24px; align-items: start; }
 .pf-split > .pf-preview { position: sticky; top: 90px; }
-@media (max-width: 1199px) { .pf-split { grid-template-columns: 1fr; } .pf-split > .pf-preview { position: static; } }
+@media (max-width: 991px) { .pf-split { grid-template-columns: 1fr; } .pf-split > .pf-preview { position: static; } }
 .pf-preview { overflow: hidden; }
 .pf-preview__bar { display: flex; align-items: center; gap: 12px; padding: 10px 14px; border-bottom: 1px solid var(--bs-border-color); }
 .pf-preview__dots { display: inline-flex; gap: 6px; }

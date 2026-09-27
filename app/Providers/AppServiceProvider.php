@@ -122,6 +122,9 @@ class AppServiceProvider extends ServiceProvider
 
         View::composer('backend.layout.navbar', NotificationComposer::class);
 
+        // Sign-in screen copy + loaders (Konten Halaman › Halaman Login & Loader).
+        View::composer(['auth.app', 'auth.login'], fn ($view) => $view->with('login', \App\Support\Portfolio\PortfolioData::login()));
+
         // Admin header / sidebar / footer branding (Konten Halaman › Navbar & Footer Admin).
         View::composer(
             ['backend.layout.app', 'backend.layout.sidebar', 'backend.layout.footer'],

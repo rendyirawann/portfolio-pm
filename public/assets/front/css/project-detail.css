@@ -38,3 +38,6 @@
     .detail__grid { grid-template-columns: 1fr; }
     .detail__side { position: static; }
 }
+
+html[data-theme="light"] .prose { color: #33374f; }
+html[data-theme="light"] .prose h2 { color: var(--text); }

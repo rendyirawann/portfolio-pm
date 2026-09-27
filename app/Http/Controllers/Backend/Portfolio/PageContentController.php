@@ -50,6 +50,12 @@ class PageContentController extends Controller
         ]);
     }
 
+    /** The sign-in screen rendered for the admin's live preview panel. */
+    public function loginPreview(): View
+    {
+        return view('auth.login', ['pfPreview' => true]);
+    }
+
     public function update(Request $request): RedirectResponse
     {
         $group = (string) $request->input('_group');

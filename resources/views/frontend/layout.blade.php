@@ -18,7 +18,8 @@
         crossorigin="anonymous" referrerpolicy="no-referrer">
     <link rel="stylesheet" href="{{ asset('assets/front/css/portfolio.css') }}?v={{ filemtime(public_path('assets/front/css/portfolio.css')) }}">
     @stack('head')
-    <script nonce="{{ $nonce }}">document.documentElement.classList.replace('no-js', 'js');</script>
+    {{-- Theme before first paint. Shares the admin's key so one choice applies everywhere; dark is the default. --}}
+    <script nonce="{{ $nonce }}">(function(){var d=document.documentElement,m='dark';d.classList.replace('no-js','js');try{m=localStorage.getItem('data-bs-theme')||'dark';if(m==='system')m=matchMedia('(prefers-color-scheme: light)').matches?'light':'dark';}catch(e){}d.setAttribute('data-theme',m==='light'?'light':'dark');})();</script>
 </head>
 <body class="@yield('body_class')">
     <a class="skip-link" href="#main">Lewati ke konten</a>
@@ -62,6 +63,10 @@
                     <label for="nav-q" class="sr-only">Cari project</label>
                     <input id="nav-q" type="search" name="q" placeholder="Search" maxlength="80" value="{{ $search ?? '' }}" autocomplete="off">
                 </form>
+
+                <button class="theme-toggle" type="button" data-theme-toggle aria-label="Ganti tema terang / gelap" title="Tema terang / gelap">
+                    <i class="fa-solid fa-moon" aria-hidden="true"></i><i class="fa-solid fa-sun" aria-hidden="true"></i>
+                </button>
 
                 <button class="nav__toggle" type="button" aria-controls="nav-menu" aria-expanded="false" data-nav-toggle>
                     <span class="nav__toggle-label">Menu</span>

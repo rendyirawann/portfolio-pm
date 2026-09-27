@@ -6,9 +6,9 @@
             <div class="text-muted fs-7">
                 @if ($chrome['footer_link'])
                     <a href="{{ $chrome['footer_link'] }}" target="_blank" rel="noopener noreferrer"
-                        class="text-gray-800 text-hover-primary fw-semibold">{{ $chrome['footer'] }}</a>
+                        class="text-gray-800 text-hover-primary fw-semibold">© {{ now()->year }} <span data-pf="admin_footer_text">{{ $chrome['footer_name'] }}</span></a> · <span data-pf="admin_brand_tagline">{{ $chrome['tagline'] }}</span>
                 @else
-                    {{ $chrome['footer'] }}
+                    © {{ now()->year }} <span data-pf="admin_footer_text">{{ $chrome['footer_name'] }}</span> · <span data-pf="admin_brand_tagline">{{ $chrome['tagline'] }}</span>
                 @endif
             </div>
 

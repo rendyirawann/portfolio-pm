@@ -49,6 +49,28 @@
         }
     });
 
+    // Nothing inside the preview may really submit (login, contact form…).
+    document.addEventListener('submit', function (e) { e.preventDefault(); e.stopImmediatePropagation(); }, true);
+
+    // Login screen: replay the loaders while their texts are being edited.
+    var timers = {};
+    function showFor(id, cls, add) {
+        var el = document.getElementById(id);
+        if (!el) return;
+        clearTimeout(timers[id]);
+        el.classList[add ? 'add' : 'remove'](cls);
+        timers[id] = setTimeout(function () { el.classList[add ? 'remove' : 'add'](cls); }, 2600);
+    }
+    window.addEventListener('message', function (e) {
+        if (e.origin !== window.location.origin || !e.data || e.data.type !== 'pf:set' || typeof e.data.key !== 'string') return;
+        if (e.data.key.indexOf('login_loader') === 0) showFor('auth-preloader', 'is-done', false);
+        if (e.data.key.indexOf('login_progress') === 0) {
+            var step = document.querySelector('#auth-progress [data-progress-step]');
+            if (step) step.textContent = e.data.value || '';
+            showFor('auth-progress', 'is-on', true);
+        }
+    });
+
     // Tell the admin panel we are ready to receive the current form state.
     if (window.parent !== window) window.parent.postMessage({ type: 'pf:ready' }, window.location.origin);
 

@@ -86,3 +86,13 @@ h1.fs-2 { font-family: 'Oswald', 'Arial Narrow', sans-serif; text-transform: upp
 .form-check-input:checked { background-color: #ff2d55; border-color: #ff2d55; }
 .progress-bar.bg-primary { background: var(--pf-grad) !important; }
 .app-footer__social i { font-size: 16px; }
+.nav-pills .nav-link.active, .nav-pills .show > .nav-link { background: linear-gradient(100deg, #ff2d55, #a43bff 55%, #3b6cff) !important; color: #fff !important; } .nav-pills .nav-link.active i { color: #fff !important; }
+
+[data-bs-theme="light"] body {
+    background:
+        radial-gradient(50% 40% at 0% 100%, rgba(225, 29, 72, .06), transparent 70%),
+        radial-gradient(50% 40% at 100% 0%, rgba(37, 99, 235, .07), transparent 70%),
+        #f5f6fa;
+    background-attachment: fixed;
+}
+[data-bs-theme="light"] .app-header { background: rgba(255, 255, 255, .85) !important; backdrop-filter: blur(14px); }

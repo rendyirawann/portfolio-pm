@@ -80,9 +80,43 @@ class PortfolioData
             'name' => $name,
             'tagline' => trim((string) ($c['admin_brand_tagline'] ?? '')) ?: $brand['tagline'],
             'logo' => ! empty($c['admin_logo']) ? Media::url($c['admin_logo']) : $brand['logo_url'],
+            'footer_name' => trim((string) ($c['admin_footer_text'] ?? '')) ?: $name,
             'footer' => self::copyright($c['admin_footer_text'] ?? '', $name) . ' · ' . (trim((string) ($c['admin_brand_tagline'] ?? '')) ?: $brand['tagline']),
             'footer_link' => ($c['admin_footer_link'] ?? '') ?: null,
             'socials' => ($c['admin_footer_show_socials'] ?? '1') === '1' ? $layout['socials'] : collect(),
+        ];
+    }
+
+    /** Copy for the sign-in screen and its loaders (Konten Halaman › Halaman Login & Loader). */
+    public static function login(): array
+    {
+        try {
+            $c = self::layout()['content'];
+        } catch (\Throwable) {
+            $c = ContentSchema::defaults();
+        }
+
+        $brand = \App\Support\Brand::all();
+        $get = fn (string $k) => trim((string) ($c[$k] ?? '')) ?: (string) (ContentSchema::defaults()[$k] ?? '');
+        $name = $get('login_brand_name') ?: $brand['name'];
+
+        return [
+            'name' => $name,
+            'tagline' => $get('login_tagline') ?: $brand['tagline'],
+            'kicker' => $get('login_kicker'),
+            'headline_1' => $get('login_headline_1'),
+            'headline_2' => $get('login_headline_2'),
+            'lead' => $get('login_lead'),
+            'points' => array_values(array_filter([$get('login_point_1'), $get('login_point_2'), $get('login_point_3')])),
+            'card_title' => $get('login_card_title'),
+            'card_subtitle' => $get('login_card_subtitle'),
+            'button' => $get('login_button'),
+            'button_busy' => $get('login_button_busy'),
+            'foot' => $get('login_foot'),
+            'loader_label' => trim((string) ($c['login_loader_label'] ?? '')) ?: $name,
+            'loader_text' => $get('login_loader_text'),
+            'progress' => array_values(array_filter([$get('login_progress_1'), $get('login_progress_2'), $get('login_progress_3'), $get('login_progress_4')])),
+            'logo' => $brand['logo_url'],
         ];
     }
 

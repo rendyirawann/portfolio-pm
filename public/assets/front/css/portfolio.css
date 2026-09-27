@@ -589,3 +589,106 @@ main, .footer, .nav { position: relative; z-index: 1; }
 .is-preview .skill__bar i { transform: scaleX(1); }
 @keyframes pf-flash { 0% { box-shadow: 0 0 0 2px rgba(255, 45, 85, .9); } 100% { box-shadow: 0 0 0 2px rgba(255, 45, 85, 0); } }
 .pf-flash { animation: pf-flash 1.2s ease-out; border-radius: 4px; }
+
+/* ==========================================================================
+   Light theme — same red × blue identity on a soft off-white ground.
+   Dark stays the default; the toggle sets data-theme="light" on <html>.
+   ========================================================================== */
+html[data-theme="light"] {
+    --bg: #f5f6fa;
+    --bg-2: #eceef5;
+    --surface: #ffffff;
+    --surface-2: #f7f8fc;
+    --line: rgba(15, 23, 42, .09);
+    --line-2: rgba(15, 23, 42, .16);
+    --text: #121427;
+    --muted: #5a5f7a;
+    --dim: #8a8fa8;
+    --red: #e11d48;
+    --blue: #2f5bea;
+    --green: #059669;
+    color-scheme: light;
+}
+html[data-theme="light"] .hero__glow { opacity: .18; }
+html[data-theme="light"] .hero__stripes,
+html[data-theme="light"] .bg-particles { opacity: .55; }
+html[data-theme="light"] .hero__line--dim { background: linear-gradient(180deg, #7b7f99 0%, #b9bccd 100%); -webkit-background-clip: text; background-clip: text; }
+html[data-theme="light"] .hl--blue { color: #2f5bea; }
+
+/* Navbar & menus */
+html[data-theme="light"] .nav.is-scrolled,
+html[data-theme="light"] .page-inner .nav { background: rgba(245, 246, 250, .82); }
+html[data-theme="light"] .nav__link,
+html[data-theme="light"] .nav__toggle,
+html[data-theme="light"] .nav__search input,
+html[data-theme="light"] .about__brand,
+html[data-theme="light"] .pill,
+html[data-theme="light"] .project__more,
+html[data-theme="light"] .footer__heading { color: var(--text); }
+html[data-theme="light"] .nav__burger i { background: var(--text); }
+html[data-theme="light"] .nav__search { border-color: var(--line-2); }
+html[data-theme="light"] .nav__search:focus-within { border-color: var(--text); background: rgba(15, 23, 42, .04); }
+html[data-theme="light"] .nav__dd-menu { background: rgba(255, 255, 255, .98); box-shadow: 0 24px 60px -20px rgba(15, 23, 42, .25); }
+html[data-theme="light"] .nav__dd-menu a:hover { background: rgba(15, 23, 42, .05); color: var(--text); }
+html[data-theme="light"] .nav__menu {
+    background:
+        radial-gradient(60% 50% at 0% 100%, rgba(225, 29, 72, .12), transparent 70%),
+        radial-gradient(60% 50% at 100% 0%, rgba(37, 99, 235, .12), transparent 70%),
+        rgba(245, 246, 250, .98);
+}
+html[data-theme="light"] .nav__menu-links a { color: rgba(18, 20, 39, .45); }
+html[data-theme="light"] .nav__menu-links a:hover,
+html[data-theme="light"] .nav__menu-links a.is-active { color: var(--text); }
+
+/* Buttons & chips */
+html[data-theme="light"] .btn--glow { background: linear-gradient(#fff, #fff) padding-box, var(--grad) border-box; color: var(--text); }
+html[data-theme="light"] .btn--ghost { background: rgba(255, 255, 255, .7); }
+html[data-theme="light"] .btn--ghost:hover { border-color: rgba(15, 23, 42, .3); background: #fff; }
+html[data-theme="light"] .hero__card .btn--outline { border-color: rgba(15, 23, 42, .35); color: var(--text); }
+html[data-theme="light"] .hero__card .btn--outline:hover { background: var(--text); color: #fff; }
+html[data-theme="light"] .chip:hover { color: var(--text); border-color: rgba(15, 23, 42, .3); }
+html[data-theme="light"] .chip.is-active { color: var(--text); }
+html[data-theme="light"] .hud-chip,
+html[data-theme="light"] .pill { background: rgba(255, 255, 255, .8); }
+
+/* Surfaces & text */
+html[data-theme="light"] .hero__card { background: rgba(255, 255, 255, .85); }
+html[data-theme="light"] .hero__cards { box-shadow: 0 20px 50px -25px rgba(15, 23, 42, .3); }
+html[data-theme="light"] .hero__socials a:hover,
+html[data-theme="light"] .footer__links a:hover,
+html[data-theme="light"] .breadcrumb a:hover { color: var(--text); }
+html[data-theme="light"] .about__name { background: linear-gradient(180deg, #121427 30%, #5a5f7a 100%); -webkit-background-clip: text; background-clip: text; text-shadow: none; }
+html[data-theme="light"] .about__role,
+html[data-theme="light"] .about__bio p,
+html[data-theme="light"] .testimonial blockquote { color: #33374f; }
+html[data-theme="light"] .about__beam { opacity: .35; }
+html[data-theme="light"] .tags li { color: #3b3f58; background: rgba(15, 23, 42, .04); }
+html[data-theme="light"] .skill__bar { background: rgba(15, 23, 42, .07); }
+html[data-theme="light"] .card,
+html[data-theme="light"] .project,
+html[data-theme="light"] .skills__group,
+html[data-theme="light"] .timeline__body,
+html[data-theme="light"] .testimonial,
+html[data-theme="light"] .form,
+html[data-theme="light"] .direct,
+html[data-theme="light"] .stats li,
+html[data-theme="light"] .hud-panel { box-shadow: 0 10px 30px -18px rgba(15, 23, 42, .18); }
+html[data-theme="light"] .project:hover { box-shadow: 0 30px 60px -30px rgba(47, 91, 234, .35); }
+html[data-theme="light"] .project__type { background: rgba(255, 255, 255, .85); color: var(--text); }
+html[data-theme="light"] .timeline__item::before { background: var(--bg); }
+html[data-theme="light"] .field input,
+html[data-theme="light"] .field select,
+html[data-theme="light"] .field textarea { background: #fff; }
+html[data-theme="light"] .section--alt { background: linear-gradient(180deg, transparent, rgba(236, 238, 245, .7) 12%, rgba(236, 238, 245, .7) 88%, transparent); }
+html[data-theme="light"] .footer { background: radial-gradient(60% 50% at 50% 0%, rgba(47, 91, 234, .08), transparent 70%); }
+
+/* Theme toggle button */
+.theme-toggle {
+    width: 38px; height: 38px; display: inline-grid; place-items: center; border-radius: 50%;
+    border: 1px solid var(--line-2); background: transparent; color: var(--text); cursor: pointer;
+    transition: border-color .2s, transform .2s;
+}
+.theme-toggle:hover { border-color: var(--red); transform: rotate(-15deg); }
+.theme-toggle .fa-sun { display: none; }
+html[data-theme="light"] .theme-toggle .fa-sun { display: inline; }
+html[data-theme="light"] .theme-toggle .fa-moon { display: none; }
