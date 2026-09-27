@@ -36,7 +36,6 @@
         <span class="toolbar__title">{{ $variantLabel }} — {{ $c['about_name'] }}</span>
         <span class="toolbar__hint">± {{ $pages }} halaman A4 · Klik "Download PDF", lalu pilih <b>Save as PDF</b> / <b>Simpan sebagai PDF</b>.</span>
         <div class="toolbar__actions">
-            <a class="btn" href="{{ route('pf.export') }}">Semua versi</a>
             <button class="btn btn--primary" type="button" id="print-btn">Download PDF</button>
         </div>
     </div>
