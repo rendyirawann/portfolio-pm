@@ -148,7 +148,7 @@
             </div>
 
             <div class="footer__bottom">
-                <p data-pf="footer_copyright">{{ \App\Support\Portfolio\PortfolioData::fill($c['footer_copyright'], $c['about_name'] ?: $c['brand_name']) }}</p>
+                <p>© {{ now()->year }} <span data-pf="footer_copyright">{{ trim((string) $c['footer_copyright']) ?: ($c['about_name'] ?: $c['brand_name']) }}</span>. All rights reserved.</p>
                 @if (($c['footer_show_socials'] ?? '1') === '1')
                     @include('frontend.partials.socials', ['class' => 'socials'])
                 @endif

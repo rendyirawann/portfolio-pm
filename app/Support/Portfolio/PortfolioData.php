@@ -54,10 +54,10 @@ class PortfolioData
         return $target;
     }
 
-    /** Fill {year} / {name} placeholders in a copyright-style template. */
-    public static function fill(?string $template, string $name): string
+    /** "© 2026 Name" — the year is always the current one; only the name is editable. */
+    public static function copyright(?string $name, string $fallback): string
     {
-        return strtr((string) $template, ['{year}' => now()->year, '{name}' => $name]);
+        return '© ' . now()->year . ' ' . (trim((string) $name) ?: $fallback);
     }
 
     /**
@@ -80,7 +80,7 @@ class PortfolioData
             'name' => $name,
             'tagline' => trim((string) ($c['admin_brand_tagline'] ?? '')) ?: $brand['tagline'],
             'logo' => ! empty($c['admin_logo']) ? Media::url($c['admin_logo']) : $brand['logo_url'],
-            'footer' => self::fill($c['admin_footer_text'] ?? '© {year} {name}', $name),
+            'footer' => self::copyright($c['admin_footer_text'] ?? '', $name) . ' · ' . (trim((string) ($c['admin_brand_tagline'] ?? '')) ?: $brand['tagline']),
             'footer_link' => ($c['admin_footer_link'] ?? '') ?: null,
             'socials' => ($c['admin_footer_show_socials'] ?? '1') === '1' ? $layout['socials'] : collect(),
         ];
