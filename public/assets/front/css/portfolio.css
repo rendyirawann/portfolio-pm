@@ -166,6 +166,11 @@ ul, ol { margin: 0; padding: 0; list-style: none; }
 .hero__visual {
     position: relative; justify-self: end;
     width: 116%; max-width: 720px; margin-right: -3vw;
+
+    /* Dinaikkan sedikit. Memakai transform, bukan margin-top negatif, supaya
+       tinggi baris grid tidak ikut berubah dan kolom teks di sebelahnya tetap
+       pada posisi semula. */
+    transform: translateY(clamp(-52px, -3vw, 0px));
 }
 /* Bingkai kartu DILEPAS — permintaan client: fotonya menyatu dengan latar web. */
 .hero__frame { position: relative; aspect-ratio: 5 / 6; background: none; border: 0; overflow: visible; }
