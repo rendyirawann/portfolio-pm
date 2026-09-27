@@ -72,8 +72,10 @@ class PortfolioController extends Controller
         if (str_starts_with($robots, 'noindex')) {
             $lines[] = 'Disallow: /';
         } else {
-            $lines[] = 'Allow: /';
-            $lines[] = 'Disallow: /admin';
+            // Respect a subfolder install ("/portfolio/admin").
+            $base = rtrim((string) parse_url(url('/'), PHP_URL_PATH), '/');
+            $lines[] = 'Allow: ' . ($base ?: '/');
+            $lines[] = 'Disallow: ' . $base . '/admin';
             $lines[] = '';
             $lines[] = 'Sitemap: ' . route('sitemap');
         }

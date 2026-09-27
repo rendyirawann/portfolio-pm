@@ -45,9 +45,9 @@
                 <p class="hero__desc" data-pf="hero_description">{{ $c['hero_description'] }}</p>
 
                 <div class="hero__actions">
-                    <a href="{{ $c['hero_cta_link'] }}" class="btn btn--glow"><span data-pf="hero_cta_label">{{ $c['hero_cta_label'] }}</span> <i class="fa-solid fa-arrow-right" aria-hidden="true"></i></a>
+                    <a href="{{ \App\Support\Portfolio\PortfolioData::href($c['hero_cta_link']) }}" class="btn btn--glow"><span data-pf="hero_cta_label">{{ $c['hero_cta_label'] }}</span> <i class="fa-solid fa-arrow-right" aria-hidden="true"></i></a>
                     @if ($c['hero_cta2_label'])
-                        <a href="{{ $c['hero_cta2_link'] }}" class="btn btn--ghost" data-pf="hero_cta2_label">{{ $c['hero_cta2_label'] }}</a>
+                        <a href="{{ \App\Support\Portfolio\PortfolioData::href($c['hero_cta2_link']) }}" class="btn btn--ghost" data-pf="hero_cta2_label">{{ $c['hero_cta2_label'] }}</a>
                     @endif
                     @if ($c['hero_badge'])
                         <div class="badge-ring">
@@ -74,7 +74,7 @@
                         <div class="hero__card">
                             <h2 data-pf="hero_card{{ $n }}_title">{{ $c["hero_card{$n}_title"] }}</h2>
                             <p data-pf="hero_card{{ $n }}_text">{{ $c["hero_card{$n}_text"] }}</p>
-                            <a href="{{ $c["hero_card{$n}_link"] }}" class="btn btn--outline btn--xs" data-pf="hero_card{{ $n }}_label">{{ $c["hero_card{$n}_label"] }}</a>
+                            <a href="{{ \App\Support\Portfolio\PortfolioData::href($c["hero_card{$n}_link"]) }}" class="btn btn--outline btn--xs" data-pf="hero_card{{ $n }}_label">{{ $c["hero_card{$n}_label"] }}</a>
                         </div>
                     @endif
                 @endforeach

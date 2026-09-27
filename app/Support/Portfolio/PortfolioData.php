@@ -28,7 +28,62 @@ class PortfolioData
             'nav' => NavItem::visible()->get(['id', 'label', 'target']),
             'socials' => SocialLink::visible()->get(['id', 'platform', 'label', 'url']),
             'navCategories' => self::categories(),
+            'footerLinks' => \App\Models\Portfolio\FooterLink::visible()->get(['id', 'column', 'label', 'url', 'icon'])->groupBy('column'),
         ]);
+    }
+
+    /**
+     * Turn a link typed in the admin into a working href, wherever the site
+     * is mounted: "#about" (home section), "/projects" (relative to the app,
+     * so it keeps a /subfolder base), or a full URL / mailto: / tel: as-is.
+     */
+    public static function href(?string $target): string
+    {
+        $target = trim((string) $target);
+
+        if ($target === '') {
+            return url('/');
+        }
+        if (str_starts_with($target, '#')) {
+            return request()->routeIs('home') ? $target : route('home') . $target;
+        }
+        if (str_starts_with($target, '/') && ! str_starts_with($target, '//')) {
+            return url($target);
+        }
+
+        return $target;
+    }
+
+    /** Fill {year} / {name} placeholders in a copyright-style template. */
+    public static function fill(?string $template, string $name): string
+    {
+        return strtr((string) $template, ['{year}' => now()->year, '{name}' => $name]);
+    }
+
+    /**
+     * Branding for the admin header, sidebar and footer — edited under
+     * Konten Halaman › Navbar & Footer Admin, falling back to Settings.
+     */
+    public static function admin(): array
+    {
+        try {
+            $layout = self::layout();
+        } catch (\Throwable) {
+            $layout = ['content' => ContentSchema::defaults(), 'socials' => collect()];
+        }
+
+        $c = $layout['content'];
+        $brand = \App\Support\Brand::all();
+        $name = trim((string) ($c['admin_brand_name'] ?? '')) ?: $brand['name'];
+
+        return [
+            'name' => $name,
+            'tagline' => trim((string) ($c['admin_brand_tagline'] ?? '')) ?: $brand['tagline'],
+            'logo' => ! empty($c['admin_logo']) ? Media::url($c['admin_logo']) : $brand['logo_url'],
+            'footer' => self::fill($c['admin_footer_text'] ?? '© {year} {name}', $name),
+            'footer_link' => ($c['admin_footer_link'] ?? '') ?: null,
+            'socials' => ($c['admin_footer_show_socials'] ?? '1') === '1' ? $layout['socials'] : collect(),
+        ];
     }
 
     public static function home(): array

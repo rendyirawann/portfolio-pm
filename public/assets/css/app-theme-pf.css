@@ -85,3 +85,4 @@ h1.fs-2 { font-family: 'Oswald', 'Arial Narrow', sans-serif; text-transform: upp
 .form-control:focus, .form-select:focus { border-color: #3b6cff !important; }
 .form-check-input:checked { background-color: #ff2d55; border-color: #ff2d55; }
 .progress-bar.bg-primary { background: var(--pf-grad) !important; }
+.app-footer__social i { font-size: 16px; }

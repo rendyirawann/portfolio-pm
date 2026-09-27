@@ -38,6 +38,15 @@
                                     </label>
                                     @break
 
+                                @case('select')
+                                    <label class="form-label fw-semibold" for="f-{{ $name }}">{{ $field['label'] }}</label>
+                                    <select class="form-select form-select-solid" id="f-{{ $name }}" name="{{ $name }}">
+                                        @foreach ($field['options'] as $optValue => $optLabel)
+                                            <option value="{{ $optValue }}" @selected((string) $value === (string) $optValue)>{{ $optLabel }}</option>
+                                        @endforeach
+                                    </select>
+                                    @break
+
                                 @case('textarea')
                                     <label class="form-label fw-semibold" for="f-{{ $name }}">{{ $field['label'] }}</label>
                                     <textarea class="form-control form-control-solid" id="f-{{ $name }}" name="{{ $name }}" rows="4">{{ $value }}</textarea>

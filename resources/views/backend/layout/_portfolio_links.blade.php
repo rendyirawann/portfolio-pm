@@ -12,6 +12,7 @@
         ['pf.testimonials.index', 'admin/portfolio/testimonials*', 'Testimoni', 'ki-message-text-2'],
         ['pf.nav.index', 'admin/portfolio/nav*', 'Menu Navbar', 'ki-burger-menu-2'],
         ['pf.socials.index', 'admin/portfolio/socials*', 'Sosial Media', 'ki-share'],
+        ['pf.footer.index', 'admin/portfolio/footer*', 'Link Footer', 'ki-row-horizontal'],
         ['pf.messages.index', 'admin/portfolio/messages*', 'Pesan Masuk', 'ki-sms'],
     ];
 @endphp

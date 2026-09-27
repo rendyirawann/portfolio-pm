@@ -36,7 +36,7 @@
             </a>
 
             @php
-                $link = fn ($t) => str_starts_with($t, '#') && ! request()->routeIs('home') ? route('home') . $t : $t;
+                $link = fn ($t) => \App\Support\Portfolio\PortfolioData::href($t);
             @endphp
 
             {{-- Right cluster: Home · Category ▾ · Search · Menu ≡ --}}
@@ -119,29 +119,39 @@
                     <p data-pf="footer_about">{{ $c['footer_about'] }}</p>
                 </div>
 
-                <div>
-                    <h3 class="footer__heading">Navigasi</h3>
-                    <ul class="footer__links">
-                        @foreach ($nav as $item)
-                            <li><a href="{{ str_starts_with($item->target, '#') && ! request()->routeIs('home') ? route('home') . $item->target : $item->target }}">{{ $item->label }}</a></li>
-                        @endforeach
-                        <li><a href="{{ route('portfolio.projects') }}">Semua Project</a></li>
-                    </ul>
-                </div>
-
-                <div>
-                    <h3 class="footer__heading">Kontak</h3>
-                    <ul class="footer__links">
-                        @if ($c['contact_email'])<li><a href="mailto:{{ $c['contact_email'] }}"><i class="fa-solid fa-envelope" aria-hidden="true"></i> {{ $c['contact_email'] }}</a></li>@endif
-                        @if ($c['contact_whatsapp'])<li><a href="https://wa.me/{{ preg_replace('/\D/', '', $c['contact_whatsapp']) }}" target="_blank" rel="noopener"><i class="fa-brands fa-whatsapp" aria-hidden="true"></i> +{{ preg_replace('/\D/', '', $c['contact_whatsapp']) }}</a></li>@endif
-                        @if ($c['contact_address'])<li><span><i class="fa-solid fa-location-dot" aria-hidden="true"></i> {{ $c['contact_address'] }}</span></li>@endif
-                    </ul>
-                </div>
+                @foreach (\App\Models\Portfolio\FooterLink::COLUMNS as $colKey => $colDefault)
+                    @php $items = $footerLinks[$colKey] ?? collect(); @endphp
+                    @if ($items->isNotEmpty())
+                        <div>
+                            <h3 class="footer__heading" data-pf="footer_{{ $colKey === 'nav' ? 'nav' : 'contact' }}_title">{{ $c["footer_{$colKey}_title"] ?? $colDefault }}</h3>
+                            <ul class="footer__links">
+                                @foreach ($items as $fl)
+                                    @php $external = $fl->url && (str_starts_with($fl->url, 'http') && ! str_starts_with($fl->url, url('/'))); @endphp
+                                    <li>
+                                        @if ($fl->url)
+                                            <a href="{{ $link($fl->url) }}" @if ($external) target="_blank" rel="noopener" @endif>
+                                                @if ($fl->icon_class)<i class="{{ $fl->icon_class }}" aria-hidden="true"></i>@endif
+                                                <span data-pf="footer.{{ $fl->id }}.label">{{ $fl->label }}</span>
+                                            </a>
+                                        @else
+                                            <span>
+                                                @if ($fl->icon_class)<i class="{{ $fl->icon_class }}" aria-hidden="true"></i>@endif
+                                                <span data-pf="footer.{{ $fl->id }}.label">{{ $fl->label }}</span>
+                                            </span>
+                                        @endif
+                                    </li>
+                                @endforeach
+                            </ul>
+                        </div>
+                    @endif
+                @endforeach
             </div>
 
             <div class="footer__bottom">
-                <p>&copy; <span data-year>{{ date('Y') }}</span> {{ $c['about_name'] ?: $c['brand_name'] }}. {{ $c['footer_copyright'] }}</p>
-                @include('frontend.partials.socials', ['class' => 'socials'])
+                <p data-pf="footer_copyright">{{ \App\Support\Portfolio\PortfolioData::fill($c['footer_copyright'], $c['about_name'] ?: $c['brand_name']) }}</p>
+                @if (($c['footer_show_socials'] ?? '1') === '1')
+                    @include('frontend.partials.socials', ['class' => 'socials'])
+                @endif
             </div>
         </div>
     </footer>

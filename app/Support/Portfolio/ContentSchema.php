@@ -108,7 +108,22 @@ class ContentSchema
                 'fields' => [
                     'footer_cta_title' => ['Ajakan di footer', 'text', 'Got an idea? Let\'s make it real.'],
                     'footer_about' => ['Teks singkat footer', 'textarea', 'Designing and building digital products with a focus on speed, security and delight.'],
-                    'footer_copyright' => ['Teks copyright', 'text', 'All rights reserved.'],
+                    'footer_nav_title' => ['Judul kolom navigasi', 'text', 'Navigasi'],
+                    'footer_contact_title' => ['Judul kolom kontak', 'text', 'Kontak'],
+                    'footer_copyright' => ['Teks copyright — {year} = tahun, {name} = nama', 'text', '© {year} {name}. All rights reserved.'],
+                    'footer_show_socials' => ['Tampilkan ikon sosial media di footer', 'toggle', '1'],
+                ],
+            ],
+            'admin' => [
+                'label' => 'Navbar & Footer Admin',
+                'icon' => 'ki-element-plus',
+                'fields' => [
+                    'admin_brand_name' => ['Nama di navbar admin', 'text', 'Rendy Irawan'],
+                    'admin_brand_tagline' => ['Tagline di navbar admin', 'text', 'Portfolio Control Center'],
+                    'admin_logo' => ['Logo admin (kosongkan = logo utama)', 'image', null],
+                    'admin_footer_text' => ['Teks footer admin — {year} = tahun, {name} = nama', 'text', '© {year} {name} · Portfolio Control Center'],
+                    'admin_footer_link' => ['Link saat nama di footer diklik', 'url', ''],
+                    'admin_footer_show_socials' => ['Tampilkan ikon sosial media (dari menu Sosial Media)', 'toggle', '1'],
                 ],
             ],
             'seo' => [

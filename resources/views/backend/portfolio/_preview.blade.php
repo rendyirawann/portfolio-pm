@@ -5,7 +5,8 @@
             url (optional page to preview, default: home)
 --}}
 @php
-    $previewUrl = ($url ?? route('home')) . (str_contains($url ?? '', '?') ? '&' : '?') . 'pf_preview=1' . ($target ?? '');
+    // Trailing slash on the home URL avoids a redirect when mounted in a subfolder.
+    $previewUrl = ($url ?? rtrim(route('home'), '/') . '/') . (str_contains($url ?? '', '?') ? '&' : '?') . 'pf_preview=1' . ($target ?? '');
 @endphp
 <div class="pf-preview card card-flush shadow-sm" data-pf-preview data-target="{{ $target ?? '' }}" data-prefix="{{ $prefix ?? '' }}">
     <div class="pf-preview__bar">

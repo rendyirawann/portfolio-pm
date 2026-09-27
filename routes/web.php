@@ -28,6 +28,7 @@ use App\Http\Controllers\Backend\Settings\SettingController;
 
 // Portfolio (admin)
 use App\Http\Controllers\Backend\Portfolio\ExperienceController;
+use App\Http\Controllers\Backend\Portfolio\FooterLinkController;
 use App\Http\Controllers\Backend\Portfolio\MessageController;
 use App\Http\Controllers\Backend\Portfolio\NavItemController;
 use App\Http\Controllers\Backend\Portfolio\PageContentController;
@@ -83,6 +84,7 @@ Route::middleware(['auth', 'forbid-banned-user'])->group(function () {
             'experiences' => ExperienceController::class,
             'testimonials' => TestimonialController::class,
             'socials' => SocialLinkController::class,
+            'footer' => FooterLinkController::class,
         ];
 
         foreach ($resources as $uri => $controller) {

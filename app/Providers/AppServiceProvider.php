@@ -33,9 +33,13 @@ class AppServiceProvider extends ServiceProvider
     /** Force canonical absolute URLs behind TLS in production. */
     private function configureUrls(): void
     {
-        if (config('app.env') === 'production') {
-            URL::forceRootUrl(config('app.url'));
-            URL::forceScheme('https');
+        // APP_URL is the single source of truth for scheme, host and base
+        // path — "http://103.1.2.3/portfolio" and "https://domain.com" both
+        // work without code changes, so moving to a domain is an .env edit.
+        if (config('app.env') === 'production' && filled(config('app.url'))) {
+            $root = rtrim((string) config('app.url'), '/');
+            URL::forceRootUrl($root);
+            URL::forceScheme(str_starts_with($root, 'https://') ? 'https' : 'http');
         }
     }
 
@@ -117,6 +121,12 @@ class AppServiceProvider extends ServiceProvider
         });
 
         View::composer('backend.layout.navbar', NotificationComposer::class);
+
+        // Admin header / sidebar / footer branding (Konten Halaman › Navbar & Footer Admin).
+        View::composer(
+            ['backend.layout.app', 'backend.layout.sidebar', 'backend.layout.footer'],
+            fn ($view) => $view->with('chrome', \App\Support\Portfolio\PortfolioData::admin())
+        );
     }
 
     /** @return array<string,string> */

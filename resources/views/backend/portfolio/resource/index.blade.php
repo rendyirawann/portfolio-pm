@@ -62,6 +62,9 @@
                                                     <span class="text-muted">—</span>
                                                 @endif
                                                 @break
+                                            @case(($fields[$column]['type'] ?? null) === 'select')
+                                                <span class="badge badge-light-info">{{ $fields[$column]['options'][$item->{$column}] ?? $item->{$column} }}</span>
+                                                @break
                                             @case($column === 'level')
                                                 <div class="d-flex align-items-center gap-2 mw-150px">
                                                     <div class="progress h-6px w-100"><div class="progress-bar bg-primary" style="width: {{ (int) $item->level }}%"></div></div>

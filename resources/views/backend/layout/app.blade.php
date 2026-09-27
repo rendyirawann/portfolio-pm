@@ -161,10 +161,10 @@
                         </button>
 
                         <a href="{{ route('dashboard') }}" class="app-brand">
-                            <img src="{{ $brand['logo_url'] }}" alt="" class="app-brand__mark" width="34" height="34" />
+                            <img src="{{ $chrome['logo'] }}" alt="" class="app-brand__mark" width="34" height="34" />
                             <span class="min-w-0">
-                                <span class="app-brand__name d-block">{{ $brand['name'] }}</span>
-                                <span class="app-brand__tagline">{{ $brand['tagline'] }}</span>
+                                <span class="app-brand__name d-block">{{ $chrome['name'] }}</span>
+                                <span class="app-brand__tagline">{{ $chrome['tagline'] }}</span>
                             </span>
                         </a>
                     </div>
