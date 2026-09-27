@@ -379,8 +379,12 @@ ul, ol { margin: 0; padding: 0; list-style: none; }
     width: min(94vw, 760px); max-height: 90vh; padding: 0;
     border: 1px solid var(--line); border-radius: var(--radius);
     background: var(--surface); color: inherit; overflow: hidden;
-    display: flex; flex-direction: column;
 }
+/* Tata letak flex HANYA saat dialog terbuka.
+   Kalau `display: flex` ditaruh di `.expdlg` polos, ia menimpa aturan bawaan
+   browser `dialog:not([open]) { display: none }` — akibatnya semua dialog
+   tampil begitu halaman dimuat. */
+.expdlg[open] { display: flex; flex-direction: column; }
 .expdlg::backdrop { background: rgb(0 0 0 / .72); backdrop-filter: blur(3px); }
 .expdlg__close {
     position: absolute; top: 14px; right: 16px; z-index: 3;
