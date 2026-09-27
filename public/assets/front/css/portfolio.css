@@ -165,7 +165,7 @@ ul, ol { margin: 0; padding: 0; list-style: none; }
    Aman dari scrollbar karena .hero memakai overflow: hidden. */
 .hero__visual {
     position: relative; justify-self: end;
-    width: 116%; max-width: 720px; margin-right: -3vw;
+    width: 108%; max-width: 672px; margin-right: -2vw;
 
     /* Dinaikkan sedikit. Memakai transform, bukan margin-top negatif, supaya
        tinggi baris grid tidak ikut berubah dan kolom teks di sebelahnya tetap
