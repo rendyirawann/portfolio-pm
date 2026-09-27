@@ -134,3 +134,182 @@ body.auth-body { background: #06060c; font-family: 'Inter', system-ui, sans-seri
 .auth-theme-toggle [data-when="light"] { display: none; }
 [data-bs-theme="light"] .auth-theme-toggle [data-when="light"] { display: inline; }
 [data-bs-theme="light"] .auth-theme-toggle [data-when="dark"] { display: none; }
+
+/* ==========================================================================
+   "Command deck" layout (≥ 992px): the form docks as a full-height panel on
+   the left, the showcase (headline + numbered point cards) fills the right.
+   ========================================================================== */
+@media (min-width: 992px) {
+    .auth-shell { grid-template-columns: minmax(420px, 500px) minmax(0, 1fr); }
+
+    .auth-panel {
+        order: -1;
+        position: relative;
+        padding: 48px clamp(36px, 4vw, 56px);
+        background: var(--auth-glass) !important;
+        -webkit-backdrop-filter: blur(26px) saturate(140%) !important;
+        backdrop-filter: blur(26px) saturate(140%) !important;
+        border-right: 1px solid var(--auth-line);
+    }
+    .auth-panel::after {
+        content: ''; position: absolute; top: 0; right: -1px; bottom: 0; width: 2px;
+        background: linear-gradient(180deg, transparent, var(--pf-red) 25%, var(--pf-violet) 55%, var(--pf-blue) 80%, transparent);
+        opacity: .8;
+    }
+
+    /* The card melts into the panel. */
+    .auth-card {
+        max-width: 380px !important;
+        padding: 0 !important;
+        background: transparent !important;
+        border: 0 !important;
+        box-shadow: none !important;
+        -webkit-backdrop-filter: none !important;
+        backdrop-filter: none !important;
+    }
+    .auth-card::before, .auth-card::after { display: none; }
+
+    /* Brand moves into the panel, above the form. */
+    .auth-card__brand {
+        display: flex !important; flex-direction: row; align-items: center; text-align: left;
+        gap: 14px; margin-bottom: 44px;
+    }
+    .auth-card__brand img { width: 48px; height: 48px; border-radius: 14px; box-shadow: 0 10px 30px -10px rgba(255, 45, 85, .55); }
+    .auth-card__brand .auth-card__title { font: 600 1.15rem/1.15 'Playfair Display', Georgia, serif !important; text-transform: none; letter-spacing: .02em; }
+    .auth-card__brand .auth-card__subtitle { font: 600 .66rem/1.3 'Chakra Petch', monospace; letter-spacing: .2em; text-transform: uppercase; color: var(--auth-faint); }
+    .auth-story__brand { display: none !important; }
+
+    /* Showcase */
+    .auth-story {
+        position: relative;
+        justify-content: center !important;
+        padding: clamp(48px, 6vw, 96px) !important;
+        overflow: hidden;
+    }
+    .auth-story::before {
+        /* Giant monogram watermark */
+        content: '0'; position: absolute; right: -2vw; bottom: -14vw; z-index: -1;
+        font: 700 42vw/1 'Playfair Display', Georgia, serif; font-variant-numeric: lining-nums;
+        color: transparent; -webkit-text-stroke: 1px rgba(255, 255, 255, .06);
+        pointer-events: none;
+    }
+    [data-bs-theme="light"] .auth-story::before { -webkit-text-stroke-color: rgba(15, 23, 42, .06); }
+
+    .auth-story__headline { font-size: clamp(4rem, 7.5vw, 8.2rem) !important; line-height: .9 !important; }
+    .auth-story__lead { max-width: 44ch; margin-top: 22px !important; font-size: 1.02rem; }
+
+    .auth-story__points {
+        display: grid !important; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 14px;
+        max-width: 860px; margin-top: 40px !important; padding: 0; counter-reset: pt;
+    }
+    .auth-story__points li {
+        position: relative; display: block !important; counter-increment: pt;
+        padding: 46px 18px 18px !important; border-radius: 14px;
+        background: var(--auth-glass); border: 1px solid var(--auth-line);
+        -webkit-backdrop-filter: blur(12px); backdrop-filter: blur(12px);
+        font-size: .86rem !important; line-height: 1.45; color: var(--auth-ink);
+        transition: transform .3s ease, border-color .3s ease;
+    }
+    .auth-story__points li:hover { transform: translateY(-4px); border-color: rgba(255, 45, 85, .45); }
+    .auth-story__points li::before {
+        content: counter(pt, decimal-leading-zero);
+        position: absolute; top: 16px; left: 18px;
+        font: 700 .78rem/1 'Chakra Petch', monospace; letter-spacing: .14em; color: var(--pf-red);
+    }
+    .auth-story__points li::after {
+        content: ''; position: absolute; top: 22px; left: 50px; right: 18px; height: 1px;
+        background: linear-gradient(90deg, var(--pf-red), transparent);
+        opacity: .5;
+    }
+    .auth-story__points svg { display: none !important; }
+
+    .auth-story__foot { position: absolute; left: clamp(48px, 6vw, 96px); bottom: 32px; }
+}
+
+/* ==========================================================================
+   Loaders — HUD "boot" style (entry preloader + sign-in progress overlay)
+   ========================================================================== */
+#auth-preloader { gap: 26px !important; }
+#auth-preloader::before {
+    /* faint grid behind the loader */
+    content: ''; position: absolute; inset: 0; pointer-events: none;
+    background:
+        radial-gradient(40% 40% at 50% 50%, rgba(255, 45, 85, .12), transparent 70%),
+        repeating-linear-gradient(90deg, rgba(255, 255, 255, .03) 0 1px, transparent 1px 28px),
+        repeating-linear-gradient(0deg, rgba(255, 255, 255, .03) 0 1px, transparent 1px 28px);
+    mask-image: radial-gradient(circle at 50% 50%, #000 0 30%, transparent 70%);
+}
+[data-bs-theme="light"] #auth-preloader::before {
+    background:
+        radial-gradient(40% 40% at 50% 50%, rgba(225, 29, 72, .1), transparent 70%),
+        repeating-linear-gradient(90deg, rgba(15, 23, 42, .05) 0 1px, transparent 1px 28px),
+        repeating-linear-gradient(0deg, rgba(15, 23, 42, .05) 0 1px, transparent 1px 28px);
+}
+
+.auth-preloader__mark { width: 124px !important; height: 124px !important; }
+/* HUD corner brackets */
+.auth-preloader__mark::before, .auth-preloader__mark::after {
+    content: ''; position: absolute; width: 22px; height: 22px; pointer-events: none;
+    animation: pf-bracket 1.6s ease-in-out infinite;
+}
+.auth-preloader__mark::before { top: -6px; left: -6px; border-top: 2px solid var(--pf-red); border-left: 2px solid var(--pf-red); border-top-left-radius: 6px; }
+.auth-preloader__mark::after { bottom: -6px; right: -6px; border-bottom: 2px solid var(--pf-blue); border-right: 2px solid var(--pf-blue); border-bottom-right-radius: 6px; animation-delay: .8s; }
+@keyframes pf-bracket { 50% { transform: scale(1.18); opacity: .55; } }
+
+/* Ring 1 → rotating gradient rounded-square; ring 2 → slow dashed orbit */
+.auth-preloader__ring {
+    inset: 10px !important; border: 0 !important; border-radius: 30px !important;
+    background: conic-gradient(from 0deg, var(--pf-red), var(--pf-violet), var(--pf-blue), transparent 70%, var(--pf-red)) !important;
+    -webkit-mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0); -webkit-mask-composite: xor;
+    mask: linear-gradient(#000 0 0) content-box exclude, linear-gradient(#000 0 0);
+    padding: 2px;
+    animation: auth-spin 2.2s linear infinite !important;
+}
+.auth-preloader__ring--alt {
+    inset: -2px !important; border-radius: 50% !important; padding: 0;
+    background: none !important; -webkit-mask: none; mask: none;
+    border: 1px dashed rgba(255, 255, 255, .22) !important;
+    animation: auth-spin 9s linear infinite reverse !important;
+}
+[data-bs-theme="light"] .auth-preloader__ring--alt { border-color: rgba(15, 23, 42, .2) !important; }
+
+.auth-preloader__mark img { position: relative; z-index: 1; width: 64px !important; height: 64px !important; border-radius: 18px !important; overflow: hidden; animation: none !important; }
+/* scan line sweeping over the logo */
+.auth-preloader__mark { overflow: visible; }
+.auth-preloader__mark img + * { display: none; }
+.auth-preloader__label { position: relative; font: 600 1.15rem/1 'Playfair Display', Georgia, serif !important; letter-spacing: .06em !important; text-transform: none !important; color: var(--auth-ink) !important; }
+
+/* Segmented progress bar */
+.auth-preloader__bar {
+    width: min(260px, 64vw) !important; height: 6px !important; border-radius: 0 !important;
+    background: var(--auth-line) !important;
+    -webkit-mask: repeating-linear-gradient(90deg, #000 0 16px, transparent 16px 21px);
+    mask: repeating-linear-gradient(90deg, #000 0 16px, transparent 16px 21px);
+}
+.auth-preloader__bar span { border-radius: 0 !important; background: var(--pf-grad) !important; }
+
+.auth-preloader__text { margin-top: -8px !important; }
+.auth-preloader__text::after { content: '_'; margin-left: 3px; color: var(--pf-red); animation: pf-blink .9s steps(1) infinite; }
+@keyframes pf-blink { 50% { opacity: 0; } }
+
+/* Sign-in progress overlay */
+#auth-progress { gap: 22px !important; }
+.auth-progress__ring {
+    position: relative; width: 72px !important; height: 72px !important; border: 0 !important; border-radius: 22px !important;
+    background: conic-gradient(from 0deg, var(--pf-red), var(--pf-violet), var(--pf-blue), transparent 72%, var(--pf-red)) !important;
+    padding: 3px;
+    -webkit-mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0); -webkit-mask-composite: xor;
+    mask: linear-gradient(#000 0 0) content-box exclude, linear-gradient(#000 0 0);
+    animation: auth-spin 1.4s linear infinite !important;
+}
+#auth-progress::before {
+    /* pulsing core, centred on the ring */
+    content: ''; position: absolute; left: 50%; top: calc(50% - 44px); width: 14px; height: 14px; margin-left: -7px;
+    border-radius: 4px; background: var(--pf-grad); box-shadow: 0 0 24px rgba(255, 45, 85, .7);
+    animation: pf-core 1.1s ease-in-out infinite;
+}
+@keyframes pf-core { 50% { transform: scale(.55) rotate(45deg); opacity: .6; } }
+.auth-progress__step { font: 600 .8rem/1.4 'Chakra Petch', monospace !important; letter-spacing: .16em; text-transform: uppercase; }
+.auth-progress__dots { gap: 6px !important; }
+.auth-progress__dots i { width: 34px !important; height: 4px !important; border-radius: 1px !important; background: var(--auth-line) !important; }
+.auth-progress__dots i.is-active { background: var(--pf-grad) !important; box-shadow: 0 0 10px rgba(255, 45, 85, .5); }
