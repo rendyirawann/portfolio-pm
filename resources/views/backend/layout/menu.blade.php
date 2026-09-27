@@ -16,7 +16,7 @@
 
     @can('manage_portfolio')
         <div data-kt-menu-trigger="{default: 'click', lg: 'hover'}" data-kt-menu-placement="bottom-start"
-            class="menu-item menu-lg-down-accordion me-lg-2 {{ request()->is('admin/portfolio*') ? 'here show menu-here-bg' : '' }}">
+            class="menu-item menu-lg-down-accordion me-lg-2 {{ request()->is('admin/portfolio*') && ! request()->is('admin/portfolio/export*') ? 'here show menu-here-bg' : '' }}">
             <span class="menu-link py-3">
                 <span class="menu-icon"><i class="ki-outline ki-abstract-41 fs-3"></i></span>
                 <span class="menu-title">Portfolio</span>
@@ -25,6 +25,19 @@
             <div class="menu-sub menu-sub-lg-down-accordion menu-sub-lg-dropdown py-4 w-250px">
                 @include('backend.layout._portfolio_links')
             </div>
+        </div>
+    @endcan
+
+    @can('manage_portfolio')
+        <div class="menu-item me-lg-2 {{ request()->is('admin/portfolio/export*') ? 'here show menu-here-bg' : '' }}">
+            <a class="menu-link py-3" href="{{ route('pf.export') }}">
+                <span class="menu-icon">
+                    <i class="ki-duotone ki-file-down fs-3">
+                        <span class="path1"></span><span class="path2"></span>
+                    </i>
+                </span>
+                <span class="menu-title">Export PDF</span>
+            </a>
         </div>
     @endcan
 

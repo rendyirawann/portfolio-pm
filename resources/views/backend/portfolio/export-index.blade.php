@@ -33,10 +33,15 @@
                                     <h3 class="fs-4 fw-bold mb-1">{{ $v['label'] }}</h3>
                                     <span class="badge badge-light-danger">{{ $v['tagline'] }}</span>
                                 </div>
-                                <a class="btn btn-sm btn-light-primary flex-shrink-0"
-                                   href="{{ route('pf.export.sheet', $key) }}" target="_blank" rel="noopener">
-                                    <i class="ki-outline ki-exit-right-corner fs-5"></i> Buka &amp; Cetak
-                                </a>
+                                <div class="d-flex gap-2 flex-shrink-0">
+                                    <button type="button" class="btn btn-sm btn-light-danger" data-pfx-preview>
+                                        <i class="ki-outline ki-eye fs-5"></i> Pratinjau
+                                    </button>
+                                    <a class="btn btn-sm btn-light-primary"
+                                       href="{{ route('pf.export.sheet', $key) }}" target="_blank" rel="noopener">
+                                        <i class="ki-outline ki-exit-right-corner fs-5"></i> Buka &amp; Cetak
+                                    </a>
+                                </div>
                             </div>
                             <p class="text-muted mt-4 mb-0 fs-7">{{ $v['desc'] }}</p>
                         </div>
@@ -65,7 +70,7 @@
                         </a>
                     </div>
                 </div>
-                <div class="pf-preview__stage pfx-stage">
+                <div class="pfx-stage" data-pfx-stage>
                     <iframe data-pfx-frame src="{{ route('pf.export.sheet', $active) }}"
                             title="Pratinjau dokumen export" loading="lazy"></iframe>
                 </div>
@@ -76,13 +81,20 @@
         </div>
     </div>
 
-    @push('styles')
+    @push('stylesheets')
         <style>
-            .pfx-card { cursor: pointer; transition: border-color .15s, transform .15s; border: 1px solid var(--bs-border-color); }
-            .pfx-card:hover { transform: translateY(-2px); }
+            /* Kartu versi: seluruh kartu bisa diklik. */
+            .pfx-card { cursor: pointer; transition: border-color .15s, transform .15s, box-shadow .15s; border: 1px solid var(--bs-border-color); }
+            .pfx-card:hover { transform: translateY(-2px); border-color: var(--bs-danger); }
             .pfx-card--on { border-color: var(--bs-danger); box-shadow: 0 0 0 3px rgb(var(--bs-danger-rgb) / .12) !important; }
-            .pfx-stage { height: min(78vh, 900px); }
-            .pfx-stage iframe { width: 100%; height: 100%; border: 0; background: #e5e7eb; }
+            .pfx-card h3, .pfx-card .badge, .pfx-card p { cursor: pointer; }
+
+            /* Panggung pratinjau. Lembar export lebarnya A4 (~794px), jadi
+               iframe dirender pada lebar tetap lalu DISKALAKAN agar pas di
+               panel — kalau tidak, yang muncul cuma pojok kiri-atas + scrollbar. */
+            .pfx-stage { position: relative; height: min(76vh, 880px); overflow: hidden; background: #e5e7eb; }
+            .pfx-stage iframe { position: absolute; top: 0; left: 0; width: 860px; border: 0;
+                                transform-origin: top left; background: #e5e7eb; }
         </style>
     @endpush
 
@@ -97,7 +109,8 @@
 
                 document.querySelectorAll('[data-pfx-card]').forEach(function (card) {
                     card.addEventListener('click', function (e) {
-                        // Biarkan tombol "Buka & Cetak" bekerja seperti biasa.
+                        // Biarkan tautan "Buka & Cetak" bekerja seperti biasa;
+                        // tombol "Pratinjau" justru memicu pemilihan kartu ini.
                         if (e.target.closest('a')) { return; }
                         document.querySelectorAll('[data-pfx-card]').forEach(function (c) { c.classList.remove('pfx-card--on'); });
                         card.classList.add('pfx-card--on');
@@ -111,6 +124,17 @@
                 if (reload) {
                     reload.addEventListener('click', function () { frame.src = frame.src; });
                 }
+
+                // Skalakan lembar A4 agar seluruh lebarnya terlihat.
+                var stage = document.querySelector('[data-pfx-stage]');
+                function fit() {
+                    if (!stage) { return; }
+                    var k = stage.clientWidth / 860;
+                    frame.style.transform = 'scale(' + k + ')';
+                    frame.style.height = (stage.clientHeight / k) + 'px';
+                }
+                fit();
+                window.addEventListener('resize', fit);
             })();
         </script>
     @endpush

@@ -79,6 +79,12 @@
                 </div>
                 @include('backend.layout._portfolio_links')
                 <div class="menu-item">
+                    <a class="menu-link {{ request()->is('admin/portfolio/export*') ? 'active' : '' }}" href="{{ route('pf.export') }}">
+                        <span class="menu-icon"><i class="ki-outline ki-file-down fs-4"></i></span>
+                        <span class="menu-title">Export PDF</span>
+                    </a>
+                </div>
+                <div class="menu-item">
                     <a class="menu-link" href="{{ route('home') }}" target="_blank" rel="noopener">
                         <span class="menu-icon"><i class="ki-outline ki-exit-right-corner fs-4"></i></span>
                         <span class="menu-title">Lihat Website</span>
