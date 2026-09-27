@@ -136,97 +136,6 @@ body.auth-body { background: #06060c; font-family: 'Inter', system-ui, sans-seri
 [data-bs-theme="light"] .auth-theme-toggle [data-when="dark"] { display: none; }
 
 /* ==========================================================================
-   "Command deck" layout (≥ 992px): the form docks as a full-height panel on
-   the left, the showcase (headline + numbered point cards) fills the right.
-   ========================================================================== */
-@media (min-width: 992px) {
-    .auth-shell { grid-template-columns: minmax(420px, 500px) minmax(0, 1fr); }
-
-    .auth-panel {
-        order: -1;
-        position: relative;
-        padding: 48px clamp(36px, 4vw, 56px);
-        background: var(--auth-glass) !important;
-        -webkit-backdrop-filter: blur(26px) saturate(140%) !important;
-        backdrop-filter: blur(26px) saturate(140%) !important;
-        border-right: 1px solid var(--auth-line);
-    }
-    .auth-panel::after {
-        content: ''; position: absolute; top: 0; right: -1px; bottom: 0; width: 2px;
-        background: linear-gradient(180deg, transparent, var(--pf-red) 25%, var(--pf-violet) 55%, var(--pf-blue) 80%, transparent);
-        opacity: .8;
-    }
-
-    /* The card melts into the panel. */
-    .auth-card {
-        max-width: 380px !important;
-        padding: 0 !important;
-        background: transparent !important;
-        border: 0 !important;
-        box-shadow: none !important;
-        -webkit-backdrop-filter: none !important;
-        backdrop-filter: none !important;
-    }
-    .auth-card::before, .auth-card::after { display: none; }
-
-    /* Brand moves into the panel, above the form. */
-    .auth-card__brand {
-        display: flex !important; flex-direction: row; align-items: center; text-align: left;
-        gap: 14px; margin-bottom: 44px;
-    }
-    .auth-card__brand img { width: 48px; height: 48px; border-radius: 14px; box-shadow: 0 10px 30px -10px rgba(255, 45, 85, .55); }
-    .auth-card__brand .auth-card__title { font: 600 1.15rem/1.15 'Playfair Display', Georgia, serif !important; text-transform: none; letter-spacing: .02em; }
-    .auth-card__brand .auth-card__subtitle { font: 600 .66rem/1.3 'Chakra Petch', monospace; letter-spacing: .2em; text-transform: uppercase; color: var(--auth-faint); }
-    .auth-story__brand { display: none !important; }
-
-    /* Showcase */
-    .auth-story {
-        position: relative;
-        justify-content: center !important;
-        padding: clamp(48px, 6vw, 96px) !important;
-        overflow: hidden;
-    }
-    .auth-story::before {
-        /* Giant monogram watermark */
-        content: '0'; position: absolute; right: -2vw; bottom: -14vw; z-index: -1;
-        font: 700 42vw/1 'Playfair Display', Georgia, serif; font-variant-numeric: lining-nums;
-        color: transparent; -webkit-text-stroke: 1px rgba(255, 255, 255, .06);
-        pointer-events: none;
-    }
-    [data-bs-theme="light"] .auth-story::before { -webkit-text-stroke-color: rgba(15, 23, 42, .06); }
-
-    .auth-story__headline { font-size: clamp(4rem, 7.5vw, 8.2rem) !important; line-height: .9 !important; }
-    .auth-story__lead { max-width: 44ch; margin-top: 22px !important; font-size: 1.02rem; }
-
-    .auth-story__points {
-        display: grid !important; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 14px;
-        max-width: 860px; margin-top: 40px !important; padding: 0; counter-reset: pt;
-    }
-    .auth-story__points li {
-        position: relative; display: block !important; counter-increment: pt;
-        padding: 46px 18px 18px !important; border-radius: 14px;
-        background: var(--auth-glass); border: 1px solid var(--auth-line);
-        -webkit-backdrop-filter: blur(12px); backdrop-filter: blur(12px);
-        font-size: .86rem !important; line-height: 1.45; color: var(--auth-ink);
-        transition: transform .3s ease, border-color .3s ease;
-    }
-    .auth-story__points li:hover { transform: translateY(-4px); border-color: rgba(255, 45, 85, .45); }
-    .auth-story__points li::before {
-        content: counter(pt, decimal-leading-zero);
-        position: absolute; top: 16px; left: 18px;
-        font: 700 .78rem/1 'Chakra Petch', monospace; letter-spacing: .14em; color: var(--pf-red);
-    }
-    .auth-story__points li::after {
-        content: ''; position: absolute; top: 22px; left: 50px; right: 18px; height: 1px;
-        background: linear-gradient(90deg, var(--pf-red), transparent);
-        opacity: .5;
-    }
-    .auth-story__points svg { display: none !important; }
-
-    .auth-story__foot { position: absolute; left: clamp(48px, 6vw, 96px); bottom: 32px; }
-}
-
-/* ==========================================================================
    Loaders — HUD "boot" style (entry preloader + sign-in progress overlay)
    ========================================================================== */
 #auth-preloader { gap: 26px !important; }
@@ -313,3 +222,79 @@ body.auth-body { background: #06060c; font-family: 'Inter', system-ui, sans-seri
 .auth-progress__dots { gap: 6px !important; }
 .auth-progress__dots i { width: 34px !important; height: 4px !important; border-radius: 1px !important; background: var(--auth-line) !important; }
 .auth-progress__dots i.is-active { background: var(--pf-grad) !important; box-shadow: 0 0 10px rgba(255, 45, 85, .5); }
+
+/* ==========================================================================
+   Login v3 — story left, floating HUD card right (animated gradient border)
+   ========================================================================== */
+@property --pf-angle { syntax: '<angle>'; initial-value: 0deg; inherits: false; }
+
+.auth-card { overflow: visible; }
+.auth-card__glow {
+    position: absolute; inset: -1px; border-radius: inherit; padding: 1.5px; pointer-events: none; z-index: 0;
+    background: conic-gradient(from var(--pf-angle), transparent 0 30%, var(--pf-red) 45%, var(--pf-violet) 55%, var(--pf-blue) 65%, transparent 80% 100%);
+    -webkit-mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0); -webkit-mask-composite: xor;
+    mask: linear-gradient(#000 0 0) content-box exclude, linear-gradient(#000 0 0);
+    animation: pf-orbit 6s linear infinite;
+}
+@keyframes pf-orbit { to { --pf-angle: 360deg; } }
+.auth-card > *:not(.auth-card__glow) { position: relative; z-index: 1; }
+
+/* HUD status strip at the top of the card */
+.auth-hud {
+    display: flex; align-items: center; gap: 10px; margin: -6px 0 26px;
+    font: 600 .64rem/1 'Chakra Petch', monospace; letter-spacing: .2em; text-transform: uppercase; color: var(--auth-faint);
+}
+.auth-hud__dot { width: 7px; height: 7px; border-radius: 50%; background: #22e58b; box-shadow: 0 0 0 0 rgba(34, 229, 139, .6); animation: pf-live 2s infinite; }
+@keyframes pf-live { 70% { box-shadow: 0 0 0 7px rgba(34, 229, 139, 0); } 100% { box-shadow: 0 0 0 0 rgba(34, 229, 139, 0); } }
+.auth-hud__line { flex: 1; height: 1px; background: linear-gradient(90deg, var(--auth-line), transparent); }
+.auth-hud__tag { padding: 4px 7px; border-radius: 4px; background: rgba(255, 45, 85, .14); color: var(--pf-red); letter-spacing: .14em; }
+
+/* Card title with a gradient underline */
+.auth-card__title:not(.mb-0)::after {
+    content: ''; display: block; width: 46px; height: 3px; margin-top: 10px; border-radius: 3px; background: var(--pf-grad);
+}
+
+@media (min-width: 992px) {
+    .auth-card { max-width: 440px !important; padding: 38px 38px 32px !important; transform: perspective(1400px) rotateY(-4deg); transition: transform .5s ease; }
+    .auth-card:hover, .auth-card:focus-within { transform: none; }
+
+    /* Showcase side */
+    .auth-story { position: relative; overflow: hidden; }
+    .auth-story::before {
+        content: '0'; position: absolute; right: -4vw; bottom: -16vw; z-index: -1; pointer-events: none;
+        font: 700 40vw/1 'Playfair Display', Georgia, serif; font-variant-numeric: lining-nums;
+        color: transparent; -webkit-text-stroke: 1px rgba(255, 255, 255, .06);
+    }
+    [data-bs-theme="light"] .auth-story::before { -webkit-text-stroke-color: rgba(15, 23, 42, .07); }
+    .auth-story__headline { font-size: clamp(3.6rem, 6.4vw, 6.8rem) !important; line-height: .9 !important; }
+    .auth-story__lead { max-width: 46ch; margin-top: 20px !important; }
+
+    .auth-story__points {
+        display: grid !important; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 12px;
+        max-width: 720px; margin-top: 34px !important; padding: 0; counter-reset: pt;
+    }
+    .auth-story__points li {
+        position: relative; display: block !important; counter-increment: pt;
+        padding: 42px 16px 16px !important; border-radius: 14px;
+        background: var(--auth-glass); border: 1px solid var(--auth-line);
+        -webkit-backdrop-filter: blur(12px); backdrop-filter: blur(12px);
+        font-size: .82rem !important; line-height: 1.45;
+        transition: transform .3s ease, border-color .3s ease;
+    }
+    .auth-story__points li:hover { transform: translateY(-4px); border-color: rgba(255, 45, 85, .45); }
+    .auth-story__points li::before {
+        content: counter(pt, decimal-leading-zero); position: absolute; top: 15px; left: 16px;
+        font: 700 .76rem/1 'Chakra Petch', monospace; letter-spacing: .14em; color: var(--pf-red);
+    }
+    .auth-story__points li::after { content: ''; position: absolute; top: 21px; left: 46px; right: 16px; height: 1px; background: linear-gradient(90deg, var(--pf-red), transparent); opacity: .5; }
+    .auth-story__points svg { display: none !important; }
+}
+
+/* Status chips under the points */
+.auth-story__chips { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 18px; }
+.auth-story__chips span {
+    display: inline-flex; align-items: center; gap: 8px; padding: 7px 12px; border-radius: 999px;
+    border: 1px solid var(--auth-line); background: var(--auth-glass);
+    font: 600 .64rem/1 'Chakra Petch', monospace; letter-spacing: .16em; text-transform: uppercase; color: var(--auth-muted);
+}
+.auth-story__live { width: 6px; height: 6px; border-radius: 50%; background: #22e58b; animation: pf-live 2s infinite; }

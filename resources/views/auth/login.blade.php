@@ -37,6 +37,16 @@
     @endphp
 
     <div class="auth-card">
+        <span class="auth-card__glow" aria-hidden="true"></span>
+
+        {{-- HUD status strip --}}
+        <div class="auth-hud" aria-hidden="true">
+            <span class="auth-hud__dot"></span>
+            <span>Secure access</span>
+            <span class="auth-hud__line"></span>
+            <time data-auth-clock>--:--</time>
+            <span class="auth-hud__tag">TLS</span>
+        </div>
 
         {{-- Brand block — only shown when the story panel is hidden (mobile). --}}
         <div class="auth-card__brand">

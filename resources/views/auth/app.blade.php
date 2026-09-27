@@ -106,6 +106,12 @@
                         </li>
                     @endforeach
                 </ul>
+
+                <div class="auth-story__chips" aria-hidden="true">
+                    <span><i class="auth-story__live"></i>System online</span>
+                    <span>Encrypted session</span>
+                    <span>Rate-limited login</span>
+                </div>
             </div>
 
             <p class="auth-story__foot mb-0">
@@ -135,6 +141,12 @@
     <script src="{{ asset('assets/js/scripts.bundle.js') }}"></script>
     <script src="{{ asset('assets/js/app-auth.js') }}"></script>
     <script>
+        (function () {
+            var el = document.querySelector('[data-auth-clock]');
+            if (!el) return;
+            var tick = function () { el.textContent = new Date().toLocaleTimeString('id-ID', { hour: '2-digit', minute: '2-digit' }); };
+            tick(); setInterval(tick, 20000);
+        })();
         document.getElementById('auth-theme-toggle').addEventListener('click', function () {
             var html = document.documentElement;
             var next = html.getAttribute('data-bs-theme') === 'light' ? 'dark' : 'light';
