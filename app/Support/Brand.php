@@ -32,7 +32,7 @@ class Brand
     public static function compute(): array
     {
         $settings = self::settings();
-        $name = self::clean($settings['site_name'] ?? null) ?: config('app.name', 'Rendy Irawan');
+        $name = self::clean($settings['site_name'] ?? null) ?: config('app.name', 'Dormansyah Pasaribu');
 
         return [
             'name' => $name,
@@ -41,7 +41,7 @@ class Brand
             'description' => self::clean($settings['site_description'] ?? null)
                 ?: $name . ' — panel administrasi modern untuk mengelola pengguna, hak akses, dan operasional aplikasi.',
             'keywords' => self::clean($settings['site_keywords'] ?? null) ?: Str::lower($name) . ', admin panel, dashboard',
-            'author' => self::clean($settings['site_author'] ?? null) ?: 'Rendy Irawan',
+            'author' => self::clean($settings['site_author'] ?? null) ?: 'Dormansyah Pasaribu',
             'robots' => self::clean($settings['seo_robots'] ?? null) ?: 'noindex, nofollow',
             'twitter' => self::clean($settings['seo_twitter_handle'] ?? null),
             'google_verification' => self::clean($settings['seo_google_verification'] ?? null),
@@ -55,7 +55,7 @@ class Brand
             'manifest_url' => self::publicUrl('assets/media/branding/site.webmanifest'),
             'og_image_url' => self::assetUrl($settings['site_og_image'] ?? null, 'assets/media/branding/og-image.png'),
 
-            'owner' => self::clean($settings['footer_owner'] ?? null) ?: 'Rendy Irawan',
+            'owner' => self::clean($settings['footer_owner'] ?? null) ?: 'Dormansyah Pasaribu',
             'github' => self::url($settings['footer_github'] ?? null) ?: 'https://github.com/rendyirawann',
             'linkedin' => self::url($settings['footer_linkedin'] ?? null) ?: 'https://linkedin.com/in/rendyirawann',
             'font' => self::clean($settings['site_font'] ?? null) ?: 'Plus Jakarta Sans',

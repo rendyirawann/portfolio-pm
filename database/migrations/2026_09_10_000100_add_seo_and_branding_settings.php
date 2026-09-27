@@ -11,14 +11,14 @@ return new class extends Migration
      */
     private function defaults(): array
     {
-        $appName = config('app.name', 'Rendy Irawan');
+        $appName = config('app.name', 'Dormansyah Pasaribu');
 
         return [
             'site_short_name' => \Illuminate\Support\Str::limit($appName, 12, ''),
             'site_tagline' => 'Portfolio Control Center',
             'site_description' => $appName . ' — panel administrasi modern untuk mengelola pengguna, hak akses, dan operasional aplikasi Anda.',
             'site_keywords' => strtolower($appName) . ', admin panel, dashboard, manajemen pengguna, laravel',
-            'site_author' => 'Rendy Irawan',
+            'site_author' => 'Dormansyah Pasaribu',
             'site_favicon' => 'assets/media/branding/favicon.ico',
             'site_og_image' => 'assets/media/branding/og-image.png',
             'site_theme_color' => '#4f46e5',
@@ -27,7 +27,7 @@ return new class extends Migration
             'seo_google_verification' => '',
             // Self-service registration is off by default on an admin panel.
             'allow_registration' => '0',
-            'footer_owner' => 'Rendy Irawan',
+            'footer_owner' => 'Dormansyah Pasaribu',
             'footer_github' => 'https://github.com/rendyirawann',
             'footer_linkedin' => 'https://linkedin.com/in/rendyirawann',
         ];

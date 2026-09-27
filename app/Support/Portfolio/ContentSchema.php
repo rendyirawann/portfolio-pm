@@ -130,9 +130,9 @@ class ContentSchema
                 'label' => 'SEO',
                 'icon' => 'ki-search-list',
                 'fields' => [
-                    'seo_title' => ['Meta title', 'text', 'Rendy Irawan — Full-Stack Developer & AI Engineer Portfolio'],
-                    'seo_description' => ['Meta description (maks 160 karakter)', 'textarea', 'Portfolio Rendy Irawan: full-stack developer & AI engineer. Lihat project, produk, dan layanan pembuatan website serta aplikasi yang cepat dan aman.'],
-                    'seo_keywords' => ['Keywords', 'text', 'portfolio, full-stack developer, web developer, laravel, AI engineer, jasa pembuatan website'],
+                    'seo_title' => ['Meta title', 'text', 'Dormansyah Pasaribu — Portfolio'],
+                    'seo_description' => ['Meta description (maks 160 karakter)', 'textarea', 'Portfolio Dormansyah Pasaribu: lihat project, produk, pengalaman, dan layanan yang pernah dikerjakan.'],
+                    'seo_keywords' => ['Keywords', 'text', 'dormansyah pasaribu, portfolio, project manager, project, produk'],
                     'seo_og_image' => ['Gambar share (1200×630)', 'image', null],
                     'seo_robots' => ['Robots', 'select', 'index, follow', ['index, follow', 'noindex, nofollow', 'index, nofollow', 'noindex, follow']],
                     'seo_theme_color' => ['Warna tema browser', 'color', '#07070d'],

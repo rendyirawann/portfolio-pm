@@ -6,7 +6,7 @@
 @php
     use App\Support\Portfolio\Media;
     $pageTitle = trim($__env->yieldContent('title'));
-    $title = $pageTitle !== '' ? $pageTitle . ' | ' . ($content['about_name'] ?: $content['brand_name']) : $content['seo_title'];
+    $title = $pageTitle !== '' ? $pageTitle . ' | ' . $brand['name'] : $content['seo_title'];
     $description = \Illuminate\Support\Str::limit(trim($__env->yieldContent('meta_description')) ?: (string) $content['seo_description'], 160, '…');
     $ogImage = trim($__env->yieldContent('og_image'))
         ?: Media::url($content['seo_og_image'] ?: ($content['hero_image'] ?: null), 'assets/media/branding/og-image.png');
@@ -19,7 +19,7 @@
 <title>{{ $title }}</title>
 <meta name="description" content="{{ $description }}">
 <meta name="keywords" content="{{ $content['seo_keywords'] }}">
-<meta name="author" content="{{ $content['about_name'] }}">
+<meta name="author" content="{{ $brand['author'] }}">
 <meta name="robots" content="{{ $content['seo_robots'] ?: 'index, follow' }}, max-image-preview:large">
 <meta name="theme-color" content="{{ $content['seo_theme_color'] ?: '#07070d' }}">
 <meta name="color-scheme" content="dark">
@@ -31,7 +31,7 @@
 
 <meta property="og:type" content="{{ trim($__env->yieldContent('og_type')) ?: 'website' }}">
 <meta property="og:locale" content="id_ID">
-<meta property="og:site_name" content="{{ $content['brand_name'] }}">
+<meta property="og:site_name" content="{{ $brand['name'] }}">
 <meta property="og:title" content="{{ $title }}">
 <meta property="og:description" content="{{ $description }}">
 <meta property="og:url" content="{{ $canonical }}">
@@ -55,14 +55,14 @@
             '@type' => 'WebSite',
             '@id' => url('/') . '#website',
             'url' => url('/'),
-            'name' => $content['brand_name'],
+            'name' => $brand['name'],
             'description' => $content['seo_description'],
             'inLanguage' => 'id-ID',
         ],
         array_filter([
             '@type' => 'Person',
             '@id' => url('/') . '#person',
-            'name' => $content['about_name'],
+            'name' => $brand['author'],
             'jobTitle' => $content['about_role'],
             'description' => $content['about_bio'],
             'url' => url('/'),
