@@ -200,12 +200,43 @@
                 <ol class="timeline">
                     @foreach ($experiences as $exp)
                         <li class="timeline__item" data-reveal>
+                            {{-- Penanda timeline. Tanpa foto = belah ketupat merah seperti semula;
+                                 dengan foto = foto yang dibingkai belah ketupat merah yang sama.
+                                 Dua-duanya bisa diklik untuk membuka modal detail. --}}
+                            <button type="button"
+                                    class="timeline__marker{{ $exp->image ? ' timeline__marker--photo' : '' }}"
+                                    aria-haspopup="dialog"
+                                    data-exp-open="exp-dialog-{{ $exp->id }}"
+                                    aria-label="Lihat detail pengalaman: {{ $exp->role }} di {{ $exp->company }}">
+                                @if ($exp->image)
+                                    <span class="timeline__frame">
+                                        <img src="{{ Media::url($exp->image) }}" alt="" loading="lazy" decoding="async">
+                                    </span>
+                                @endif
+                            </button>
+
                             <span class="timeline__period" data-pf="experiences.{{ $exp->id }}.period">{{ $exp->period }}</span>
                             <div class="timeline__body">
                                 <h3 data-pf="experiences.{{ $exp->id }}.role">{{ $exp->role }}</h3>
                                 <p class="timeline__company" data-pf="experiences.{{ $exp->id }}.company">{{ $exp->company }}</p>
                                 <p data-pf="experiences.{{ $exp->id }}.description">{{ $exp->description }}</p>
                             </div>
+
+                            <dialog class="expdlg" id="exp-dialog-{{ $exp->id }}" aria-labelledby="exp-dialog-{{ $exp->id }}-title">
+                                <button type="button" class="expdlg__close" data-exp-close aria-label="Tutup">&times;</button>
+                                @if ($exp->image)
+                                    <img class="expdlg__img" src="{{ Media::url($exp->image) }}"
+                                         alt="Foto {{ $exp->company }}" loading="lazy" decoding="async">
+                                @endif
+                                <div class="expdlg__body">
+                                    <span class="expdlg__period">{{ $exp->period }}</span>
+                                    <h3 id="exp-dialog-{{ $exp->id }}-title">{{ $exp->role }}</h3>
+                                    <p class="expdlg__company">{{ $exp->company }}</p>
+                                    @if ($exp->description)
+                                        <p class="expdlg__desc">{{ $exp->description }}</p>
+                                    @endif
+                                </div>
+                            </dialog>
                         </li>
                     @endforeach
                 </ol>

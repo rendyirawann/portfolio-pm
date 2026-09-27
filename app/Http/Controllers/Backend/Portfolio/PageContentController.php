@@ -29,23 +29,70 @@ class PageContentController extends Controller
      * Print-ready A4 portfolio built from the live website content:
      * profile, skills, experience and the top three projects.
      */
+    /**
+     * Keempat versi export. Perbedaannya bukan sekadar gaya:
+     *
+     *  portfolio       etalase karya — satu lembar per project lengkap dengan galeri.
+     *  portfolio-lite  isi yang sama tapi TANPA gambar; daftar + detail teks saja.
+     *  cv              riwayat lengkap & kronologis, tidak dipangkas.
+     *  resume          intisari satu halaman untuk melamar.
+     */
+    public const EXPORT_VARIANTS = [
+        'portfolio' => [
+            'label' => 'Portfolio',
+            'tagline' => 'Etalase karya, bergambar',
+            'desc' => 'Satu lembar profil, lalu satu lembar penuh untuk setiap project/produk lengkap dengan gambar sampul dan galerinya. Versi paling tebal — untuk dipresentasikan ke klien.',
+        ],
+        'portfolio-lite' => [
+            'label' => 'Portfolio Ringkas',
+            'tagline' => 'Daftar & detail, tanpa gambar',
+            'desc' => 'Isi yang sama dengan Portfolio, tetapi project disajikan sebagai daftar bernomor berisi ringkasan, detail, teknologi, dan tautan — tanpa gambar sama sekali. Berkasnya jauh lebih kecil, enak dikirim lewat email.',
+        ],
+        'cv' => [
+            'label' => 'CV',
+            'tagline' => 'Riwayat lengkap & kronologis',
+            'desc' => 'Curriculum Vitae: seluruh pengalaman dengan deskripsi utuh, semua keahlian beserta levelnya, bidang layanan, tabel seluruh karya, dan referensi. Tidak ada yang dipangkas.',
+        ],
+        'resume' => [
+            'label' => 'Resume',
+            'tagline' => 'Intisari satu halaman',
+            'desc' => 'Ringkas dan selektif: profil singkat, keahlian teratas, tiga pengalaman terbaru, dan karya unggulan — dirancang muat satu halaman untuk dilampirkan saat melamar.',
+        ],
+    ];
+
+    /** Menu export: memilih versi sekaligus melihat pratinjaunya. */
     public function export(): View
     {
+        return view('backend.portfolio.export-index', [
+            'variants' => self::EXPORT_VARIANTS,
+            'active' => 'portfolio',
+        ]);
+    }
+
+    /** Lembar cetak untuk satu versi. */
+    public function exportSheet(string $variant = 'portfolio'): View
+    {
+        abort_unless(isset(self::EXPORT_VARIANTS[$variant]), 404);
+
         $layout = PortfolioData::layout();
         $home = PortfolioData::home();
 
+        // TANPA limit: dulu di sini ada ->limit(3) sehingga hanya 3 project yang
+        // ikut tercetak, dan galerinya dipotong 3 gambar.
         $projects = Project::visible()
-            ->with(['category:id,name', 'images' => fn ($q) => $q->limit(3), 'links'])
-            ->limit(3)
+            ->with(['category:id,name', 'images', 'links'])
             ->get();
 
         return view('backend.portfolio.export', [
+            'variant' => $variant,
+            'variantLabel' => self::EXPORT_VARIANTS[$variant]['label'],
             'c' => $layout['content'],
             'socials' => $layout['socials'],
             'stats' => $home['stats'],
             'skills' => $home['skills'],
             'services' => $home['services'],
             'experiences' => $home['experiences'],
+            'testimonials' => $home['testimonials'],
             'projects' => $projects,
         ]);
     }

@@ -38,7 +38,7 @@
 
         <div class="d-flex flex-wrap gap-2">
             @can('manage_portfolio')
-                <a href="{{ route('pf.export') }}" target="_blank" rel="noopener" class="btn btn-sm btn-primary">
+                <a href="{{ route('pf.export') }}" class="btn btn-sm btn-primary">
                     <i class="ki-outline ki-file-down fs-5 me-1"></i> Export Portfolio (PDF)
                 </a>
             @endcan

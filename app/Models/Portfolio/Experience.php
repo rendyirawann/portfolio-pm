@@ -11,7 +11,7 @@ class Experience extends Model
 
     protected $table = 'experiences';
 
-    protected $fillable = ['role', 'company', 'period', 'description', 'sort_order', 'is_active'];
+    protected $fillable = ['role', 'company', 'period', 'description', 'image', 'sort_order', 'is_active'];
 
     protected $casts = ['is_active' => 'boolean'];
 }

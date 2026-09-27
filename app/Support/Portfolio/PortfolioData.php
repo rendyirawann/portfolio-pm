@@ -127,7 +127,7 @@ class PortfolioData
             'services' => Service::visible()->get(['id', 'title', 'icon', 'description']),
             'skills' => Skill::visible()->get(['id', 'name', 'category', 'level'])
                 ->groupBy(fn ($s) => $s->category ?: 'General'),
-            'experiences' => Experience::visible()->get(['id', 'role', 'company', 'period', 'description']),
+            'experiences' => Experience::visible()->get(['id', 'role', 'company', 'period', 'description', 'image']),
             'testimonials' => Testimonial::visible()->get(['id', 'name', 'position', 'quote', 'avatar']),
             'projects' => self::projectCards(9),
             'categories' => self::categories(),

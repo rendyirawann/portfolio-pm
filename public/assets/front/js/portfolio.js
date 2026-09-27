@@ -238,3 +238,46 @@
         });
     }
 })();
+
+/* ---------- Modal detail pengalaman ----------
+   Penanda timeline (belah ketupat merah, berfoto atau tidak) membuka <dialog>
+   milik item itu. Dipakai event delegation supaya tetap jalan walau item
+   pengalaman bertambah/berkurang.                                            */
+(function () {
+    'use strict';
+
+    var opener = null;
+
+    document.addEventListener('click', function (e) {
+        var open = e.target.closest('[data-exp-open]');
+        if (open) {
+            var dlg = document.getElementById(open.getAttribute('data-exp-open'));
+            if (dlg && typeof dlg.showModal === 'function') {
+                opener = open;
+                dlg.showModal();
+            }
+            return;
+        }
+
+        var close = e.target.closest('[data-exp-close]');
+        if (close) {
+            var owner = close.closest('dialog');
+            if (owner) { owner.close(); }
+            return;
+        }
+
+        // Klik di area gelap (backdrop) menutup modal.
+        if (e.target.tagName === 'DIALOG' && e.target.classList.contains('expdlg')) {
+            e.target.close();
+        }
+    });
+
+    // Kembalikan fokus ke penanda yang tadi diklik, supaya navigasi keyboard
+    // tidak "tersesat" setelah modal ditutup.
+    document.addEventListener('close', function (e) {
+        if (e.target.classList && e.target.classList.contains('expdlg') && opener) {
+            opener.focus();
+            opener = null;
+        }
+    }, true);
+})();
