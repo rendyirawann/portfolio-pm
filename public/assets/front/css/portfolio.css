@@ -171,7 +171,16 @@ ul, ol { margin: 0; padding: 0; list-style: none; }
     content: ''; position: absolute; inset: 0; pointer-events: none;
     background: repeating-linear-gradient(90deg, rgba(255, 255, 255, .035) 0 1px, transparent 1px 14px), linear-gradient(180deg, transparent 60%, rgba(6, 6, 12, .85));
 }
-.hero__img { width: 100%; height: 100%; object-fit: cover; object-position: center top; }
+/* Bingkai kartunya sengaja dipertahankan apa adanya. Yang dihilangkan hanya
+   SIKU PERSEGI dari latar hitam bawaan file fotonya, yang terbaca sebagai
+   kotak gelap di dalam kartu. Gambarnya ditopeng elips lembut sehingga
+   sudut-sudutnya luruh ke gradien kartu dan bentuknya membulat, bukan kotak. */
+.hero__img {
+    width: 100%; height: 100%; object-fit: cover; object-position: center top;
+    --oval: radial-gradient(74% 72% at 52% 44%, #000 50%, rgba(0, 0, 0, .58) 74%, transparent 100%);
+    -webkit-mask-image: var(--oval);
+    mask-image: var(--oval);
+}
 
 .hero__footer { display: flex; align-items: flex-end; justify-content: space-between; gap: 24px; margin-top: clamp(28px, 4vw, 48px); }
 .hero__socials { display: flex; gap: 20px; }
