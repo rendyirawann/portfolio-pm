@@ -158,23 +158,34 @@ ul, ol { margin: 0; padding: 0; list-style: none; }
 @keyframes spin { to { transform: rotate(360deg); } }
 
 .hero__visual { position: relative; justify-self: end; width: 100%; max-width: 600px; }
+/* Bingkai kartu DIPERTAHANKAN — gradien latar merah/birunya tetap ada.
+   Yang dilepas hanya dua hal yang membuat tepinya berhenti mendadak:
+   `border` (garis tajam) dan `box-shadow` (tetap akan terpotong topeng).
+   Sebagai gantinya seluruh bingkai ditopeng gradien di keempat sisinya,
+   jadi kartunya memudar luruh ke halaman alih-alih berbatas persegi. */
 .hero__frame {
     position: relative; aspect-ratio: 5 / 6; border-radius: 28px; overflow: hidden;
     background:
         radial-gradient(120% 80% at 20% 100%, rgba(255, 45, 85, .35), transparent 55%),
         radial-gradient(120% 80% at 90% 10%, rgba(59, 108, 255, .4), transparent 55%),
         linear-gradient(180deg, #0f0f1c, #07070d);
-    border: 1px solid var(--line);
-    box-shadow: 0 40px 120px -40px rgba(59, 108, 255, .45), 0 40px 120px -50px rgba(255, 45, 85, .45);
+    border: 0;
+
+    --fade: linear-gradient(180deg, transparent 0%, #000 16%, #000 60%, transparent 98%),
+            linear-gradient(90deg, transparent 0%, #000 14%, #000 86%, transparent 100%);
+    -webkit-mask-image: var(--fade);
+    mask-image: var(--fade);
+    -webkit-mask-composite: source-in;
+    mask-composite: intersect;
 }
 .hero__frame::after {
     content: ''; position: absolute; inset: 0; pointer-events: none;
     background: repeating-linear-gradient(90deg, rgba(255, 255, 255, .035) 0 1px, transparent 1px 14px), linear-gradient(180deg, transparent 60%, rgba(6, 6, 12, .85));
 }
-/* Bingkai kartunya sengaja dipertahankan apa adanya. Yang dihilangkan hanya
-   SIKU PERSEGI dari latar hitam bawaan file fotonya, yang terbaca sebagai
-   kotak gelap di dalam kartu. Gambarnya ditopeng elips lembut sehingga
-   sudut-sudutnya luruh ke gradien kartu dan bentuknya membulat, bukan kotak. */
+/* Topeng kedua, terpisah dari topeng bingkai di atas: ini melenyapkan SIKU
+   PERSEGI dari latar hitam bawaan file fotonya, yang terbaca sebagai kotak
+   gelap di dalam kartu. Elips lembut membuat sudut fotonya luruh ke gradien
+   kartu di belakangnya sehingga siluetnya membulat, bukan kotak. */
 .hero__img {
     width: 100%; height: 100%; object-fit: cover; object-position: center top;
     --oval: radial-gradient(74% 72% at 52% 44%, #000 50%, rgba(0, 0, 0, .58) 74%, transparent 100%);
