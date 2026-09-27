@@ -1,0 +1,86 @@
+/* ==========================================================================
+   Sign-in screens re-skinned in the portfolio's look: near-black ground,
+   red × blue duotone glow, condensed display type and HUD corners.
+   Loaded after app-auth.css; only overrides colour, type and decoration.
+   ========================================================================== */
+
+:root, [data-bs-theme="dark"], [data-bs-theme="light"] {
+    --pf-red: #ff2d55;
+    --pf-blue: #3b6cff;
+    --pf-violet: #a43bff;
+    --pf-grad: linear-gradient(100deg, #ff2d55 0%, #a43bff 50%, #3b6cff 100%);
+
+    --auth-ink: #f3f3f8;
+    --auth-muted: rgba(243, 243, 248, .7);
+    --auth-faint: rgba(243, 243, 248, .45);
+    --auth-glass: rgba(16, 16, 28, .72);
+    --auth-line: rgba(255, 255, 255, .1);
+    --auth-splash: #06060c;
+    --auth-field: rgba(255, 255, 255, .04);
+    --auth-field-hover: rgba(255, 255, 255, .07);
+    --auth-panel-veil: rgba(6, 6, 12, .35);
+    --auth-autofill: #11111d;
+    --auth-scrim:
+        radial-gradient(60% 60% at 0% 100%, rgba(225, 29, 72, .38), transparent 70%),
+        radial-gradient(60% 60% at 100% 0%, rgba(37, 99, 235, .4), transparent 70%),
+        linear-gradient(180deg, rgba(6, 6, 12, .55), rgba(6, 6, 12, .85));
+    --auth-vanta-scrim: linear-gradient(100deg, rgba(6, 6, 12, .72), rgba(6, 6, 12, .35) 55%, rgba(6, 6, 12, .75));
+}
+
+body.auth-body { background: #06060c; font-family: 'Inter', system-ui, sans-serif; }
+.auth-bg { background-image: none !important; background-color: #06060c; }
+.auth-bg::after {
+    content: ''; position: absolute; inset: 0;
+    background: repeating-linear-gradient(90deg, rgba(255, 255, 255, .025) 0 1px, transparent 1px 22px);
+    mask-image: radial-gradient(ellipse at 30% 40%, #000 20%, transparent 75%);
+}
+
+/* --- Story panel --- */
+.auth-story__name { font: 600 1.25rem/1.1 'Playfair Display', Georgia, serif; letter-spacing: .04em; }
+.auth-story__tagline { font: 600 .68rem/1.2 'Chakra Petch', monospace; letter-spacing: .22em; text-transform: uppercase; color: var(--auth-faint); }
+.auth-story__logo { border-radius: 14px; box-shadow: 0 10px 34px -10px rgba(255, 45, 85, .6); }
+.auth-story__headline {
+    font: 700 clamp(2.6rem, 4.6vw, 4.6rem)/.95 'Oswald', 'Arial Narrow', sans-serif !important;
+    text-transform: uppercase; letter-spacing: -.005em;
+}
+.auth-story__headline span { display: block; background: linear-gradient(180deg, #8e8ea6, #3a3a4f); -webkit-background-clip: text; background-clip: text; color: transparent; }
+.auth-story__kicker { display: inline-flex; gap: 10px; align-items: center; margin-bottom: 18px; font: 600 .72rem/1 'Chakra Petch', monospace; letter-spacing: .28em; text-transform: uppercase; color: var(--pf-red); }
+.auth-story__kicker::before { content: ''; width: 22px; height: 1px; background: currentColor; }
+.auth-story__points svg { stroke: var(--pf-red) !important; }
+.auth-story__points li { font-family: 'Chakra Petch', monospace; letter-spacing: .04em; }
+
+/* --- Card --- */
+.auth-card {
+    position: relative;
+    background: linear-gradient(180deg, rgba(255, 45, 85, .06), transparent 40%), rgba(16, 16, 28, .78) !important;
+    border: 1px solid rgba(255, 255, 255, .1) !important;
+    border-radius: 20px !important;
+    box-shadow: 0 40px 100px -40px rgba(59, 108, 255, .45), 0 40px 100px -50px rgba(255, 45, 85, .45) !important;
+    backdrop-filter: blur(18px);
+}
+.auth-card::before, .auth-card::after { content: ''; position: absolute; width: 22px; height: 22px; pointer-events: none; }
+.auth-card::before { top: -1px; left: -1px; border-top: 2px solid var(--pf-red); border-left: 2px solid var(--pf-red); border-top-left-radius: 8px; }
+.auth-card::after { bottom: -1px; right: -1px; border-bottom: 2px solid var(--pf-blue); border-right: 2px solid var(--pf-blue); border-bottom-right-radius: 8px; }
+.auth-card__title { font: 700 clamp(1.8rem, 2.4vw, 2.3rem)/1.05 'Oswald', sans-serif !important; text-transform: uppercase; letter-spacing: .01em; }
+.auth-label { font: 600 .7rem/1 'Chakra Petch', monospace !important; letter-spacing: .16em; text-transform: uppercase; color: var(--auth-muted); }
+.auth-input { border-radius: 12px !important; background: rgba(255, 255, 255, .04) !important; border-color: rgba(255, 255, 255, .14) !important; }
+.auth-input:focus { border-color: var(--pf-blue) !important; box-shadow: 0 0 0 4px rgba(59, 108, 255, .18) !important; }
+.auth-check input { accent-color: var(--pf-red) !important; }
+.auth-toggle:focus-visible { outline-color: var(--pf-blue) !important; }
+
+.auth-submit {
+    border-radius: 999px !important;
+    background: linear-gradient(#0b0b15, #0b0b15) padding-box, var(--pf-grad) border-box !important;
+    border: 1.5px solid transparent !important;
+    font-weight: 600; letter-spacing: .02em;
+    box-shadow: 0 12px 40px -12px rgba(255, 45, 85, .6), 0 12px 40px -12px rgba(59, 108, 255, .6) !important;
+}
+.auth-submit:hover { box-shadow: 0 16px 50px -10px rgba(255, 45, 85, .75), 0 16px 50px -10px rgba(59, 108, 255, .75) !important; }
+.auth-account__mark, .auth-preloader__bar span, .auth-progress__dots i { background: var(--pf-grad) !important; }
+.auth-accounts__clear, .auth-foot a { color: var(--pf-red) !important; }
+
+/* --- Preloader / progress rings --- */
+#auth-preloader, #auth-progress { background: #06060c !important; }
+.auth-preloader__ring, .auth-progress__ring { border-top-color: var(--pf-red) !important; border-right-color: rgba(59, 108, 255, .4) !important; }
+.auth-preloader__ring--alt { border-top-color: var(--pf-blue) !important; }
+.auth-preloader__label { font: 600 1rem/1 'Playfair Display', Georgia, serif; letter-spacing: .1em; }

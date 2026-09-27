@@ -1,0 +1,40 @@
+/* Project detail page only: article layout, gallery and lightbox. */
+.detail__head { max-width: 860px; }
+.detail__title { margin-top: 14px; font: 700 clamp(2.4rem, 6.4vw, 5.4rem)/.98 var(--font-display); text-transform: uppercase; }
+.detail__cover { margin: clamp(28px, 4vw, 48px) 0 0; border-radius: var(--radius); overflow: hidden; border: 1px solid var(--line); background: var(--bg-2); }
+.detail__cover img { width: 100%; max-height: 720px; object-fit: cover; }
+.detail__grid { display: grid; grid-template-columns: 1fr minmax(260px, 340px); gap: clamp(28px, 4vw, 56px); margin-top: clamp(36px, 5vw, 64px); align-items: start; }
+.detail__side { display: grid; gap: 18px; position: sticky; top: calc(var(--nav-h) + 20px); }
+.detail__links { display: grid; gap: 10px; }
+.prose { font-size: clamp(1rem, .3vw + .95rem, 1.12rem); color: #d4d4e2; }
+.prose h2 { font: 600 clamp(1.3rem, 1.4vw + .9rem, 1.8rem)/1.2 var(--font-display); text-transform: uppercase; color: #fff; margin: 1.6em 0 .5em; }
+.prose h2:first-child { margin-top: 0; }
+.prose p + p { margin-top: 1em; }
+.files { display: grid; gap: 8px; }
+.files a { display: grid; grid-template-columns: auto 1fr auto; gap: 12px; align-items: center; padding: 12px 14px; border-radius: 10px; background: var(--bg-2); border: 1px solid var(--line); transition: border-color .2s; }
+.files a:hover { border-color: var(--red); }
+.files i { color: var(--red); }
+.files span { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; font-size: .9rem; }
+.files small { color: var(--muted); font-size: .78rem; }
+
+.gallery-wrap, .related { margin-top: clamp(56px, 7vw, 96px); }
+.gallery { columns: 3 280px; column-gap: 16px; }
+.gallery__item { position: relative; display: block; margin-bottom: 16px; break-inside: avoid; border-radius: 14px; overflow: hidden; border: 1px solid var(--line); cursor: zoom-in; }
+.gallery__item img { width: 100%; transition: transform .6s var(--ease); }
+.gallery__item:hover img { transform: scale(1.04); }
+.gallery__item span { position: absolute; inset: auto 0 0; padding: 24px 14px 12px; font-size: .82rem; background: linear-gradient(transparent, rgba(0, 0, 0, .8)); }
+
+.lightbox { position: fixed; inset: 0; z-index: 300; display: grid; grid-template-rows: 1fr auto; place-items: center; padding: 56px 16px 20px; background: rgba(4, 4, 8, .94); backdrop-filter: blur(10px); }
+.lightbox[hidden] { display: none; }
+.lightbox img { max-width: min(1400px, 100%); max-height: calc(100svh - 140px); width: auto; border-radius: 12px; }
+.lightbox__caption { color: var(--muted); font-size: .9rem; min-height: 1.4em; margin-top: 12px; text-align: center; }
+.lightbox button { position: absolute; width: 48px; height: 48px; border-radius: 50%; border: 1px solid var(--line-2); background: rgba(255, 255, 255, .06); color: #fff; font-size: 1.1rem; cursor: pointer; }
+.lightbox button:hover { background: rgba(255, 255, 255, .15); }
+.lightbox__close { top: 16px; right: 16px; }
+.lightbox__prev { left: 16px; top: 50%; transform: translateY(-50%); }
+.lightbox__next { right: 16px; top: 50%; transform: translateY(-50%); }
+
+@media (max-width: 900px) {
+    .detail__grid { grid-template-columns: 1fr; }
+    .detail__side { position: static; }
+}

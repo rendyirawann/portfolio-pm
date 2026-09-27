@@ -1,0 +1,13 @@
+# Uploaded files are data, never code.
+<IfModule mod_php.c>
+    php_flag engine off
+</IfModule>
+<FilesMatch "\.(?i:php\d*|phtml|phar|pl|py|cgi|sh|asp|aspx|jsp|html?|svg|shtml)$">
+    Require all denied
+</FilesMatch>
+Options -Indexes -ExecCGI
+<IfModule mod_headers.c>
+    Header set X-Content-Type-Options "nosniff"
+    Header set Content-Security-Policy "default-src 'none'; img-src 'self'; style-src 'unsafe-inline'; sandbox"
+    Header set Cache-Control "public, max-age=31536000, immutable"
+</IfModule>

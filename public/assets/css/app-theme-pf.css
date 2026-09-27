@@ -1,0 +1,87 @@
+/* ==========================================================================
+   Admin panel in the portfolio palette: near-black surfaces, red primary,
+   blue/violet accents. Overrides Metronic's Bootstrap variables only, so
+   every component (buttons, badges, menus, tables) follows automatically.
+   ========================================================================== */
+
+:root, [data-bs-theme="light"], [data-bs-theme="dark"] {
+    --bs-primary: #ff2d55;
+    --bs-primary-rgb: 255, 45, 85;
+    --bs-primary-active: #e11d48;
+    --bs-primary-inverse: #ffffff;
+    --bs-primary-clarity: rgba(255, 45, 85, .2);
+    --bs-text-primary: #ff2d55;
+    --bs-link-color: #ff5577;
+    --bs-link-color-rgb: 255, 85, 119;
+    --bs-link-hover-color: #ff8aa2;
+    --bs-link-hover-color-rgb: 255, 138, 162;
+
+    --bs-info: #3b6cff;
+    --bs-info-rgb: 59, 108, 255;
+    --bs-info-active: #2563eb;
+    --bs-text-info: #6f93ff;
+    --pf-grad: linear-gradient(100deg, #ff2d55 0%, #a43bff 50%, #3b6cff 100%);
+}
+
+[data-bs-theme="light"] {
+    --bs-primary-light: #ffe8ed;
+    --bs-info-light: #e8eeff;
+}
+
+[data-bs-theme="dark"] {
+    --bs-body-bg: #07070d;
+    --bs-body-bg-rgb: 7, 7, 13;
+    --bs-app-bg-color: #07070d;
+    --bs-app-blank-bg: #07070d;
+    --bs-gray-100: #10101c;
+    --bs-gray-100-rgb: 16, 16, 28;
+    --bs-gray-200: #1a1a2b;
+    --bs-gray-200-rgb: 26, 26, 43;
+    --bs-gray-300: #26263a;
+    --bs-gray-300-rgb: 38, 38, 58;
+    --bs-light: #12121f;
+    --bs-light-active: #1a1a2b;
+    --bs-light-light: #12121f;
+    --bs-border-color: #1d1d2e;
+    --bs-card-bg: #0e0e19;
+    --bs-primary-light: rgba(255, 45, 85, .12);
+    --bs-info-light: rgba(59, 108, 255, .14);
+    --bs-card-box-shadow: none;
+}
+
+/* Surfaces */
+[data-bs-theme="dark"] body {
+    background:
+        radial-gradient(50% 40% at 0% 100%, rgba(225, 29, 72, .12), transparent 70%),
+        radial-gradient(50% 40% at 100% 0%, rgba(37, 99, 235, .14), transparent 70%),
+        #07070d;
+    background-attachment: fixed;
+}
+[data-bs-theme="dark"] .card { background-color: rgba(14, 14, 25, .88); border: 1px solid #1d1d2e; }
+[data-bs-theme="dark"] .app-header { background: rgba(7, 7, 13, .82) !important; backdrop-filter: blur(14px); border-bottom-color: #1d1d2e !important; }
+[data-bs-theme="dark"] #kt_app_sidebar { background: #0a0a14 !important; border-inline-end-color: #1d1d2e !important; }
+[data-bs-theme="dark"] .menu-sub-dropdown, [data-bs-theme="dark"] .menu-sub-lg-dropdown { background-color: #10101c !important; }
+
+/* Primary actions get the portfolio gradient */
+.btn.btn-primary {
+    background: var(--pf-grad) !important; border: 0 !important; color: #fff !important;
+    box-shadow: 0 10px 30px -14px rgba(255, 45, 85, .8), 0 10px 30px -14px rgba(59, 108, 255, .8);
+}
+.btn.btn-primary:hover { filter: brightness(1.08); }
+
+/* Active menu items: gradient accent bar */
+.menu-link.active, .menu-item.here > .menu-link { position: relative; }
+#kt_app_sidebar .menu-link.active::before {
+    content: ''; position: absolute; left: -6px; top: 20%; bottom: 20%; width: 3px; border-radius: 3px; background: var(--pf-grad);
+}
+
+/* Brand name in the header uses the logo's serif */
+.app-brand__name { font-family: 'Playfair Display', Georgia, serif !important; letter-spacing: .03em; }
+.app-brand__mark { border-radius: 10px; }
+
+/* Headings a touch closer to the frontend */
+h1.fs-2 { font-family: 'Oswald', 'Arial Narrow', sans-serif; text-transform: uppercase; letter-spacing: .01em; font-weight: 700 !important; }
+
+.form-control:focus, .form-select:focus { border-color: #3b6cff !important; }
+.form-check-input:checked { background-color: #ff2d55; border-color: #ff2d55; }
+.progress-bar.bg-primary { background: var(--pf-grad) !important; }
