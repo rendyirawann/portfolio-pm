@@ -158,26 +158,18 @@ ul, ol { margin: 0; padding: 0; list-style: none; }
 @keyframes spin { to { transform: rotate(360deg); } }
 
 .hero__visual { position: relative; justify-self: end; width: 100%; max-width: 600px; }
-/* Bingkai dan foto sengaja DIPISAH menjadi dua lapisan supaya bisa digeser
-   sendiri-sendiri. Dulu latar kartu menempel di .hero__frame — satu elemen
-   dengan fotonya — jadi menggeser kartunya pasti ikut menggeser fotonya.
-   Sekarang .hero__frame hanya kotak penampung transparan; kartunya digambar
-   di ::before yang boleh bergeser bebas, dan <img> tetap diam di tempat. */
-.hero__frame { position: relative; aspect-ratio: 5 / 6; overflow: visible; }
-
-/* Kartu yang memudar. `inset` di sini yang menggeser: sisi kiri ditarik keluar
-   dan sisi kanan ditarik masuk sebesar angka yang sama, sehingga lebarnya
-   tetap tapi posisinya bergeser ke kiri — lekukan tepi kanannya jadi lebih
-   dekat ke wajah. Ubah nilai 11% untuk menggeser lebih jauh atau lebih dekat. */
-.hero__frame::before {
-    content: ''; position: absolute; inset: 0 11% 0 -11%; z-index: 0; pointer-events: none;
-    border-radius: 28px;
+/* Bingkai kartu DIPERTAHANKAN — gradien latar merah/birunya tetap ada.
+   Yang dilepas hanya dua hal yang membuat tepinya berhenti mendadak:
+   `border` (garis tajam) dan `box-shadow` (tetap akan terpotong topeng).
+   Sebagai gantinya seluruh bingkai ditopeng gradien di keempat sisinya,
+   jadi kartunya memudar luruh ke halaman alih-alih berbatas persegi. */
+.hero__frame {
+    position: relative; aspect-ratio: 5 / 6; border-radius: 28px; overflow: hidden;
     background:
-        repeating-linear-gradient(90deg, rgba(255, 255, 255, .035) 0 1px, transparent 1px 14px),
-        linear-gradient(180deg, transparent 60%, rgba(6, 6, 12, .85)),
         radial-gradient(120% 80% at 20% 100%, rgba(255, 45, 85, .35), transparent 55%),
         radial-gradient(120% 80% at 90% 10%, rgba(59, 108, 255, .4), transparent 55%),
         linear-gradient(180deg, #0f0f1c, #07070d);
+    border: 0;
 
     --fade: linear-gradient(180deg, transparent 0%, #000 16%, #000 60%, transparent 98%),
             linear-gradient(90deg, transparent 0%, #000 14%, #000 86%, transparent 100%);
@@ -186,11 +178,15 @@ ul, ol { margin: 0; padding: 0; list-style: none; }
     -webkit-mask-composite: source-in;
     mask-composite: intersect;
 }
-
-/* Foto tidak ikut bergeser. Topengnya sendiri melenyapkan siku kotak gelap
-   bawaan file gambarnya supaya siluetnya membulat, bukan persegi. */
+.hero__frame::after {
+    content: ''; position: absolute; inset: 0; pointer-events: none;
+    background: repeating-linear-gradient(90deg, rgba(255, 255, 255, .035) 0 1px, transparent 1px 14px), linear-gradient(180deg, transparent 60%, rgba(6, 6, 12, .85));
+}
+/* Topeng kedua, terpisah dari topeng bingkai di atas: ini melenyapkan SIKU
+   PERSEGI dari latar hitam bawaan file fotonya, yang terbaca sebagai kotak
+   gelap di dalam kartu. Elips lembut membuat sudut fotonya luruh ke gradien
+   kartu di belakangnya sehingga siluetnya membulat, bukan kotak. */
 .hero__img {
-    position: relative; z-index: 1;
     width: 100%; height: 100%; object-fit: cover; object-position: center top;
     --oval: radial-gradient(74% 72% at 52% 44%, #000 50%, rgba(0, 0, 0, .58) 74%, transparent 100%);
     -webkit-mask-image: var(--oval);
