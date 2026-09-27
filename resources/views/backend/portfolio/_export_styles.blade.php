@@ -26,7 +26,7 @@
         .btn--primary { background: var(--accent); border-color: var(--accent); }
 
         /* ---------- A4 sheets ---------- */
-        .sheet { position: relative; width: 210mm; height: 297mm; margin: 24px auto; background: #fff; box-shadow: 0 10px 40px rgba(15, 23, 42, .15); overflow: hidden; display: flex; flex-direction: column; }
+        .sheet { position: relative; width: 210mm; min-height: 297mm; margin: 24px auto; background: #fff; box-shadow: 0 10px 40px rgba(15, 23, 42, .15); display: flex; flex-direction: column; }
         .sheet__body { flex: 1; padding: 14mm 16mm 0; display: flex; flex-direction: column; min-height: 0; }
         .sheet__foot { display: flex; justify-content: space-between; padding: 6mm 16mm 8mm; font-size: 7.5pt; color: var(--muted); letter-spacing: .02em; }
         .sheet__foot b { color: var(--ink); font-weight: 600; }
@@ -53,7 +53,7 @@
         .stats b { display: block; font-size: 15pt; font-weight: 800; color: var(--ink); line-height: 1.1; }
         .stats span { font-size: 7.5pt; color: var(--muted); }
 
-        .cols { display: grid; grid-template-columns: 1fr 1.15fr; gap: 10mm; padding: 9mm 16mm 0; flex: 1; min-height: 0; overflow: hidden; }
+        .cols { display: grid; grid-template-columns: 1fr 1.15fr; gap: 10mm; padding: 9mm 16mm 0; flex: 1; min-height: 0; }
         .skill-group + .skill-group { margin-top: 4mm; }
         .skill-group h4 { font-size: 8pt; font-weight: 700; color: var(--muted); text-transform: uppercase; letter-spacing: .08em; margin-bottom: 2mm; }
         .skill { display: grid; grid-template-columns: 1fr 24mm; align-items: center; gap: 4mm; font-size: 9pt; padding: .9mm 0; }
@@ -79,7 +79,7 @@
         .project__cover img { width: 100%; height: 100%; object-fit: cover; }
         .project__grid { display: grid; grid-template-columns: 1fr 52mm; gap: 9mm; margin-top: 7mm; flex: 1; min-height: 0; }
         .project__summary { font-size: 11pt; font-weight: 600; color: var(--ink); line-height: 1.5; }
-        .project__desc { margin-top: 4mm; font-size: 9.2pt; line-height: 1.7; white-space: pre-line; color: var(--text); overflow: hidden; }
+        .project__desc { margin-top: 4mm; font-size: 9.2pt; line-height: 1.7; white-space: pre-line; color: var(--text); }
         .meta { display: grid; gap: 3.5mm; align-content: start; }
         .meta dt { font-size: 7pt; font-weight: 700; letter-spacing: .14em; text-transform: uppercase; color: var(--muted); }
         .meta dd { margin: .6mm 0 0; font-size: 9pt; font-weight: 600; color: var(--ink); word-break: break-word; }
@@ -92,8 +92,38 @@
         @media print {
             body { background: #fff; }
             .toolbar { display: none; }
-            .sheet { margin: 0; box-shadow: none; page-break-after: always; break-after: page; }
-            .sheet:last-child { page-break-after: auto; break-after: auto; }
+            /* Lembar tidak lagi dipaksa setinggi 297mm: kalau isinya pendek,
+               halamannya berhenti di situ (tidak ada ruang kosong dipaksakan);
+               kalau isinya panjang, ia MENGALIR ke halaman berikutnya alih-alih
+               terpotong seperti sebelumnya. */
+            .sheet { margin: 0; box-shadow: none; min-height: 0; }
+            .sheet + .sheet { page-break-before: always; break-before: page; }
+
+            /* Versi teks (ringkas / CV / resume) dibiarkan menyambung supaya
+               tidak menyisakan halaman setengah kosong. */
+            .sheet--flow + .sheet--flow { page-break-before: auto; break-before: auto; padding-top: 10mm; }
+
+            /* ---- Jangan pernah memotong satu blok utuh ---- */
+            .lite__item, .timeline li, .skill-group, .doc__quotes li,
+            .services li, .resume__proj li, .stats, .thumbs,
+            .project__cover, .hero, .intro, .doc__table tr {
+                page-break-inside: avoid; break-inside: avoid;
+            }
+
+            /* Judul tidak boleh tertinggal sendirian di dasar halaman. */
+            h1, h2, h3, h4, .section-title {
+                page-break-after: avoid; break-after: avoid;
+            }
+
+            /* Paragraf: minimal 3 baris tersisa di tiap sisi pemenggalan. */
+            p, li { orphans: 3; widows: 3; }
+
+            /* Tabel panjang: header ikut berulang di halaman berikutnya. */
+            .doc__table thead { display: table-header-group; }
+            .doc__table tr { page-break-inside: avoid; break-inside: avoid; }
+
+            /* Footer menempel di akhir isi, bukan dipaksa ke dasar kertas. */
+            .sheet__foot { margin-top: auto; }
         }
         @media screen and (max-width: 860px) {
             .sheet { transform-origin: top center; zoom: .45; }
@@ -136,4 +166,84 @@
         .resume__proj p { color: var(--muted); font-size: 8.6pt; margin-top: .8mm; }
         .resume__stats { margin-top: 6mm; }
         .resume__note { margin-top: 6mm; padding-top: 3mm; border-top: 1px solid var(--line); font-size: 8.4pt; color: var(--muted); }
+
+        /* ================= CV & RESUME (tata letak baru) =================
+           Dua kolom: sidebar sempit untuk data ringkas, kolom utama untuk
+           narasi. Jarak antar bagian sengaja dilonggarkan supaya tidak padat.
+           Paragraf dibuat rata kanan-kiri. */
+
+        .doc2 { display: flex; flex-direction: column; flex: 1; }
+
+        .doc2__head { display: grid; grid-template-columns: auto 1fr; gap: 9mm; align-items: center;
+                      padding: 14mm 16mm 10mm; background: var(--ink); color: #fff; }
+        .doc2__head--nophoto { grid-template-columns: 1fr; }
+        .doc2__photo { width: 34mm; height: 34mm; border-radius: 50%; overflow: hidden;
+                       background: #1e293b; border: 1.2mm solid rgba(255,255,255,.14); }
+        .doc2__photo img { width: 100%; height: 100%; object-fit: cover; object-position: top center; }
+        .doc2__kicker { font-size: 7.6pt; letter-spacing: .22em; text-transform: uppercase; color: var(--accent); font-weight: 700; }
+        .doc2__name { font-size: 25pt; font-weight: 800; letter-spacing: -.02em; line-height: 1.08; margin-top: 2mm; color: #fff; }
+        .doc2__role { font-size: 11pt; color: #cbd5e1; margin-top: 1.5mm; }
+        .doc2__line { display: flex; flex-wrap: wrap; gap: 3mm 7mm; margin-top: 5mm; font-size: 8.6pt; color: #e2e8f0; }
+        .doc2__line span { display: flex; gap: 2mm; align-items: baseline; }
+        .doc2__line em { font-style: normal; color: #94a3b8; font-size: 7.4pt;
+                         letter-spacing: .1em; text-transform: uppercase; }
+
+        .doc2__body { display: grid; grid-template-columns: 58mm 1fr; gap: 11mm; padding: 11mm 16mm 0; flex: 1; }
+        .doc2__body--wide { grid-template-columns: 1fr; }
+
+        .doc2__h { font-size: 8.4pt; font-weight: 700; letter-spacing: .18em; text-transform: uppercase;
+                   color: var(--ink); padding-bottom: 2mm; border-bottom: .4mm solid var(--accent); margin-bottom: 4.5mm; }
+        .doc2__h + * { margin-top: 0; }
+        .doc2__sec { margin-bottom: 9mm; }
+        .doc2__sec:last-child { margin-bottom: 0; }
+
+        /* Paragraf rata kanan-kiri, dengan jarak baris yang lega. */
+        .doc2 p, .doc2 li { text-align: justify; hyphens: auto; -webkit-hyphens: auto; }
+        .doc2__lead { font-size: 10pt; line-height: 1.85; color: var(--text); }
+
+        /* Sidebar */
+        .doc2__meta { display: grid; gap: 3mm; font-size: 8.8pt; }
+        .doc2__meta div { display: grid; gap: .8mm; }
+        .doc2__meta dt { font-size: 7.2pt; letter-spacing: .12em; text-transform: uppercase; color: var(--muted); }
+        .doc2__meta dd { margin: 0; font-weight: 600; color: var(--ink); word-break: break-word; }
+
+        .doc2__skill { margin-bottom: 5mm; }
+        .doc2__skill h5 { font-size: 8pt; letter-spacing: .1em; text-transform: uppercase; color: var(--accent); margin-bottom: 2.5mm; }
+        .doc2__skill ul { list-style: none; display: grid; gap: 2.2mm; }
+        .doc2__skill li { display: grid; gap: 1.2mm; font-size: 9pt; text-align: left; }
+        .doc2__skill span { display: block; height: 1.2mm; background: var(--line); border-radius: 1mm; overflow: hidden; }
+        .doc2__skill i { display: block; height: 100%; background: var(--ink); }
+
+        .doc2__tags { display: flex; flex-wrap: wrap; gap: 1.8mm; }
+        .doc2__tags li { list-style: none; font-size: 8.2pt; padding: 1mm 2.4mm; border-radius: 1mm;
+                         background: var(--soft); color: var(--ink); text-align: left; }
+
+        /* Riwayat pengalaman — lebih lega dari versi lama */
+        .doc2__exp { list-style: none; display: grid; gap: 7mm; }
+        .doc2__exp li { position: relative; padding-left: 7mm; }
+        .doc2__exp li::before { content: ''; position: absolute; left: 0; top: 1.6mm; width: 2.6mm; height: 2.6mm;
+                                border-radius: 50%; background: #fff; border: .7mm solid var(--accent); }
+        .doc2__exp li::after { content: ''; position: absolute; left: 1.1mm; top: 5.5mm; bottom: -7mm; width: .3mm; background: var(--line); }
+        .doc2__exp li:last-child::after { display: none; }
+        .doc2__when { font-size: 7.6pt; letter-spacing: .12em; text-transform: uppercase; color: var(--muted); }
+        .doc2__what { font-size: 11.5pt; font-weight: 700; color: var(--ink); margin-top: 1mm; line-height: 1.3; }
+        .doc2__where { font-size: 9.2pt; font-weight: 600; color: var(--accent); margin-top: .8mm; }
+        .doc2__exp p { margin-top: 2.5mm; font-size: 9.2pt; line-height: 1.75; color: var(--text); }
+
+        /* Daftar karya */
+        .doc2__works { list-style: none; display: grid; gap: 5mm; }
+        .doc2__works li { display: grid; grid-template-columns: 1fr auto; gap: 2mm 5mm; padding-bottom: 4mm; border-bottom: .2mm solid var(--line); }
+        .doc2__works li:last-child { border-bottom: 0; padding-bottom: 0; }
+        .doc2__works b { font-size: 10.5pt; color: var(--ink); }
+        .doc2__works .doc2__when { grid-column: 2; grid-row: 1; text-align: right; }
+        .doc2__works p { grid-column: 1 / -1; font-size: 9pt; line-height: 1.7; color: var(--muted); }
+        .doc2__works small { grid-column: 1 / -1; font-size: 8.2pt; color: var(--muted); }
+
+        .doc2__quote { list-style: none; display: grid; gap: 4mm; }
+        .doc2__quote li { padding: 4mm 5mm; background: var(--soft); border-left: .8mm solid var(--accent); }
+        .doc2__quote p { font-style: italic; font-size: 9.2pt; line-height: 1.7; }
+        .doc2__quote span { display: block; margin-top: 2mm; font-size: 8.4pt; color: var(--muted); text-align: left; }
+
+        .doc2__note { margin: 8mm 16mm 0; padding-top: 4mm; border-top: .2mm solid var(--line);
+                      font-size: 8.4pt; color: var(--muted); text-align: left; }
     </style>

@@ -11,7 +11,7 @@
 @endphp
 
 @foreach ($chunks as $ci => $chunk)
-    <section class="sheet">
+    <section class="sheet sheet--flow">
         <div class="sheet__body">
             @if ($ci === 0)
                 <h2 class="section-title">Project &amp; Produk</h2>
