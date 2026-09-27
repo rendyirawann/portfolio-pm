@@ -182,7 +182,9 @@ ul, ol { margin: 0; padding: 0; list-style: none; }
 .hero__img {
     width: 100%; height: 100%; object-fit: cover; object-position: center top;
 
-    --oval: radial-gradient(74% 74% at 52% 44%, #000 46%, rgba(0, 0, 0, .5) 72%, transparent 96%);
+    /* Jangan dirapatkan lagi: wajahnya berada dekat tepi elips, jadi elips yang
+   terlalu kecil akan ikut menghapus wajah dan hanya menyisakan garis rambut. */
+    --oval: radial-gradient(82% 80% at 52% 44%, #000 58%, rgba(0, 0, 0, .6) 80%, transparent 100%);
     -webkit-mask-image: var(--hero-src), var(--oval);
     mask-image: var(--hero-src), var(--oval);
     -webkit-mask-size: cover, cover;
