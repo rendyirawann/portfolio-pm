@@ -60,7 +60,7 @@
 
             <div class="hero__visual">
                 <div class="hero__frame">
-                    <img src="{{ $heroImage }}" alt="{{ $c['about_name'] }} — {{ $c['about_role'] }}" class="hero__img" style="--hero-src: url('{{ $heroImage }}')" data-pf-img="hero_image" width="720" height="820" fetchpriority="high" decoding="async">
+                    <img src="{{ $heroImage }}" alt="{{ $c['about_name'] }} — {{ $c['about_role'] }}" class="hero__img" data-pf-img="hero_image" width="720" height="820" fetchpriority="high" decoding="async">
                 </div>
             </div>
         </div>
