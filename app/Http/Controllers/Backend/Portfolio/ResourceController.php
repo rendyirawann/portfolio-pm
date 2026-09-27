@@ -43,6 +43,9 @@ abstract class ResourceController extends Controller
     /** Section of the website shown in the live preview panel (e.g. "#services"). */
     protected ?string $previewTarget = null;
 
+    /** Step-by-step "Panduan" shown on the list and form pages. */
+    protected array $guide = [];
+
     abstract protected function fields(): array;
 
     /** @return array<string,string> column => heading */
@@ -136,6 +139,7 @@ abstract class ResourceController extends Controller
             'description' => $this->description,
             'fields' => $this->fields(),
             'previewTarget' => $this->previewTarget,
+            'guide' => $this->guide,
             // Preview keys look like "services.5.title" — the resource's URI segment.
             'previewKey' => substr($this->route, strrpos($this->route, '.') + 1),
         ];

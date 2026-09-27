@@ -45,6 +45,11 @@
                     <h3 class="card-title fw-bold fs-4"><i class="ki-outline {{ $group['icon'] }} fs-2 me-2 text-primary"></i>{{ $group['label'] }}</h3>
                 </div>
                 <div class="card-body pt-2">
+                    @php
+                        $guides = \App\Support\Portfolio\ContentSchema::guides();
+                        $hints = \App\Support\Portfolio\ContentSchema::help();
+                    @endphp
+                    @include('backend.portfolio._guide', ['text' => $guides[$tab] ?? null])
                     <div class="row g-6">
                         @foreach ($group['fields'] as $key => $field)
                             @php
@@ -98,6 +103,9 @@
                                             <input type="{{ in_array($type, ['email', 'url'], true) ? $type : 'text' }}" class="form-control form-control-solid"
                                                 id="c-{{ $key }}" name="{{ $key }}" value="{{ $value }}">
                                     @endswitch
+                                @endif
+                                @if (! empty($hints[$key]))
+                                    <div class="form-text pf-hint"><i class="ki-outline ki-information-5 fs-7 me-1"></i>{{ $hints[$key] }}</div>
                                 @endif
                                 @error($key)<div class="text-danger fs-7 mt-1">{{ $message }}</div>@enderror
                             </div>

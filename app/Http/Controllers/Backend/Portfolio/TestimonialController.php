@@ -13,6 +13,11 @@ class TestimonialController extends ResourceController
     protected string $icon = 'ki-message-text-2';
     protected string $description = 'Ulasan klien.';
     protected ?string $previewTarget = '#testimonials';
+    protected array $guide = [
+        'Nama & jabatan pemberi ulasan.',
+        'Ulasan 1–3 kalimat, tulis apa adanya dari klien.',
+        'Foto opsional; jika kosong tampil inisial nama.',
+    ];
     protected string $searchColumn = 'name';
 
     protected function fields(): array

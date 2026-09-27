@@ -13,6 +13,11 @@ class SkillController extends ResourceController
     protected string $icon = 'ki-technology-2';
     protected string $description = 'Skill beserta levelnya (0–100). Kategori mengelompokkan skill di halaman depan.';
     protected ?string $previewTarget = '#skills';
+    protected array $guide = [
+        'Nama skill, mis. "Scrum", "Jira", "Stakeholder Management".',
+        'Kategori mengelompokkan skill ke kotak yang sama, mis. Metodologi / Tools / Soft Skill.',
+        'Level 0–100 menentukan panjang bar.',
+    ];
     protected string $searchColumn = 'name';
 
     protected function fields(): array

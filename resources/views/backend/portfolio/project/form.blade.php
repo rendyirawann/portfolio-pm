@@ -29,14 +29,23 @@
                 <div class="card card-flush shadow-sm mb-6">
                     <div class="card-header pt-6 border-0"><h3 class="card-title fw-bold fs-5">Informasi Utama</h3></div>
                     <div class="card-body pt-2">
+                        @include('backend.portfolio._guide', ['text' => 'Satu project/produk = satu halaman detail di website, plus kartu di daftar project.', 'steps' => [
+                            'Isi judul, pilih tipe (Project/Product) dan kategori.',
+                            'Tulis ringkasan 1 kalimat (tampil di kartu) dan deskripsi lengkap (tampil di halaman detail).',
+                            'Upload gambar: klik kotak upload lalu Ctrl+V untuk menempel screenshot, atau seret file. Bisa banyak sekaligus.',
+                            'Tambahkan file lampiran (PDF, ZIP, dll) dan link (Live Demo, GitHub, Play Store) jika ada.',
+                            'Aktifkan “Tampilkan di website”, lalu klik Simpan Project.',
+                        ]])
                         <div class="row g-5">
                             <div class="col-12">
                                 <label class="form-label fw-semibold required" for="title">Judul</label>
                                 <input type="text" class="form-control form-control-solid" id="title" name="title" value="{{ old('title', $project->title) }}" required maxlength="150">
+                                <div class="form-text pf-hint">Nama project/produk. Contoh: Implementasi ERP Nasional.</div>
                             </div>
                             <div class="col-md-6">
                                 <label class="form-label fw-semibold" for="slug">Slug URL</label>
                                 <input type="text" class="form-control form-control-solid" id="slug" name="slug" value="{{ old('slug', $project->slug) }}" placeholder="otomatis dari judul">
+                                <div class="form-text pf-hint">Alamat halaman: /projects/slug-ini. Kosongkan agar dibuat otomatis.</div>
                             </div>
                             <div class="col-md-3">
                                 <label class="form-label fw-semibold" for="type">Tipe</label>
@@ -59,6 +68,7 @@
                             <div class="col-12">
                                 <label class="form-label fw-semibold" for="summary">Ringkasan (tampil di kartu)</label>
                                 <input type="text" class="form-control form-control-solid" id="summary" name="summary" value="{{ old('summary', $project->summary) }}" maxlength="300">
+                                <div class="form-text pf-hint">1 kalimat hasil/tujuan project — tampil di kartu dan di bawah judul halaman detail.</div>
                             </div>
                             <div class="col-12">
                                 <label class="form-label fw-semibold" for="description">Deskripsi lengkap</label>
@@ -75,7 +85,8 @@
                             </div>
                             <div class="col-md-6">
                                 <label class="form-label fw-semibold" for="tech">Tech stack</label>
-                                <input type="text" class="form-control form-control-solid" id="tech" name="tech_stack" value="{{ old('tech_stack', $project->tech_stack) }}" placeholder="Laravel, Vue, PostgreSQL">
+                                <input type="text" class="form-control form-control-solid" id="tech" name="tech_stack" value="{{ old('tech_stack', $project->tech_stack) }}" placeholder="Jira, Scrum, Laravel">
+                                <div class="form-text pf-hint">Tools / teknologi / metode, pisahkan koma. Tampil sebagai label.</div>
                             </div>
                         </div>
                     </div>

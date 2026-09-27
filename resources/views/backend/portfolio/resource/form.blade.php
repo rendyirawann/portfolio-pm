@@ -25,6 +25,7 @@
 
         <div class="card card-flush shadow-sm">
             <div class="card-body pt-8">
+                @include('backend.portfolio._guide', ['text' => $description, 'steps' => $guide])
                 <div class="row g-6">
                     @foreach ($fields as $name => $field)
                         @php $value = old($name, $item->{$name}); @endphp

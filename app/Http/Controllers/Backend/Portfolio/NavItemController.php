@@ -13,6 +13,11 @@ class NavItemController extends ResourceController
     protected string $icon = 'ki-burger-menu-2';
     protected string $description = 'Link di navbar halaman depan. Pakai #id-seksi (mis. #projects) atau URL lengkap.';
     protected ?string $previewTarget = '#home';
+    protected array $guide = [
+        'Label = teks menu yang terlihat, mis. "Projects".',
+        'Tujuan: #projects untuk lompat ke seksi, /projects untuk halaman lain, atau URL lengkap.',
+        'Urutan kecil tampil paling kiri. Matikan "Tampilkan" untuk menyembunyikan tanpa menghapus.',
+    ];
     protected string $searchColumn = 'label';
 
     protected function fields(): array

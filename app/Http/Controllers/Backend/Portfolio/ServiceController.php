@@ -13,6 +13,11 @@ class ServiceController extends ResourceController
     protected string $icon = 'ki-briefcase';
     protected string $description = 'Jasa yang Anda tawarkan.';
     protected ?string $previewTarget = '#services';
+    protected array $guide = [
+        'Judul = nama layanan singkat, mis. "Project Planning".',
+        'Ikon: class Font Awesome, mis. fa-solid fa-diagram-project — pratinjau ikon muncul di sebelah kolom.',
+        'Deskripsi 1–2 kalimat tentang manfaatnya untuk klien.',
+    ];
     protected string $searchColumn = 'title';
 
     protected function fields(): array

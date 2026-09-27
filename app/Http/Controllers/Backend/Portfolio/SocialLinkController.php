@@ -13,6 +13,11 @@ class SocialLinkController extends ResourceController
     protected string $icon = 'ki-share';
     protected string $description = 'Cukup tempel link-nya — ikon otomatis mengikuti platform (GitHub, Instagram, LinkedIn, WhatsApp, dst).';
     protected ?string $previewTarget = '#contact';
+    protected array $guide = [
+        'Tempel link profil lengkap, mis. https://instagram.com/nama.',
+        'Ikon terdeteksi otomatis dari link (lihat pratinjau ikon).',
+        'Tampil di hero, kontak, footer website, dan footer admin.',
+    ];
     protected string $searchColumn = 'url';
 
     protected function fields(): array

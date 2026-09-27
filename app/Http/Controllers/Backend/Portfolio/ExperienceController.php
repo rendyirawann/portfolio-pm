@@ -13,6 +13,11 @@ class ExperienceController extends ResourceController
     protected string $icon = 'ki-medal-star';
     protected string $description = 'Riwayat kerja / pendidikan, tampil sebagai timeline.';
     protected ?string $previewTarget = '#experience';
+    protected array $guide = [
+        'Posisi & perusahaan, mis. "Project Manager" di "PT Contoh".',
+        'Periode bebas, mis. "2022 — Sekarang".',
+        'Deskripsi: pencapaian utama (angka/hasil lebih meyakinkan).',
+    ];
     protected string $searchColumn = 'role';
 
     protected function fields(): array

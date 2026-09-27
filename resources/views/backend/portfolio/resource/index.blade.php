@@ -23,6 +23,7 @@
         </div>
 
         <div class="card-body pt-2">
+            @include('backend.portfolio._guide', ['steps' => $guide])
             <div class="table-responsive">
                 <table class="table align-middle table-row-dashed fs-6 gy-4 mb-0">
                     <thead>

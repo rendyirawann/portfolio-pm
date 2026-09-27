@@ -16,6 +16,11 @@ class ProjectCategoryController extends ResourceController
     protected string $icon = 'ki-category';
     protected string $description = 'Dipakai sebagai filter di daftar project.';
     protected ?string $previewTarget = '#projects';
+    protected array $guide = [
+        'Nama kategori, mis. "Web App", "Mobile", "Infrastruktur".',
+        'Kategori tampil sebagai tombol filter di daftar project & dropdown Category di navbar.',
+        'Kategori tanpa project yang dipublikasikan tidak ditampilkan.',
+    ];
     protected string $searchColumn = 'name';
 
     protected function fields(): array

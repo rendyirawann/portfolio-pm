@@ -13,6 +13,11 @@ class FooterLinkController extends ResourceController
     protected string $icon = 'ki-row-horizontal';
     protected string $description = 'Isi kolom "Navigasi" dan "Kontak" di footer website. Ikon kontak otomatis dari link (email, WhatsApp, dll).';
     protected ?string $previewTarget = '#footer';
+    protected array $guide = [
+        'Pilih kolom: Navigasi (link halaman) atau Kontak (email, WhatsApp, alamat).',
+        'Link: #seksi, /halaman, https://..., mailto:email, atau tel:+62... Kosongkan untuk teks biasa seperti alamat.',
+        'Ikon kontak otomatis dari link; isi Ikon hanya jika ingin mengganti.',
+    ];
     protected string $searchColumn = 'label';
 
     protected function fields(): array
