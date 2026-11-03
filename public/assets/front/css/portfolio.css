@@ -182,15 +182,19 @@ ul, ol { margin: 0; padding: 0; list-style: none; }
    dari latarnya lewat terang-gelap saja. Glow dan partikel kini terlihat
    menembus di sekitar kepala apa adanya. */
 /* Tepi bawah dipudarkan supaya foto tidak terlihat terpotong lurus oleh batas
-   bingkai. Hanya sisi bawah yang ditopeng — sisi lain dibiarkan utuh agar
-   bahu dan rambut tidak ikut terkikis. Ini berlaku untuk foto apa pun, jadi
-   tetap bekerja kalau foto hero diganti dengan hasil remove background
-   sendiri, yang biasanya masih mempertahankan badan. */
+   bingkai. Sisi kiri, kanan dan atas ikut dipudarkan tipis supaya gambar yang
+   masih punya latar sendiri — ilustrasi default saat foto hero belum diisi,
+   atau foto yang latarnya belum dihapus — tidak tampil sebagai kotak, tapi
+   melebur ke latar halaman. Pudar samping/atas sengaja hanya di ~14% tepi
+   luar, sehingga rambut dan bahu pada foto cutout tetap utuh. */
 .hero__img {
     width: 100%; height: 100%; object-fit: cover; object-position: center top;
-    --bottom-fade: linear-gradient(180deg, #000 62%, rgba(0, 0, 0, .55) 84%, transparent 100%);
-    -webkit-mask-image: var(--bottom-fade);
-    mask-image: var(--bottom-fade);
+    --side-fade: linear-gradient(90deg, transparent 0%, #000 14%, #000 86%, transparent 100%);
+    --vertical-fade: linear-gradient(180deg, transparent 0%, #000 9%, #000 62%, rgba(0, 0, 0, .55) 84%, transparent 100%);
+    -webkit-mask-image: var(--side-fade), var(--vertical-fade);
+    -webkit-mask-composite: source-in;
+    mask-image: var(--side-fade), var(--vertical-fade);
+    mask-composite: intersect;
 
     /* Sedikit diredupkan supaya fotonya lebih melebur ke halaman gelap, bukan
        menonjol sendiri. Dipakai filter, bukan lapisan gelap di atasnya, karena
