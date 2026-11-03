@@ -89,9 +89,9 @@ class UserController extends Controller implements HasMiddleware
                         // Gunakan where (AND) untuk setiap kata, 
                         // artinya data harus mengandung SEMUA kata yang diketik
                         $query->where(function ($subQuery) use ($word) {
-                            $subQuery->where('name', 'ILIKE', "%{$word}%")
-                                ->orWhere('nik', 'ILIKE', "%{$word}%")
-                                ->orWhere('email', 'ILIKE', "%{$word}%");
+                            $subQuery->whereLike('name', "%{$word}%")
+                                ->orWhereLike('nik', "%{$word}%")
+                                ->orWhereLike('email', "%{$word}%");
                         });
                     }
                 });

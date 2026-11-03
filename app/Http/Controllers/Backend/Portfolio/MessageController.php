@@ -21,7 +21,7 @@ class MessageController extends Controller
         $messages = ContactMessage::query()
             ->select(['id', 'name', 'email', 'subject', 'budget', 'mail_sent', 'read_at', 'created_at'])
             ->when($search !== '', fn ($q) => $q->where(fn ($w) => $w
-                ->where('name', 'ilike', $like)->orWhere('email', 'ilike', $like)->orWhere('subject', 'ilike', $like)))
+                ->whereLike('name', $like)->orWhereLike('email', $like)->orWhereLike('subject', $like)))
             ->when($request->query('status') === 'unread', fn ($q) => $q->whereNull('read_at'))
             ->latest()
             ->paginate(20)

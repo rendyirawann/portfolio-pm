@@ -29,7 +29,7 @@ class ProjectController extends Controller
             ->with('category:id,name')
             ->with(['images' => fn ($q) => $q->select('id', 'project_id', 'path', 'thumb_path')->limit(1)])
             ->withCount(['images', 'files', 'links'])
-            ->when($search !== '', fn ($q) => $q->where('title', 'ilike', '%' . addcslashes($search, '%_\\') . '%'))
+            ->when($search !== '', fn ($q) => $q->whereLike('title', '%' . addcslashes($search, '%_\\') . '%'))
             ->when($category, fn ($q) => $q->where('project_category_id', $category))
             ->when(isset(Project::TYPES[$type]), fn ($q) => $q->where('type', $type))
             ->orderBy('sort_order')->orderByDesc('id')

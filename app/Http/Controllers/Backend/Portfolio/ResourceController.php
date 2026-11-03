@@ -56,7 +56,7 @@ abstract class ResourceController extends Controller
         $search = trim((string) $request->query('q', ''));
 
         $items = $this->model::query()
-            ->when($search !== '', fn ($q) => $q->where($this->searchColumn, 'ilike', '%' . addcslashes($search, '%_\\') . '%'))
+            ->when($search !== '', fn ($q) => $q->whereLike($this->searchColumn, '%' . addcslashes($search, '%_\\') . '%'))
             ->orderBy('sort_order')->orderBy('id')
             ->paginate(20)
             ->withQueryString();
