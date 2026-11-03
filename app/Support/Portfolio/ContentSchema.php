@@ -20,7 +20,7 @@ class ContentSchema
                 'label' => 'Brand & Navbar',
                 'icon' => 'ki-abstract-26',
                 'fields' => [
-                    'brand_name' => ['Nama brand / logo teks', 'text', 'RENDY IRAWAN'],
+                    'brand_name' => ['Nama brand / logo teks', 'text', 'DORMANSYAH PASARIBU'],
                     'brand_logo' => ['Logo (kosongkan untuk logo teks)', 'image', null],
                     'nav_cta_label' => ['Tombol navbar — teks', 'text', 'Hire Me'],
                     'nav_cta_link' => ['Tombol navbar — link', 'text', '#contact'],
@@ -57,7 +57,7 @@ class ContentSchema
                 'icon' => 'ki-profile-circle',
                 'fields' => [
                     'about_title' => ['Judul seksi', 'text', 'About Me'],
-                    'about_name' => ['Nama lengkap', 'text', 'Rendy Irawan'],
+                    'about_name' => ['Nama lengkap', 'text', 'Dormansyah Pasaribu'],
                     'about_role' => ['Profesi', 'text', 'Full-Stack Developer & AI Engineer'],
                     'about_location' => ['Lokasi', 'text', 'Jakarta, ID'],
                     'about_timezone' => ['Zona waktu (untuk jam live)', 'text', 'Asia/Jakarta'],
@@ -93,7 +93,7 @@ class ContentSchema
                 'fields' => [
                     'contact_title' => ['Judul', 'text', "Let's Work Together"],
                     'contact_subtitle' => ['Subjudul', 'textarea', 'Have a project in mind? Tell me about it and I will reply within 24 hours.'],
-                    'contact_email' => ['Email tujuan (pesan form dikirim ke sini)', 'email', 'rendy9008@gmail.com'],
+                    'contact_email' => ['Email tujuan (pesan form dikirim ke sini)', 'email', 'dormansyah.pasaribu@gmail.com'],
                     'contact_whatsapp' => ['Nomor WhatsApp (format 628xxx)', 'text', '628123456789'],
                     'contact_whatsapp_text' => ['Pesan awal WhatsApp', 'text', 'Halo, saya tertarik untuk membuat project bersama Anda.'],
                     'contact_linkedin' => ['URL LinkedIn', 'url', 'https://linkedin.com/in/rendyirawann'],
@@ -110,7 +110,7 @@ class ContentSchema
                     'footer_about' => ['Teks singkat footer', 'textarea', 'Designing and building digital products with a focus on speed, security and delight.'],
                     'footer_nav_title' => ['Judul kolom navigasi', 'text', 'Navigasi'],
                     'footer_contact_title' => ['Judul kolom kontak', 'text', 'Kontak'],
-                    'footer_copyright' => ['Nama di copyright (tahun otomatis)', 'text', 'Rendy Irawan'],
+                    'footer_copyright' => ['Nama di copyright (tahun otomatis)', 'text', 'Dormansyah Pasaribu'],
                     'footer_show_socials' => ['Tampilkan ikon sosial media di footer', 'toggle', '1'],
                 ],
             ],
@@ -144,10 +144,10 @@ class ContentSchema
                 'label' => 'Navbar & Footer Admin',
                 'icon' => 'ki-element-plus',
                 'fields' => [
-                    'admin_brand_name' => ['Nama di navbar admin', 'text', 'Rendy Irawan'],
+                    'admin_brand_name' => ['Nama di navbar admin', 'text', 'Dormansyah Pasaribu'],
                     'admin_brand_tagline' => ['Tagline di navbar admin', 'text', 'Portfolio Control Center'],
                     'admin_logo' => ['Logo admin (kosongkan = logo utama)', 'image', null],
-                    'admin_footer_text' => ['Nama di copyright footer admin (tahun otomatis)', 'text', 'Rendy Irawan'],
+                    'admin_footer_text' => ['Nama di copyright footer admin (tahun otomatis)', 'text', 'Dormansyah Pasaribu'],
                     'admin_footer_link' => ['Link saat nama di footer diklik', 'url', ''],
                     'admin_footer_show_socials' => ['Tampilkan ikon sosial media (dari menu Sosial Media)', 'toggle', '1'],
                 ],

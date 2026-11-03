@@ -27,7 +27,7 @@ return new class extends Migration
             ['nav', 'Home', '#home'], ['nav', 'About', '#about'], ['nav', 'Services', '#services'],
             ['nav', 'Projects', '#projects'], ['nav', 'Experience', '#experience'], ['nav', 'Contact', '#contact'],
             ['nav', 'Semua Project', '/projects'],
-            ['contact', 'rendy9008@gmail.com', 'mailto:rendy9008@gmail.com'],
+            ['contact', 'dormansyah.pasaribu@gmail.com', 'mailto:dormansyah.pasaribu@gmail.com'],
             ['contact', '+628123456789', 'https://wa.me/628123456789'],
             ['contact', 'Jakarta, Indonesia — Remote worldwide', null],
         ];
