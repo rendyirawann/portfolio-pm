@@ -1,7 +1,7 @@
 /*
  * Portfolio — shared behaviour for every public page:
- * navbar, reveal-on-scroll, active section, live clock, project filter and
- * the AJAX contact form (falls back to a normal POST without JS).
+ * navbar, theme toggle, reveal-on-scroll, active section, live clock, project
+ * filter and the AJAX contact form (falls back to a normal POST without JS).
  */
 (function () {
     'use strict';
@@ -26,85 +26,6 @@
         window.matchMedia('(min-width: 901px)').addEventListener('change', function (m) { if (m.matches) setOpen(false); });
     }
 
-    // --- Animated particle background ---
-    (function particles() {
-        var reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-        var canvas = document.createElement('canvas');
-        canvas.className = 'bg-particles';
-        canvas.setAttribute('aria-hidden', 'true');
-        document.body.prepend(canvas);
-        var ctx = canvas.getContext('2d');
-        if (!ctx) return;
-
-        var COLORS = ['255,45,85', '59,108,255', '164,59,255', '255,255,255'];
-        // The neutral particle flips to ink on the light theme.
-        function tone(c) { return c === '255,255,255' && document.documentElement.getAttribute('data-theme') === 'light' ? '18,20,39' : c; }
-        var dpr = Math.min(window.devicePixelRatio || 1, 2);
-        var w, h, dots = [], link = 130;
-        var mouse = { x: -9999, y: -9999 };
-
-        function resize() {
-            w = window.innerWidth; h = window.innerHeight;
-            canvas.width = w * dpr; canvas.height = h * dpr;
-            ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
-            // Density scales with screen area, capped for low-end phones.
-            var count = Math.min(170, Math.round(w * h / 8500));
-            link = w < 700 ? 110 : 150;
-            dots = [];
-            for (var i = 0; i < count; i++) {
-                dots.push({
-                    x: Math.random() * w, y: Math.random() * h,
-                    vx: (Math.random() - .5) * .35, vy: (Math.random() - .5) * .35,
-                    r: Math.random() * 2.2 + .8,
-                    c: COLORS[i % COLORS.length === 3 && Math.random() > .4 ? 0 : i % COLORS.length]
-                });
-            }
-        }
-
-        function frame() {
-            ctx.clearRect(0, 0, w, h);
-            for (var i = 0; i < dots.length; i++) {
-                var d = dots[i];
-                if (!reduce) {
-                    d.x += d.vx; d.y += d.vy;
-                    if (d.x < 0 || d.x > w) d.vx *= -1;
-                    if (d.y < 0 || d.y > h) d.vy *= -1;
-
-                    // Gentle push away from the cursor.
-                    var mx = d.x - mouse.x, my = d.y - mouse.y, md = mx * mx + my * my;
-                    if (md < 14400) { var f = (14400 - md) / 14400 * .6; d.x += mx / 120 * f; d.y += my / 120 * f; }
-                }
-
-                for (var j = i + 1; j < dots.length; j++) {
-                    var e = dots[j], dx = d.x - e.x, dy = d.y - e.y, dist = Math.sqrt(dx * dx + dy * dy);
-                    if (dist < link) {
-                        ctx.strokeStyle = 'rgba(' + tone(d.c) + ',' + (1 - dist / link) * .35 + ')';
-                        ctx.lineWidth = .7;
-                        ctx.beginPath(); ctx.moveTo(d.x, d.y); ctx.lineTo(e.x, e.y); ctx.stroke();
-                    }
-                }
-
-                ctx.fillStyle = 'rgba(' + tone(d.c) + ',.85)';
-                ctx.shadowColor = 'rgba(' + tone(d.c) + ',.9)';
-                ctx.shadowBlur = 8;
-                ctx.beginPath(); ctx.arc(d.x, d.y, d.r, 0, Math.PI * 2); ctx.fill();
-                ctx.shadowBlur = 0;
-            }
-            if (!reduce && !document.hidden) raf = requestAnimationFrame(frame);
-        }
-
-        var raf;
-        resize();
-        frame();
-        window.addEventListener('resize', function () { resize(); if (reduce) frame(); }, { passive: true });
-        window.addEventListener('pointermove', function (e) { mouse.x = e.clientX; mouse.y = e.clientY; }, { passive: true });
-        document.addEventListener('pointerleave', function () { mouse.x = mouse.y = -9999; });
-        document.addEventListener('visibilitychange', function () {
-            cancelAnimationFrame(raf);
-            if (!document.hidden && !reduce) raf = requestAnimationFrame(frame);
-        });
-    })();
-
     // --- Light / dark theme (same storage key as the admin panel) ---
     document.querySelectorAll('[data-theme-toggle]').forEach(function (btn) {
         btn.addEventListener('click', function () {
@@ -112,7 +33,7 @@
             document.documentElement.setAttribute('data-theme', next);
             try { localStorage.setItem('data-bs-theme', next); } catch (e) {}
             var meta = document.querySelector('meta[name="theme-color"]');
-            if (meta) meta.setAttribute('content', next === 'light' ? '#f5f6fa' : '#07070d');
+            if (meta) meta.setAttribute('content', next === 'light' ? '#f6f6f4' : '#0d0d0f');
         });
     });
 

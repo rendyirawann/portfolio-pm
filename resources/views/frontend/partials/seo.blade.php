@@ -21,7 +21,7 @@
 <meta name="keywords" content="{{ $content['seo_keywords'] }}">
 <meta name="author" content="{{ $brand['author'] }}">
 <meta name="robots" content="{{ $content['seo_robots'] ?: 'index, follow' }}, max-image-preview:large">
-<meta name="theme-color" content="{{ $content['seo_theme_color'] ?: '#07070d' }}">
+<meta name="theme-color" content="{{ $content['seo_theme_color'] ?: '#0d0d0f' }}">
 <meta name="color-scheme" content="dark">
 <meta name="format-detection" content="telephone=no">
 <link rel="canonical" href="{{ $canonical }}">
