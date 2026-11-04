@@ -26,7 +26,7 @@
     --ink: #fff;                 /* strongest text / solid button ground */
     --ink-contrast: #0d0d0f;     /* text on top of --ink */
 
-    --font-display: 'Archivo', 'Inter', system-ui, sans-serif;
+    --font-display: 'Plus Jakarta Sans', 'Archivo', system-ui, sans-serif;
     --font-hud: 'Plus Jakarta Sans', system-ui, sans-serif;
     --font-body: 'Plus Jakarta Sans', 'Inter', system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif;
 
@@ -219,7 +219,7 @@ body.nav-open { overflow: hidden; }
     width: min(100vw, 1800px); transform: translateX(-50%); pointer-events: none; user-select: none;
 }
 .hero__word svg { width: 100%; height: auto; display: block; overflow: visible; }
-.hero__word text { font: 900 270px/1 var(--font-display); fill: var(--word); text-transform: uppercase; }
+.hero__word text { font: 800 270px/1 var(--font-display); fill: var(--word); text-transform: uppercase; }
 
 .hero__stage {
     position: relative; z-index: 1;
