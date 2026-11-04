@@ -38,12 +38,12 @@
     {{-- ================= HERO ================= --}}
     <section class="hero" id="home" aria-labelledby="hero-title">
         {{-- Giant word behind everything; textLength stretches it to the full width. --}}
-        <div class="hero__word" aria-hidden="true">
+        <div class="hero__word" aria-hidden="true" data-px="0.35">
             <svg viewBox="0 0 1000 250"><text x="500" y="236" text-anchor="middle" textLength="1000" lengthAdjust="spacingAndGlyphs" data-pf="hero_word">{{ $c['hero_word'] }}</text></svg>
         </div>
 
         <div class="container hero__stage">
-            <div class="hero__copy">
+            <div class="hero__copy" data-px="-0.08">
                 <p class="hero__eyebrow" data-pf="hero_eyebrow">{{ $c['hero_eyebrow'] }}</p>
                 <h1 class="hero__title" id="hero-title">
                     <span class="hero__line" data-pf="hero_title_1">{{ $c['hero_title_1'] }}</span>
@@ -61,13 +61,13 @@
                 </div>
             </div>
 
-            <div class="hero__visual">
+            <div class="hero__visual" data-px="0.15">
                 <div class="hero__frame">
                     <img src="{{ $heroImage }}" alt="{{ $c['about_name'] }} — {{ $c['about_role'] }}" class="hero__img" data-pf-img="hero_image" width="720" height="820" fetchpriority="high" decoding="async">
                 </div>
             </div>
 
-            <aside class="hero__side">
+            <aside class="hero__side" data-px="-0.08">
                 <p class="hero__tagline"><span data-pf="hero_subtitle">{!! $subtitle !!}</span></p>
                 @if ($stats->isNotEmpty())
                     <ul class="hero__stats" aria-label="Statistik">
@@ -116,7 +116,7 @@
     <section class="section about" id="about" aria-labelledby="about-title">
         <div class="container about__grid">
             <div data-reveal>
-                <img src="{{ $photo }}" alt="Foto {{ $c['about_name'] }}" class="about__photo" data-pf-img="about_photo" width="520" height="650" loading="lazy" decoding="async">
+                <img src="{{ $photo }}" alt="Foto {{ $c['about_name'] }}" class="about__photo" data-px="0.08" data-pf-img="about_photo" width="520" height="650" loading="lazy" decoding="async">
                 <ul class="about__meta">
                     <li><small>Lokasi</small><span data-pf="about_location">{{ $c['about_location'] }}</span></li>
                     <li><small>Waktu lokal</small><time data-clock data-tz="{{ $c['about_timezone'] ?: 'Asia/Jakarta' }}">--:--</time></li>

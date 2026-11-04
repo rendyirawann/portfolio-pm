@@ -423,3 +423,37 @@
     else window.addEventListener('load', finish);
     setTimeout(finish, 2500);
 })();
+
+/* ---------- Parallax scroll ----------
+   Elemen [data-px="k"] bergeser sejauh k × jarak scroll (positif = lebih
+   lambat dari halaman, negatif = lebih cepat). Panggung hero ikut mengecil
+   dan memudar saat digulir keluar. Dimatikan untuk "kurangi gerakan".    */
+(function () {
+    'use strict';
+    if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+    var items = Array.prototype.slice.call(document.querySelectorAll('[data-px]'));
+    var stage = document.querySelector('.hero__stage');
+    if (!items.length && !stage) return;
+
+    var ticking = false;
+    function update() {
+        ticking = false;
+        var y = window.scrollY || 0, vh = Math.min(window.innerHeight, 1100);
+        items.forEach(function (el) {
+            var k = parseFloat(el.getAttribute('data-px')) || 0;
+            var r = el.getBoundingClientRect();
+            // Offset relatif ke tengah layar supaya elemen di bawah hero juga wajar.
+            var centre = r.top + r.height / 2 - vh / 2 + (parseFloat(el.style.getPropertyValue('--py')) || 0);
+            el.style.setProperty('--py', (-centre * k).toFixed(1) + 'px');
+        });
+        if (stage) {
+            var p = Math.min(1, Math.max(0, y / (vh * 0.9)));
+            stage.style.opacity = String(1 - p * 0.9);
+            stage.style.transform = 'scale(' + (1 - p * 0.06).toFixed(3) + ')';
+        }
+    }
+    function onScroll() { if (!ticking) { ticking = true; requestAnimationFrame(update); } }
+    window.addEventListener('scroll', onScroll, { passive: true });
+    window.addEventListener('resize', onScroll, { passive: true });
+    update();
+})();

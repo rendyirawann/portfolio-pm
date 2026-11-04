@@ -1,5 +1,6 @@
 @php
     use App\Support\Portfolio\Media;
+    use Illuminate\Support\Str;
     $c = $content;
     $nonce = app(\App\Http\Middleware\SecurityHeaders::NONCE);
     $brandLogo = $c['brand_logo'] ?? null;
@@ -12,7 +13,7 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link rel="preconnect" href="https://cdnjs.cloudflare.com" crossorigin>
-    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@112.5,700;112.5,800;112.5,900&family=Inter:wght@400;500;600&display=swap">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Archivo:wdth,wght@112.5,800;112.5,900&display=swap">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css"
         integrity="sha512-SnH5WK+bZxgPHs44uWIX+LLJAJ9/2PkPKZ5QiAj6Ta86w+fsb2TkcmfRyVX3pBnMFcV7oQPJkl9QevSCWr3W6A=="
         crossorigin="anonymous" referrerpolicy="no-referrer">
@@ -94,9 +95,11 @@
         </nav>
     </header>
 
-    {{-- Preloader: brand + thin progress line, gone on load (portfolio.js) --}}
+    {{-- Preloader: logo in a spinning ring, brand name, progress bar (portfolio.js hides it on load) --}}
     <div class="loader" data-loader aria-hidden="true">
+        <span class="loader__ring"><i></i><img src="{{ $brandLogo ? Media::url($brandLogo) : $brand['logo_url'] }}" alt="" width="96" height="96"></span>
         <span class="loader__name">{{ $c['brand_name'] }}</span>
+        <span class="loader__text">Loading<b>.</b><b>.</b><b>.</b></span>
         <span class="loader__bar"><i></i></span>
     </div>
 
@@ -106,30 +109,25 @@
 
     {{-- ================= FOOTER ================= --}}
     <footer class="footer" id="footer">
-        <div class="container">
-            <div class="footer__cta" data-reveal>
-                <div>
-                    <p class="kicker">Let's talk</p>
-                    <h2 class="footer__cta-title" data-pf="footer_cta_title">{{ $c['footer_cta_title'] }}</h2>
-                </div>
+        <div class="footer__ghost" aria-hidden="true"><span>{{ Str::upper(Str::before(trim((string) ($c['about_name'] ?: $c['brand_name'])), ' ') ?: $c['brand_name']) }}</span></div>
+        <div class="container footer__inner">
+            <div class="footer__connect" data-reveal>
+                <a href="{{ route('home') }}" class="footer__brand" aria-label="{{ $c['brand_name'] }}">
+                    @if ($brandLogo)
+                        <img src="{{ Media::url($brandLogo) }}" alt="{{ $c['brand_name'] }}" height="40" width="132" loading="lazy">
+                    @else
+                        <img src="{{ $brand['logo_url'] }}" alt="" width="44" height="44" loading="lazy">
+                        <span data-pf="brand_name">{{ $c['brand_name'] }}</span>
+                    @endif
+                </a>
+                <p class="footer__kicker" data-pf="footer_about">{{ $c['footer_about'] }}</p>
+                <h2 class="footer__cta-title" data-pf="footer_cta_title">{{ $c['footer_cta_title'] }}</h2>
                 <a href="{{ request()->routeIs('home') ? '#contact' : route('home') . '#contact' }}" class="btn btn--glow btn--lg">
                     {{ $c['hero_cta_label'] }} <i class="fa-solid fa-arrow-right" aria-hidden="true"></i>
                 </a>
             </div>
 
             <div class="footer__grid">
-                <div class="footer__about">
-                    <a href="{{ route('home') }}" class="nav__brand">
-                        @if ($brandLogo)
-                            <img src="{{ Media::url($brandLogo) }}" alt="{{ $c['brand_name'] }}" height="36" width="120" class="nav__logo" loading="lazy">
-                        @else
-                            <img src="{{ $brand['logo_url'] }}" alt="" class="nav__mark" width="40" height="40" loading="lazy">
-                            <span class="nav__name" data-pf="brand_name">{{ $c['brand_name'] }}</span>
-                        @endif
-                    </a>
-                    <p data-pf="footer_about">{{ $c['footer_about'] }}</p>
-                </div>
-
                 @foreach (\App\Models\Portfolio\FooterLink::COLUMNS as $colKey => $colDefault)
                     @php $items = $footerLinks[$colKey] ?? collect(); @endphp
                     @if ($items->isNotEmpty())
@@ -156,6 +154,17 @@
                         </div>
                     @endif
                 @endforeach
+                @if ($nav->isNotEmpty())
+                    <div>
+                        <h3 class="footer__heading">Eksplorasi</h3>
+                        <ul class="footer__links">
+                            @foreach ($nav as $item)
+                                <li><a href="{{ $link($item->target) }}">{{ $item->label }}</a></li>
+                            @endforeach
+                            <li><a href="{{ route('portfolio.projects') }}">Semua Project</a></li>
+                        </ul>
+                    </div>
+                @endif
             </div>
 
             <div class="footer__bottom">
