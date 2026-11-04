@@ -29,18 +29,22 @@
 @section('content')
     {{-- ================= HERO ================= --}}
     <section class="hero" id="home" aria-labelledby="hero-title">
-        <div class="container hero__grid">
+        {{-- Giant word behind everything; textLength stretches it to the full width. --}}
+        <div class="hero__word" aria-hidden="true">
+            <svg viewBox="0 0 1000 250"><text x="500" y="236" text-anchor="middle" textLength="1000" lengthAdjust="spacingAndGlyphs" data-pf="hero_word">{{ $c['hero_word'] }}</text></svg>
+        </div>
+
+        <div class="container hero__stage">
             <div class="hero__copy">
                 <p class="hero__eyebrow" data-pf="hero_eyebrow">{{ $c['hero_eyebrow'] }}</p>
                 <h1 class="hero__title" id="hero-title">
                     <span class="hero__line" data-pf="hero_title_1">{{ $c['hero_title_1'] }}</span>
-                    <span class="hero__line hero__line--dim" data-pf="hero_title_2">{{ $c['hero_title_2'] }}</span>
+                    <span class="hero__line" data-pf="hero_title_2">{{ $c['hero_title_2'] }}</span>
                 </h1>
-                <p class="hero__subtitle" data-pf="hero_subtitle">{!! $subtitle !!}</p>
+                <p class="hero__role" data-pf="about_role">{{ $c['about_role'] }}</p>
                 @if ($c['hero_description'])
                     <p class="hero__desc" data-pf="hero_description">{{ $c['hero_description'] }}</p>
                 @endif
-
                 <div class="hero__actions">
                     <a href="{{ PortfolioData::href($c['hero_cta_link']) }}" class="btn btn--glow"><span data-pf="hero_cta_label">{{ $c['hero_cta_label'] }}</span> <i class="fa-solid fa-arrow-right" aria-hidden="true"></i></a>
                     @if ($c['hero_cta2_label'])
@@ -54,16 +58,32 @@
                     <img src="{{ $heroImage }}" alt="{{ $c['about_name'] }} — {{ $c['about_role'] }}" class="hero__img" data-pf-img="hero_image" width="720" height="820" fetchpriority="high" decoding="async">
                 </div>
             </div>
+
+            <aside class="hero__side">
+                <p class="hero__tagline"><span data-pf="hero_subtitle">{!! $subtitle !!}</span></p>
+                @if ($stats->isNotEmpty())
+                    <ul class="hero__stats" aria-label="Statistik">
+                        @foreach ($stats->take(4) as $s)
+                            <li><b data-pf="stats.{{ $s->id }}.value">{{ $s->value }}</b><span data-pf="stats.{{ $s->id }}.label">{{ $s->label }}</span></li>
+                        @endforeach
+                    </ul>
+                @endif
+            </aside>
         </div>
 
         @if ($deck->isNotEmpty())
             <div class="container hero__deck">
-                <div class="deck__intro">
+                <div class="deck__head">
                     <span class="deck__label" data-pf="hero_deck_label">{{ $c['hero_deck_label'] }}</span>
-                    <p data-pf="hero_deck_text">{{ $c['hero_deck_text'] }}</p>
                     <a href="{{ route('portfolio.projects') }}">Semua project ({{ $projectTotal }}) <i class="fa-solid fa-arrow-right" aria-hidden="true"></i></a>
                 </div>
                 <div class="deck" aria-label="Project pilihan">
+                    @php $ringText = Str::upper(trim((string) $c['hero_deck_label']) ?: 'Selected work'); @endphp
+                    <svg class="deck__ring" viewBox="0 0 300 300" aria-hidden="true">
+                        <defs><path id="deck-ring-path" d="M150,150 m-128,0 a128,128 0 1,1 256,0 a128,128 0 1,1 -256,0"/></defs>
+                        <circle cx="150" cy="150" r="112"/>
+                        <text><textPath href="#deck-ring-path">{{ $ringText }} &#8226; {{ $ringText }} &#8226; {{ $ringText }} &#8226; {{ $ringText }} &#8226;</textPath></text>
+                    </svg>
                     @foreach ($deck as $p)
                         <a href="{{ route('portfolio.project', $p->slug) }}" class="deck__card" aria-label="{{ $p->title }}">
                             <img src="{{ $p->cover_url }}" alt="" width="300" height="400" loading="eager" decoding="async">
@@ -71,16 +91,6 @@
                         </a>
                     @endforeach
                 </div>
-            </div>
-        @endif
-
-        @if ($stats->isNotEmpty())
-            <div class="container">
-                <ul class="statbar" aria-label="Statistik">
-                    @foreach ($stats->take(4) as $s)
-                        <li><b data-pf="stats.{{ $s->id }}.value">{{ $s->value }}</b><span data-pf="stats.{{ $s->id }}.label">{{ $s->label }}</span></li>
-                    @endforeach
-                </ul>
             </div>
         @endif
     </section>

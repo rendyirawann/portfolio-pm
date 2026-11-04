@@ -19,7 +19,7 @@
     <link rel="stylesheet" href="{{ asset('assets/front/css/portfolio.css') }}?v={{ filemtime(public_path('assets/front/css/portfolio.css')) }}">
     @stack('head')
     {{-- Theme before first paint. Shares the admin's key so one choice applies everywhere; dark is the default. --}}
-    <script nonce="{{ $nonce }}">(function(){var d=document.documentElement,m='dark';d.classList.replace('no-js','js');try{m=localStorage.getItem('data-bs-theme')||'dark';if(m==='system')m=matchMedia('(prefers-color-scheme: light)').matches?'light':'dark';}catch(e){}d.setAttribute('data-theme',m==='light'?'light':'dark');})();</script>
+    <script nonce="{{ $nonce }}">(function(){var d=document.documentElement,m='dark';d.classList.replace('no-js','js');try{m=localStorage.getItem('data-bs-theme-mode')||localStorage.getItem('data-bs-theme')||'dark';}catch(e){}var t=m==='system'?(matchMedia('(prefers-color-scheme: dark)').matches?'dark':'light'):(m==='light'?'light':'dark');d.setAttribute('data-theme',t);d.setAttribute('data-theme-mode',m);})();</script>
 </head>
 <body class="@yield('body_class')">
     <a class="skip-link" href="#main">Lewati ke konten</a>
@@ -64,9 +64,11 @@
                     <input id="nav-q" type="search" name="q" placeholder="Search" maxlength="80" value="{{ $search ?? '' }}" autocomplete="off">
                 </form>
 
-                <button class="theme-toggle" type="button" data-theme-toggle aria-label="Ganti tema terang / gelap" title="Tema terang / gelap">
-                    <i class="fa-solid fa-moon" aria-hidden="true"></i><i class="fa-solid fa-sun" aria-hidden="true"></i>
-                </button>
+                <div class="theme-switch" role="radiogroup" aria-label="Tema tampilan" data-theme-switch>
+                    <button type="button" role="radio" aria-checked="false" data-theme-set="light" aria-label="Tema terang" title="Terang"><i class="fa-solid fa-sun" aria-hidden="true"></i></button>
+                    <button type="button" role="radio" aria-checked="false" data-theme-set="system" aria-label="Ikuti sistem" title="Ikuti sistem"><i class="fa-solid fa-circle-half-stroke" aria-hidden="true"></i></button>
+                    <button type="button" role="radio" aria-checked="false" data-theme-set="dark" aria-label="Tema gelap" title="Gelap"><i class="fa-solid fa-moon" aria-hidden="true"></i></button>
+                </div>
 
                 <button class="nav__toggle" type="button" aria-controls="nav-menu" aria-expanded="false" data-nav-toggle>
                     <span class="nav__toggle-label">Menu</span>

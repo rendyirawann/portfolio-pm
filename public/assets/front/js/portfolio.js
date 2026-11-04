@@ -26,16 +26,33 @@
         window.matchMedia('(min-width: 901px)').addEventListener('change', function (m) { if (m.matches) setOpen(false); });
     }
 
-    // --- Light / dark theme (same storage key as the admin panel) ---
-    document.querySelectorAll('[data-theme-toggle]').forEach(function (btn) {
-        btn.addEventListener('click', function () {
-            var next = document.documentElement.getAttribute('data-theme') === 'light' ? 'dark' : 'light';
-            document.documentElement.setAttribute('data-theme', next);
-            try { localStorage.setItem('data-bs-theme', next); } catch (e) {}
-            var meta = document.querySelector('meta[name="theme-color"]');
-            if (meta) meta.setAttribute('content', next === 'light' ? '#f6f6f4' : '#0d0d0f');
-        });
-    });
+    // --- Theme: light / dark / system (same storage keys as the admin panel) ---
+    (function theme() {
+        var root = document.documentElement;
+        var mq = window.matchMedia('(prefers-color-scheme: dark)');
+        var buttons = document.querySelectorAll('[data-theme-set]');
+        var meta = document.querySelector('meta[name="theme-color"]');
+
+        function mode() {
+            try { return localStorage.getItem('data-bs-theme-mode') || localStorage.getItem('data-bs-theme') || 'dark'; } catch (e) { return 'dark'; }
+        }
+        function apply(m, persist) {
+            var t = m === 'system' ? (mq.matches ? 'dark' : 'light') : (m === 'light' ? 'light' : 'dark');
+            root.setAttribute('data-theme', t);
+            root.setAttribute('data-theme-mode', m);
+            if (persist) { try { localStorage.setItem('data-bs-theme-mode', m); localStorage.setItem('data-bs-theme', t); } catch (e) {} }
+            if (meta) meta.setAttribute('content', t === 'light' ? '#e9e9e7' : '#0d0d0f');
+            buttons.forEach(function (b) {
+                var on = b.getAttribute('data-theme-set') === m;
+                b.classList.toggle('is-active', on);
+                b.setAttribute('aria-checked', String(on));
+            });
+        }
+
+        apply(mode(), false);
+        buttons.forEach(function (b) { b.addEventListener('click', function () { apply(b.getAttribute('data-theme-set'), true); }); });
+        mq.addEventListener('change', function () { if (mode() === 'system') apply('system', false); });
+    })();
 
     // --- Navbar dropdown (Category) ---
     document.querySelectorAll('[data-dropdown]').forEach(function (dd) {
