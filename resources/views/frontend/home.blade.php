@@ -20,6 +20,10 @@
 
     // Hero deck: featured projects first (the visible() scope orders them so).
     $deck = $projects->take(5);
+
+    // Ticker lines: service titles after the hero, skill names before contact.
+    $tickerA = $services->pluck('title')->filter()->values();
+    $tickerB = $skills->flatten()->pluck('name')->filter()->values();
 @endphp
 
 @push('head')
@@ -72,12 +76,12 @@
         </div>
 
         @if ($deck->isNotEmpty())
-            <div class="container hero__deck">
+            <div class="container hero__deck" data-cursor="drag">
                 <div class="deck__head">
                     <span class="deck__label" data-pf="hero_deck_label">{{ $c['hero_deck_label'] }}</span>
                     <a href="{{ route('portfolio.projects') }}">Semua project ({{ $projectTotal }}) <i class="fa-solid fa-arrow-right" aria-hidden="true"></i></a>
                 </div>
-                <div class="deck" aria-label="Project pilihan">
+                <div class="deck" aria-label="Project pilihan — geser untuk memutar" data-deck tabindex="0">
                     @php $ringText = Str::upper(trim((string) $c['hero_deck_label']) ?: 'Selected work'); @endphp
                     <svg class="deck__ring" viewBox="0 0 300 300" aria-hidden="true">
                         <defs><path id="deck-ring-path" d="M150,150 m-128,0 a128,128 0 1,1 256,0 a128,128 0 1,1 -256,0"/></defs>
@@ -85,14 +89,23 @@
                         <text><textPath href="#deck-ring-path">{{ $ringText }} &#8226; {{ $ringText }} &#8226; {{ $ringText }} &#8226; {{ $ringText }} &#8226;</textPath></text>
                     </svg>
                     @foreach ($deck as $p)
-                        <a href="{{ route('portfolio.project', $p->slug) }}" class="deck__card" aria-label="{{ $p->title }}">
-                            <img src="{{ $p->cover_url }}" alt="" width="300" height="400" loading="eager" decoding="async">
-                            <figcaption><b>{{ Str::limit($p->title, 32) }}</b><span>{{ $p->category?->name ?: (\App\Models\Portfolio\Project::TYPES[$p->type] ?? 'Project') }}</span></figcaption>
+                        <a href="{{ route('portfolio.project', $p->slug) }}" class="deck__card" aria-label="{{ $p->title }}" draggable="false">
+                            <span class="deck__card-inner">
+                                <img src="{{ $p->cover_url }}" alt="" width="300" height="400" loading="eager" decoding="async" draggable="false">
+                                <span class="deck__caption"><b>{{ Str::limit($p->title, 32) }}</b><span>{{ $p->category?->name ?: (\App\Models\Portfolio\Project::TYPES[$p->type] ?? 'Project') }}</span></span>
+                            </span>
                         </a>
                     @endforeach
                 </div>
             </div>
         @endif
+@if ($tickerA->isNotEmpty())
+        <div class="marquee" aria-hidden="true">
+            <div class="marquee__track">
+                @foreach ([0, 1] as $rep)@foreach ($tickerA as $w)<span>{{ $w }}</span><i>&#10022;</i>@endforeach @endforeach
+            </div>
+        </div>
+    @endif
     </section>
 
     {{-- ================= ABOUT ================= --}}
@@ -200,7 +213,7 @@
         <section class="section" id="experience" aria-labelledby="exp-title">
             <div class="container">
                 @include('frontend.partials.heading', ['key' => 'experience', 'id' => 'exp-title', 'kicker' => 'Experience', 'title' => $c['experience_title'], 'subtitle' => $c['experience_subtitle']])
-                <ol class="timeline">
+                <ol class="timeline" data-reveal="line">
                     @foreach ($experiences as $exp)
                         <li class="timeline__item" data-reveal>
                             <span class="timeline__period" data-pf="experiences.{{ $exp->id }}.period">{{ $exp->period }}</span>
@@ -269,6 +282,13 @@
     @endif
 
     {{-- ================= CONTACT ================= --}}
+    @if ($tickerB->isNotEmpty())
+        <div class="marquee marquee--line" aria-hidden="true">
+            <div class="marquee__track marquee__track--reverse">
+                @foreach ([0, 1] as $rep)@foreach ($tickerB as $w)<span>{{ $w }}</span><i>&#10022;</i>@endforeach @endforeach
+            </div>
+        </div>
+    @endif
     <section class="section contact" id="contact" aria-labelledby="contact-title">
         <div class="container contact__grid">
             <div class="contact__info" data-reveal>
