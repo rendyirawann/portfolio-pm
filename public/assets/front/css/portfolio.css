@@ -26,7 +26,7 @@
     --ink: #fff;                 /* strongest text / solid button ground */
     --ink-contrast: #0d0d0f;     /* text on top of --ink */
 
-    --font-display: 'Plus Jakarta Sans', 'Archivo', system-ui, sans-serif;
+    --font-display: 'Bricolage Grotesque', 'Plus Jakarta Sans', system-ui, sans-serif;
     --font-hud: 'Plus Jakarta Sans', system-ui, sans-serif;
     --font-body: 'Plus Jakarta Sans', 'Inter', system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif;
 
