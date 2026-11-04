@@ -24,28 +24,25 @@
 <body class="@yield('body_class')">
     <a class="skip-link" href="#main">Lewati ke konten</a>
 
-    {{-- ================= NAVBAR ================= --}}
+    {{-- ================= NAVBAR: floating pill ================= --}}
+    @php $link = fn ($x) => \App\Support\Portfolio\PortfolioData::href($x); @endphp
     <header class="nav" data-nav>
-        <div class="container nav__bar">
+        <div class="nav__pill">
             <a href="{{ route('home') }}" class="nav__brand" aria-label="{{ $c['brand_name'] }} — beranda">
                 @if ($brandLogo)
-                    <img src="{{ Media::url($brandLogo) }}" alt="{{ $c['brand_name'] }}" height="36" width="120" class="nav__logo">
+                    <img src="{{ Media::url($brandLogo) }}" alt="{{ $c['brand_name'] }}" height="28" width="96" class="nav__logo">
                 @else
-                    <img src="{{ $brand['logo_url'] }}" alt="" class="nav__mark" width="40" height="40">
+                    <img src="{{ $brand['logo_url'] }}" alt="" class="nav__mark" width="28" height="28">
                     <span class="nav__name" data-pf="brand_name">{{ $c['brand_name'] }}</span>
                 @endif
             </a>
 
-            @php
-                $link = fn ($t) => \App\Support\Portfolio\PortfolioData::href($t);
-            @endphp
-
-            {{-- Right cluster: Home · Category ▾ · Search · Menu ≡ --}}
-            <div class="nav__right">
-                <a href="{{ route('home') }}" class="nav__link">Home</a>
-
+            <ul class="nav__links">
+                @foreach ($nav->take(5) as $item)
+                    <li><a href="{{ $link($item->target) }}" class="nav__link" @if (str_starts_with($item->target, 'http')) target="_blank" rel="noopener" @endif>{{ $item->label }}</a></li>
+                @endforeach
                 @if ($navCategories->isNotEmpty())
-                    <div class="nav__dd" data-dropdown>
+                    <li class="nav__dd" data-dropdown>
                         <button type="button" class="nav__link nav__dd-btn" aria-expanded="false" aria-haspopup="true" data-dropdown-btn>
                             Category <i class="fa-solid fa-chevron-down" aria-hidden="true"></i>
                         </button>
@@ -55,29 +52,24 @@
                                 <li><a href="{{ route('portfolio.projects', ['category' => $cat->slug]) }}">{{ $cat->name }}</a></li>
                             @endforeach
                         </ul>
-                    </div>
+                    </li>
                 @endif
+            </ul>
 
-                <form action="{{ route('portfolio.projects') }}" method="GET" class="nav__search" role="search">
-                    <i class="fa-solid fa-magnifying-glass" aria-hidden="true"></i>
-                    <label for="nav-q" class="sr-only">Cari project</label>
-                    <input id="nav-q" type="search" name="q" placeholder="Search" maxlength="80" value="{{ $search ?? '' }}" autocomplete="off">
-                </form>
-
+            <div class="nav__end">
                 <div class="theme-switch" role="radiogroup" aria-label="Tema tampilan" data-theme-switch>
                     <button type="button" role="radio" aria-checked="false" data-theme-set="light" aria-label="Tema terang" title="Terang"><i class="fa-solid fa-sun" aria-hidden="true"></i></button>
                     <button type="button" role="radio" aria-checked="false" data-theme-set="system" aria-label="Ikuti sistem" title="Ikuti sistem"><i class="fa-solid fa-circle-half-stroke" aria-hidden="true"></i></button>
                     <button type="button" role="radio" aria-checked="false" data-theme-set="dark" aria-label="Tema gelap" title="Gelap"><i class="fa-solid fa-moon" aria-hidden="true"></i></button>
                 </div>
-
-                <button class="nav__toggle" type="button" aria-controls="nav-menu" aria-expanded="false" data-nav-toggle>
-                    <span class="nav__toggle-label">Menu</span>
+                <a href="{{ $link($c['nav_cta_link']) }}" class="nav__cta"><span data-pf="nav_cta_label">{{ $c['nav_cta_label'] }}</span></a>
+                <button class="nav__toggle" type="button" aria-controls="nav-menu" aria-expanded="false" data-nav-toggle aria-label="Buka menu">
                     <span class="nav__burger" aria-hidden="true"><i></i><i></i><i></i></span>
                 </button>
             </div>
         </div>
 
-        {{-- Full-screen menu opened by "Menu" --}}
+        {{-- Full-screen menu (mobile, or the burger at any width) --}}
         <nav class="nav__menu" id="nav-menu" aria-label="Navigasi utama">
             <div class="container nav__menu-inner">
                 <ul class="nav__menu-links">
@@ -85,12 +77,15 @@
                         <li><a href="{{ $link($item->target) }}" @if (str_starts_with($item->target, 'http')) target="_blank" rel="noopener" @endif>
                             <small>{{ str_pad($i + 1, 2, '0', STR_PAD_LEFT) }}</small>{{ $item->label }}</a></li>
                     @endforeach
+                    @if ($navCategories->isNotEmpty())
+                        <li><a href="{{ route('portfolio.projects') }}"><small>{{ str_pad($nav->count() + 1, 2, '0', STR_PAD_LEFT) }}</small>Semua Project</a></li>
+                    @endif
                 </ul>
                 <div class="nav__menu-side">
-                    <form action="{{ route('portfolio.projects') }}" method="GET" class="nav__search nav__search--menu" role="search">
+                    <form action="{{ route('portfolio.projects') }}" method="GET" class="nav__search" role="search">
                         <i class="fa-solid fa-magnifying-glass" aria-hidden="true"></i>
                         <label for="nav-q2" class="sr-only">Cari project</label>
-                        <input id="nav-q2" type="search" name="q" placeholder="Search project" maxlength="80">
+                        <input id="nav-q2" type="search" name="q" placeholder="Cari project" maxlength="80" value="{{ $search ?? '' }}" autocomplete="off">
                     </form>
                     <a href="{{ $link($c['nav_cta_link']) }}" class="btn btn--glow">{{ $c['nav_cta_label'] }} <i class="fa-solid fa-arrow-right" aria-hidden="true"></i></a>
                     @include('frontend.partials.socials', ['class' => 'socials'])
@@ -98,6 +93,12 @@
             </div>
         </nav>
     </header>
+
+    {{-- Preloader: brand + thin progress line, gone on load (portfolio.js) --}}
+    <div class="loader" data-loader aria-hidden="true">
+        <span class="loader__name">{{ $c['brand_name'] }}</span>
+        <span class="loader__bar"><i></i></span>
+    </div>
 
     <main id="main">
         @yield('content')
@@ -107,8 +108,11 @@
     <footer class="footer" id="footer">
         <div class="container">
             <div class="footer__cta" data-reveal>
-                <h2 class="footer__cta-title" data-pf="footer_cta_title">{{ $c['footer_cta_title'] }}</h2>
-                <a href="{{ request()->routeIs('home') ? '#contact' : route('home') . '#contact' }}" class="btn btn--glow">
+                <div>
+                    <p class="kicker">Let's talk</p>
+                    <h2 class="footer__cta-title" data-pf="footer_cta_title">{{ $c['footer_cta_title'] }}</h2>
+                </div>
+                <a href="{{ request()->routeIs('home') ? '#contact' : route('home') . '#contact' }}" class="btn btn--glow btn--lg">
                     {{ $c['hero_cta_label'] }} <i class="fa-solid fa-arrow-right" aria-hidden="true"></i>
                 </a>
             </div>

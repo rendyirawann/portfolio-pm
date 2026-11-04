@@ -81,16 +81,15 @@
 
         // Highlight the nav link of the section in view.
         var links = {};
-        document.querySelectorAll('.nav__menu a[href*="#"]').forEach(function (a) {
+        document.querySelectorAll('.nav__menu a[href*="#"], .nav__links a[href*="#"]').forEach(function (a) {
             var id = a.getAttribute('href').split('#')[1];
             if (id) links[id] = a;
         });
         var spy = new IntersectionObserver(function (entries) {
             entries.forEach(function (entry) {
-                var link = links[entry.target.id];
-                if (!link || !entry.isIntersecting) return;
-                Object.keys(links).forEach(function (k) { links[k].classList.remove('is-active'); });
-                link.classList.add('is-active');
+                if (!entry.isIntersecting || !links[entry.target.id]) return;
+                document.querySelectorAll('.nav__menu a.is-active, .nav__links a.is-active').forEach(function (a) { a.classList.remove('is-active'); });
+                document.querySelectorAll('.nav__menu a[href$="#' + entry.target.id + '"], .nav__links a[href$="#' + entry.target.id + '"]').forEach(function (a) { a.classList.add('is-active'); });
             });
         }, { rootMargin: '-45% 0px -50% 0px' });
         Object.keys(links).forEach(function (id) { var s = document.getElementById(id); if (s) spy.observe(s); });
@@ -405,4 +404,22 @@
         ring.style.transform = 'translate(' + rx + 'px,' + ry + 'px) translate(-50%,-50%)';
         requestAnimationFrame(loop);
     })();
+})();
+
+/* ---------- Preloader ----------
+   Tirai dengan nama brand + garis progres; hilang begitu halaman termuat
+   (minimal 450 ms supaya tidak berkedip, maksimal 2,5 s apa pun yang terjadi). */
+(function () {
+    'use strict';
+    var el = document.querySelector('[data-loader]');
+    if (!el) return;
+    var started = performance.now(), done = false;
+    function finish() {
+        if (done) return; done = true;
+        var wait = Math.max(0, 450 - (performance.now() - started));
+        setTimeout(function () { el.classList.add('is-done'); document.documentElement.classList.add('is-loaded'); }, wait);
+    }
+    if (document.readyState === 'complete') finish();
+    else window.addEventListener('load', finish);
+    setTimeout(finish, 2500);
 })();
