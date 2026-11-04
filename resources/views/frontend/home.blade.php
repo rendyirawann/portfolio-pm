@@ -12,7 +12,11 @@
         $subtitle = preg_replace('/' . preg_quote(e($word), '/') . '/iu', '<span class="hl">$0</span>', $subtitle, 1);
     }
 
-    $heroImage = Media::url($c['hero_image'], 'assets/front/img/hero-default.svg');
+    // Static assets are served with a year-long immutable cache, so the default
+    // illustration carries its mtime to bust old copies when the file changes.
+    $heroImage = $c['hero_image']
+        ? Media::url($c['hero_image'])
+        : asset('assets/front/img/hero-default.svg') . '?v=' . filemtime(public_path('assets/front/img/hero-default.svg'));
     $photo = Media::url($c['about_photo'], 'assets/front/img/profile-default.svg');
     $wa = preg_replace('/\D/', '', (string) $c['contact_whatsapp']);
     $waLink = $wa ? 'https://wa.me/' . $wa . '?text=' . rawurlencode($c['contact_whatsapp_text']) : null;
