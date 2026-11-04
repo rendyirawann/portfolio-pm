@@ -85,7 +85,7 @@
                     <span class="deck__label" data-pf="hero_deck_label">{{ $c['hero_deck_label'] }}</span>
                     <a href="{{ route('portfolio.projects') }}">Semua project ({{ $projectTotal }}) <i class="fa-solid fa-arrow-right" aria-hidden="true"></i></a>
                 </div>
-                <div class="deck" aria-label="Project pilihan — geser untuk memutar" data-deck tabindex="0">
+                <div class="deck" aria-label="Project pilihan — geser untuk memutar" data-deck tabindex="0" data-px="0.12">
                     @php $ringText = Str::upper(trim((string) $c['hero_deck_label']) ?: 'Selected work'); @endphp
                     <svg class="deck__ring" viewBox="0 0 300 300" aria-hidden="true">
                         <defs><path id="deck-ring-path" d="M150,150 m-128,0 a128,128 0 1,1 256,0 a128,128 0 1,1 -256,0"/></defs>

@@ -109,7 +109,7 @@
 
     {{-- ================= FOOTER ================= --}}
     <footer class="footer" id="footer">
-        <div class="footer__ghost" aria-hidden="true"><span>{{ Str::upper(Str::before(trim((string) ($c['about_name'] ?: $c['brand_name'])), ' ') ?: $c['brand_name']) }}</span></div>
+        <div class="footer__ghost" aria-hidden="true"><span data-px="0.2">{{ Str::upper(Str::before(trim((string) ($c['about_name'] ?: $c['brand_name'])), ' ') ?: $c['brand_name']) }}</span></div>
         <div class="container footer__inner">
             <div class="footer__connect" data-reveal>
                 <a href="{{ route('home') }}" class="footer__brand" aria-label="{{ $c['brand_name'] }}">

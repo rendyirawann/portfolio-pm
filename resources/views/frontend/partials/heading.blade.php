@@ -4,7 +4,7 @@
     $words = preg_split('/\s+/', trim((string) $title)) ?: [];
     $last = count($words) > 1 ? array_pop($words) : null;
 @endphp
-<header class="section-head" data-reveal>
+<header class="section-head" data-reveal data-px="0.06">
     <div>
         <p class="kicker">{{ $kicker }}</p>
         <h2 class="section-title" id="{{ $id }}">

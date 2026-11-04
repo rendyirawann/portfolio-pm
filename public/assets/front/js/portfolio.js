@@ -11,7 +11,7 @@
 
     // --- Navbar: scrolled state + mobile menu ---
     if (nav) {
-        var onScroll = function () { nav.classList.toggle('is-scrolled', window.scrollY > 20); };
+        var onScroll = function () { nav.classList.toggle('is-scrolled', window.scrollY > 80); };
         onScroll();
         window.addEventListener('scroll', onScroll, { passive: true });
 
