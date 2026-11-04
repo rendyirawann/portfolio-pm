@@ -116,7 +116,7 @@
                     @if ($brandLogo)
                         <img src="{{ Media::url($brandLogo) }}" alt="{{ $c['brand_name'] }}" height="40" width="132" loading="lazy">
                     @else
-                        <img src="{{ $brand['logo_url'] }}" alt="" width="44" height="44" loading="lazy">
+                        <img src="{{ $brand['logo_url'] }}" alt="" width="52" height="52" loading="lazy">
                         <span data-pf="brand_name">{{ $c['brand_name'] }}</span>
                     @endif
                 </a>
