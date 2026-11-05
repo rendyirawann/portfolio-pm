@@ -181,8 +181,8 @@ class ContentSchema
         return [
             'brand' => 'Mengatur logo/nama di pil navbar melayang, logo di layar loading dan footer, serta tombol putih di navbar. Pil tampil pendek di puncak halaman dan memanjang (menampilkan menu) setelah digulir. Logo bulat paling bagus.',
             'hero' => 'Bagian paling atas website. Kata raksasa merah di latar, foto di depannya, nama & profesi di kiri, tagline & statistik di kanan. Deck kartu di bawahnya otomatis mengambil 5 project pilihan (yang ditandai Featured lebih dulu).',
-            'about' => 'Seksi "About Me": pita video sinematik di atas (mulai diputar saat digulir ke seksi ini), lalu foto, nama, profesi, bio, lokasi & status. Bio menyala kata demi kata saat digulir.',
-            'mascot' => 'Robot kecil melayang di kanan bawah dengan tiga badge kaca yang bisa diklik. Pengunjung bisa menutupnya untuk tab itu saja; muncul lagi di kunjungan berikutnya.',
+            'about' => 'Seksi "About Me": foto, nama, profesi, bio, lokasi & status. Bio menyala kata demi kata saat digulir.',
+            'mascot' => 'Robot kecil melayang di kanan bawah dengan tiga badge kaca yang bisa diklik. Bisa diseret ke posisi lain dan ditutup; keduanya hanya berlaku di tab itu.',
             'sections' => 'Judul & subjudul besar di atas setiap bagian halaman depan (Layanan, Keahlian, Project, Pengalaman, Testimoni). Isi daftarnya sendiri di menu Portfolio lainnya.',
             'contact' => 'Seksi kontak & form "Hubungi saya". Email tujuan menerima pesan dari form; tombol WhatsApp & LinkedIn membuka chat/profil langsung.',
             'footer' => 'Footer gelap bergradasi merah: logo, kalimat kecil, judul besar, tombol, lalu kolom tautan dan nama raksasa samar di dasar. Isi kolom Navigasi & Kontak dikelola di menu Portfolio › Link Footer.',

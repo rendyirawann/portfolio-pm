@@ -118,16 +118,7 @@
 
     {{-- ================= ABOUT ================= --}}
     <section class="section about" id="about" aria-labelledby="about-title">
-        {{-- Full-section video backdrop (starts when the section scrolls in, pauses when out);
-             the content sits in a glass card so it stays readable over the footage. --}}
-        <div class="about__film" aria-hidden="true">
-            <video class="about__video" data-about-video muted playsinline preload="metadata">
-                <source src="{{ asset('assets/front/media/about.webm') }}" type="video/webm">
-                <source src="{{ asset('assets/front/media/about.mp4') }}" type="video/mp4">
-            </video>
-            <span class="about__film-shade"></span>
-        </div>
-        <div class="container"><div class="about__card about__grid" data-reveal>
+        <div class="container about__grid">
             <div data-reveal>
                 <img src="{{ $photo }}" alt="Foto {{ $c['about_name'] }}" class="about__photo" data-pf-img="about_photo" width="520" height="650" loading="lazy" decoding="async">
                 <ul class="about__meta">
@@ -162,7 +153,7 @@
                     @endif
                 </div>
             </div>
-        </div></div>
+        </div>
     </section>
 
     {{-- ================= SERVICES ================= --}}

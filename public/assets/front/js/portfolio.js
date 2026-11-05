@@ -698,7 +698,7 @@
     window.addEventListener('scroll', update, { passive: true }); update();
 })();
 
-/* ---------- Maskot: tombol tutup (diingat per tab saja) ---------- */
+/* ---------- Maskot: tombol tutup (per tab) + bisa diseret ---------- */
 (function () {
     'use strict';
     var m = document.querySelector('[data-mascot]');
@@ -707,26 +707,30 @@
     try { localStorage.removeItem('pf-mascot'); if (sessionStorage.getItem('pf-mascot') === 'off') m.classList.add('is-hidden'); } catch (e) {}
     var x = m.querySelector('[data-mascot-close]');
     if (x) x.addEventListener('click', function () { m.classList.add('is-hidden'); try { sessionStorage.setItem('pf-mascot', 'off'); } catch (e) {} });
-})();
 
-/* ---------- Video About: diputar saat seksi terlihat, berhenti saat keluar ---------- */
-(function () {
-    'use strict';
-    var v = document.querySelector('[data-about-video]');
-    if (!v || !('IntersectionObserver' in window)) return;
-    var wrap = v.closest('.about');
-    var io = new IntersectionObserver(function (entries) {
-        entries.forEach(function (en) {
-            if (en.isIntersecting) {
-                v.play().then(function () { wrap.classList.add('is-playing'); }).catch(function () { wrap.classList.add('is-playing'); });
-            } else {
-                v.pause();
-            }
-        });
-    }, { threshold: 0.25 });
-    io.observe(wrap);
-    // Habis diputar sekali, diam di frame terakhir; putar lagi hanya kalau masuk lagi dari atas.
-    v.addEventListener('ended', function () { v.currentTime = Math.max(0, v.duration - 0.05); });
+    // Seret robot ke mana saja; posisinya diingat untuk tab ini.
+    var img = m.querySelector('.mascot__video');
+    if (!img) return;
+    function place(x, y) {
+        var w = m.offsetWidth, h = m.offsetHeight;
+        x = Math.max(0, Math.min(window.innerWidth - w, x)); y = Math.max(0, Math.min(window.innerHeight - h, y));
+        m.style.left = x + 'px'; m.style.top = y + 'px'; m.style.right = 'auto'; m.style.bottom = 'auto';
+        return [x, y];
+    }
+    try { var saved = JSON.parse(sessionStorage.getItem('pf-mascot-pos') || 'null'); if (saved) place(saved[0], saved[1]); } catch (e) {}
+    var drag = null;
+    img.addEventListener('pointerdown', function (e) {
+        var r = m.getBoundingClientRect();
+        drag = { dx: e.clientX - r.left, dy: e.clientY - r.top };
+        m.classList.add('is-dragging'); img.setPointerCapture(e.pointerId); e.preventDefault();
+    });
+    img.addEventListener('pointermove', function (e) { if (drag) place(e.clientX - drag.dx, e.clientY - drag.dy); });
+    function drop(e) {
+        if (!drag) return; drag = null; m.classList.remove('is-dragging');
+        var r = m.getBoundingClientRect(); try { sessionStorage.setItem('pf-mascot-pos', JSON.stringify([r.left, r.top])); } catch (err) {}
+    }
+    img.addEventListener('pointerup', drop); img.addEventListener('pointercancel', drop);
+    img.setAttribute('draggable', 'false');
 })();
 
 /* ---------- Video ambient (reviews): 0.7x, jalan hanya saat terlihat ---------- */
