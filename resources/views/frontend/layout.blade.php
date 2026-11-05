@@ -114,10 +114,8 @@
                 <circle cx="150" cy="150" r="120" stroke-dasharray="4 10"/>
                 <circle cx="150" cy="150" r="96" stroke-dasharray="2 6"/>
             </svg>
-            <video class="mascot__video" autoplay loop muted playsinline preload="auto" width="360" height="360">
-                <source src="{{ asset('assets/front/media/mascot.webm') }}" type="video/webm">
-                <source src="{{ asset('assets/front/media/mascot-light.mp4') }}" type="video/mp4">
-            </video>
+            {{-- Animated WebP with real alpha: loops cleanly (VP9-alpha video showed decoder noise on loop). --}}
+            <img class="mascot__video" src="{{ asset('assets/front/media/mascot.webp') }}?v={{ filemtime(public_path('assets/front/media/mascot.webp')) }}" alt="" width="300" height="300" loading="lazy" decoding="async">
             <a href="{{ request()->routeIs('home') ? '#projects' : route('home') . '#projects' }}" class="mascot__badge mascot__badge--1"><i class="fa-solid fa-layer-group"></i><span><b data-pf="mascot_badge1">{{ $c['mascot_badge1'] }}</b><small data-pf="mascot_badge1_sub">{{ $c['mascot_badge1_sub'] }}</small></span></a>
             <a href="{{ request()->routeIs('home') ? '#experience' : route('home') . '#experience' }}" class="mascot__badge mascot__badge--2"><i class="fa-solid fa-diagram-project"></i><span><b data-pf="mascot_badge2">{{ $c['mascot_badge2'] }}</b><small data-pf="mascot_badge2_sub">{{ $c['mascot_badge2_sub'] }}</small></span></a>
             <a href="{{ request()->routeIs('home') ? '#contact' : route('home') . '#contact' }}" class="mascot__badge mascot__badge--3"><i class="fa-solid fa-check"></i><span><b data-pf="mascot_badge3">{{ $c['mascot_badge3'] }}</b><small data-pf="mascot_badge3_sub">{{ $c['mascot_badge3_sub'] }}</small></span></a>
