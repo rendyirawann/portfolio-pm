@@ -176,17 +176,6 @@
                         </div>
                     @endif
                 @endforeach
-                @if ($nav->isNotEmpty())
-                    <div>
-                        <h3 class="footer__heading">Eksplorasi</h3>
-                        <ul class="footer__links">
-                            @foreach ($nav as $item)
-                                <li><a href="{{ $link($item->target) }}">{{ $item->label }}</a></li>
-                            @endforeach
-                            <li><a href="{{ route('portfolio.projects') }}">Semua Project</a></li>
-                        </ul>
-                    </div>
-                @endif
             </div>
 
             <div class="footer__bottom">

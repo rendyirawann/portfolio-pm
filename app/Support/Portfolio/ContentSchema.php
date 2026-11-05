@@ -185,7 +185,7 @@ class ContentSchema
             'mascot' => 'Robot kecil melayang di kanan bawah dengan tiga badge kaca yang bisa diklik. Pengunjung bisa menutupnya untuk tab itu saja; muncul lagi di kunjungan berikutnya.',
             'sections' => 'Judul & subjudul besar di atas setiap bagian halaman depan (Layanan, Keahlian, Project, Pengalaman, Testimoni). Isi daftarnya sendiri di menu Portfolio lainnya.',
             'contact' => 'Seksi kontak & form "Hubungi saya". Email tujuan menerima pesan dari form; tombol WhatsApp & LinkedIn membuka chat/profil langsung.',
-            'footer' => 'Footer gelap bergradasi merah: logo, kalimat kecil, judul besar, tombol, lalu kolom tautan dan nama raksasa samar di dasar. Isi kolom Navigasi & Kontak dikelola di menu Portfolio › Link Footer; kolom Eksplorasi otomatis dari menu navbar.',
+            'footer' => 'Footer gelap bergradasi merah: logo, kalimat kecil, judul besar, tombol, lalu kolom tautan dan nama raksasa samar di dasar. Isi kolom Navigasi & Kontak dikelola di menu Portfolio › Link Footer.',
             'login' => 'Semua teks di halaman login admin, layar loading saat halaman dibuka, dan tahapan proses saat tombol Masuk ditekan.',
             'admin' => 'Nama, logo, dan footer di panel admin ini (bukan website). Ikon di footer admin diambil dari menu Sosial Media.',
             'seo' => 'Cara website tampil di Google & saat link dibagikan (WhatsApp, LinkedIn). Meta title ± 60 karakter, description ± 155 karakter, gambar share 1200×630 px.',
