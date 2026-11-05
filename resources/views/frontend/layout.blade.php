@@ -20,7 +20,7 @@
     <link rel="stylesheet" href="{{ asset('assets/front/css/portfolio.css') }}?v={{ filemtime(public_path('assets/front/css/portfolio.css')) }}">
     @stack('head')
     {{-- Theme before first paint. Shares the admin's key so one choice applies everywhere; dark is the default. --}}
-    <script nonce="{{ $nonce }}">(function(){var d=document.documentElement,m='dark';d.classList.replace('no-js','js');try{m=localStorage.getItem('data-bs-theme-mode')||localStorage.getItem('data-bs-theme')||'dark';}catch(e){}var t=m==='system'?(matchMedia('(prefers-color-scheme: dark)').matches?'dark':'light'):(m==='light'?'light':'dark');d.setAttribute('data-theme',t);d.setAttribute('data-theme-mode',m);})();</script>
+    <script nonce="{{ $nonce }}">(function(){var d=document.documentElement,m='light';d.classList.replace('no-js','js');try{m=localStorage.getItem('data-bs-theme-mode')||localStorage.getItem('data-bs-theme')||'light';}catch(e){}var t=m==='system'?(matchMedia('(prefers-color-scheme: dark)').matches?'dark':'light'):(m==='light'?'light':'dark');d.setAttribute('data-theme',t);d.setAttribute('data-theme-mode',m);})();</script>
 </head>
 <body class="@yield('body_class')">
     <a class="skip-link" href="#main">Lewati ke konten</a>
@@ -63,7 +63,7 @@
                     <button type="button" role="radio" aria-checked="false" data-theme-set="system" aria-label="Ikuti sistem" title="Ikuti sistem"><i class="fa-solid fa-circle-half-stroke" aria-hidden="true"></i></button>
                     <button type="button" role="radio" aria-checked="false" data-theme-set="dark" aria-label="Tema gelap" title="Gelap"><i class="fa-solid fa-moon" aria-hidden="true"></i></button>
                 </div>
-                <a href="{{ $link($c['nav_cta_link']) }}" class="nav__cta"><span data-pf="nav_cta_label">{{ $c['nav_cta_label'] }}</span></a>
+                <a href="{{ $link($c['nav_cta_link']) }}" class="nav__cta" data-magnet><span data-pf="nav_cta_label">{{ $c['nav_cta_label'] }}</span></a>
                 <button class="nav__toggle" type="button" aria-controls="nav-menu" aria-expanded="false" data-nav-toggle aria-label="Buka menu">
                     <span class="nav__burger" aria-hidden="true"><i></i><i></i><i></i></span>
                 </button>
@@ -103,13 +103,35 @@
         <span class="loader__bar"><i></i></span>
     </div>
 
+    {{-- Persistent film grain (ref. motionsite): SVG fractal noise, very faint. --}}
+    <div class="grain" aria-hidden="true"></div>
+
+    {{-- Floating mascot (ref. "Assist." robot companion): aura, orbit ring, glass badges. --}}
+    @if (($c['mascot_enabled'] ?? '1') === '1')
+        <aside class="mascot" data-mascot aria-label="Maskot">
+            <span class="mascot__aura" aria-hidden="true"></span>
+            <svg class="mascot__orbit" viewBox="0 0 300 300" aria-hidden="true">
+                <circle cx="150" cy="150" r="120" stroke-dasharray="4 10"/>
+                <circle cx="150" cy="150" r="96" stroke-dasharray="2 6"/>
+            </svg>
+            <video class="mascot__video" autoplay loop muted playsinline preload="auto" width="360" height="360">
+                <source src="{{ asset('assets/front/media/mascot.webm') }}" type="video/webm">
+                <source src="{{ asset('assets/front/media/mascot-light.mp4') }}" type="video/mp4">
+            </video>
+            <a href="{{ request()->routeIs('home') ? '#projects' : route('home') . '#projects' }}" class="mascot__badge mascot__badge--1"><i class="fa-solid fa-layer-group"></i><span><b data-pf="mascot_badge1">{{ $c['mascot_badge1'] }}</b><small data-pf="mascot_badge1_sub">{{ $c['mascot_badge1_sub'] }}</small></span></a>
+            <a href="{{ request()->routeIs('home') ? '#experience' : route('home') . '#experience' }}" class="mascot__badge mascot__badge--2"><i class="fa-solid fa-diagram-project"></i><span><b data-pf="mascot_badge2">{{ $c['mascot_badge2'] }}</b><small data-pf="mascot_badge2_sub">{{ $c['mascot_badge2_sub'] }}</small></span></a>
+            <a href="{{ request()->routeIs('home') ? '#contact' : route('home') . '#contact' }}" class="mascot__badge mascot__badge--3"><i class="fa-solid fa-check"></i><span><b data-pf="mascot_badge3">{{ $c['mascot_badge3'] }}</b><small data-pf="mascot_badge3_sub">{{ $c['mascot_badge3_sub'] }}</small></span></a>
+            <button type="button" class="mascot__close" data-mascot-close aria-label="Sembunyikan maskot">&times;</button>
+        </aside>
+    @endif
+
     <main id="main">
         @yield('content')
     </main>
 
     {{-- ================= FOOTER ================= --}}
     <footer class="footer" id="footer">
-        <div class="footer__ghost" aria-hidden="true"><span data-px="0.2">{{ Str::upper(Str::before(trim((string) ($c['about_name'] ?: $c['brand_name'])), ' ') ?: $c['brand_name']) }}</span></div>
+        <div class="footer__ghost" aria-hidden="true"><span>{{ Str::upper(Str::before(trim((string) ($c['about_name'] ?: $c['brand_name'])), ' ') ?: $c['brand_name']) }}</span></div>
         <div class="container footer__inner">
             <div class="footer__connect" data-reveal>
                 <a href="{{ route('home') }}" class="footer__brand" aria-label="{{ $c['brand_name'] }}">
@@ -122,7 +144,7 @@
                 </a>
                 <p class="footer__kicker" data-pf="footer_about">{{ $c['footer_about'] }}</p>
                 <h2 class="footer__cta-title" data-pf="footer_cta_title">{{ $c['footer_cta_title'] }}</h2>
-                <a href="{{ request()->routeIs('home') ? '#contact' : route('home') . '#contact' }}" class="btn btn--glow btn--lg">
+                <a href="{{ request()->routeIs('home') ? '#contact' : route('home') . '#contact' }}" class="btn btn--glow btn--lg" data-magnet>
                     {{ $c['hero_cta_label'] }} <i class="fa-solid fa-arrow-right" aria-hidden="true"></i>
                 </a>
             </div>

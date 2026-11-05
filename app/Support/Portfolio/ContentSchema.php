@@ -30,7 +30,7 @@ class ContentSchema
                 'label' => 'Hero',
                 'icon' => 'ki-rocket',
                 'fields' => [
-                    'hero_word' => ['Kata raksasa di latar hero', 'text', 'Portfolio'],
+                    'hero_word' => ['Kata raksasa di latar hero (pisahkan koma untuk bergantian)', 'text', 'Portfolio, Delivery, Leadership'],
                     'hero_eyebrow' => ['Teks kecil di atas nama', 'text', "Hello, I'm"],
                     'hero_title_1' => ['Nama — baris 1', 'text', 'Dormansyah'],
                     'hero_title_2' => ['Nama — baris 2', 'text', 'Pasaribu'],
@@ -44,6 +44,19 @@ class ContentSchema
                     'hero_image' => ['Gambar hero (PNG transparan / foto)', 'image', null],
                     'hero_deck_label' => ['Deck kartu project — label', 'text', 'Selected work'],
                     'hero_deck_text' => ['Deck kartu project — teks pendek', 'text', 'A few projects I have managed end-to-end.'],
+                ],
+            ],
+            'mascot' => [
+                'label' => 'Maskot Robot',
+                'icon' => 'ki-abstract-41',
+                'fields' => [
+                    'mascot_enabled' => ['Tampilkan maskot robot melayang', 'toggle', '1'],
+                    'mascot_badge1' => ['Badge 1 — judul (ke #projects)', 'text', 'Selected work'],
+                    'mascot_badge1_sub' => ['Badge 1 — keterangan', 'text', 'see the projects'],
+                    'mascot_badge2' => ['Badge 2 — judul (ke #experience)', 'text', 'Delivery track'],
+                    'mascot_badge2_sub' => ['Badge 2 — keterangan', 'text', 'on scope, on time'],
+                    'mascot_badge3' => ['Badge 3 — judul (ke #contact)', 'text', 'Start a project'],
+                    'mascot_badge3_sub' => ['Badge 3 — keterangan', 'text', 'reply within 24h'],
                 ],
             ],
             'about' => [
@@ -168,7 +181,8 @@ class ContentSchema
         return [
             'brand' => 'Mengatur logo/nama di pil navbar melayang, logo di layar loading dan footer, serta tombol putih di navbar. Pil tampil pendek di puncak halaman dan memanjang (menampilkan menu) setelah digulir. Logo bulat paling bagus.',
             'hero' => 'Bagian paling atas website. Kata raksasa merah di latar, foto di depannya, nama & profesi di kiri, tagline & statistik di kanan. Deck kartu di bawahnya otomatis mengambil 5 project pilihan (yang ditandai Featured lebih dulu).',
-            'about' => 'Seksi "About Me": foto, nama, profesi, bio, lokasi & status. Foto tampil sebagai potret persegi panjang — foto biasa pun bagus.',
+            'about' => 'Seksi "About Me": pita video sinematik di atas (mulai diputar saat digulir ke seksi ini), lalu foto, nama, profesi, bio, lokasi & status. Bio menyala kata demi kata saat digulir.',
+            'mascot' => 'Robot kecil melayang di kanan bawah dengan tiga badge kaca yang bisa diklik. Pengunjung bisa menutupnya; pilihan itu diingat di browsernya.',
             'sections' => 'Judul & subjudul besar di atas setiap bagian halaman depan (Layanan, Keahlian, Project, Pengalaman, Testimoni). Isi daftarnya sendiri di menu Portfolio lainnya.',
             'contact' => 'Seksi kontak & form "Hubungi saya". Email tujuan menerima pesan dari form; tombol WhatsApp & LinkedIn membuka chat/profil langsung.',
             'footer' => 'Footer gelap bergradasi merah: logo, kalimat kecil, judul besar, tombol, lalu kolom tautan dan nama raksasa samar di dasar. Isi kolom Navigasi & Kontak dikelola di menu Portfolio › Link Footer; kolom Eksplorasi otomatis dari menu navbar.',
@@ -186,7 +200,7 @@ class ContentSchema
             'brand_logo' => 'PNG/SVG transparan, tinggi ± 36 px saat tampil. Kosongkan untuk memakai ikon + nama.',
             'nav_cta_label' => 'Tombol putih di ujung kanan pil navbar. Contoh: Hire Me.',
             'nav_cta_link' => '#contact (ke seksi kontak), /projects, atau URL lengkap.',
-            'hero_word' => 'Satu kata, tampil raksasa berwarna merah di belakang foto. Contoh: Portfolio. Makin pendek makin besar hurufnya.',
+            'hero_word' => 'Kata raksasa merah di belakang foto, diketik huruf per huruf. Pisahkan koma untuk beberapa kata bergantian, mis. Portfolio, Delivery, Leadership. Kata panjang otomatis mengecil.',
             'hero_eyebrow' => 'Teks kecil di atas nama. Contoh: Hello, I\'m.',
             'hero_title_1' => 'Nama depan / baris pertama nama besar.',
             'hero_title_2' => 'Nama belakang / baris kedua. Kosongkan jika nama satu kata.',

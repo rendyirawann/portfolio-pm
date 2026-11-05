@@ -37,13 +37,17 @@
 @section('content')
     {{-- ================= HERO ================= --}}
     <section class="hero" id="home" aria-labelledby="hero-title">
-        {{-- Giant word behind everything; textLength stretches it to the full width. --}}
-        <div class="hero__word" aria-hidden="true" data-px="0.35">
-            <svg viewBox="0 0 1000 250"><text x="500" y="236" text-anchor="middle" textLength="1000" lengthAdjust="spacingAndGlyphs" data-pf="hero_word">{{ $c['hero_word'] }}</text></svg>
+        {{-- Giant word behind everything. The admin field holds comma-separated
+             phrases; portfolio.js types them out one after another with a
+             blinking caret (ref. motionsite). Halftone + grain sit on top. --}}
+        @php $words = array_values(array_filter(array_map('trim', explode(',', (string) $c['hero_word'])))) ?: ['Portfolio']; @endphp
+        <div class="hero__word" aria-hidden="true" data-px="0.35" data-typewriter='@json($words)'>
+            <span class="hero__word-text" data-pf="hero_word">{{ $words[0] }}</span><span class="hero__caret"></span>
         </div>
+        <div class="hero__halftone" aria-hidden="true"></div>
 
         <div class="container hero__stage">
-            <div class="hero__copy" data-px="-0.08">
+            <div class="hero__copy">
                 <p class="hero__eyebrow" data-pf="hero_eyebrow">{{ $c['hero_eyebrow'] }}</p>
                 <h1 class="hero__title" id="hero-title">
                     <span class="hero__line" data-pf="hero_title_1">{{ $c['hero_title_1'] }}</span>
@@ -54,20 +58,20 @@
                     <p class="hero__desc" data-pf="hero_description">{{ $c['hero_description'] }}</p>
                 @endif
                 <div class="hero__actions">
-                    <a href="{{ PortfolioData::href($c['hero_cta_link']) }}" class="btn btn--glow"><span data-pf="hero_cta_label">{{ $c['hero_cta_label'] }}</span> <i class="fa-solid fa-arrow-right" aria-hidden="true"></i></a>
+                    <a href="{{ PortfolioData::href($c['hero_cta_link']) }}" class="btn btn--glow" data-magnet><span data-pf="hero_cta_label">{{ $c['hero_cta_label'] }}</span> <i class="fa-solid fa-arrow-right" aria-hidden="true"></i></a>
                     @if ($c['hero_cta2_label'])
-                        <a href="{{ PortfolioData::href($c['hero_cta2_link']) }}" class="btn btn--ghost"><span data-pf="hero_cta2_label">{{ $c['hero_cta2_label'] }}</span> <i class="fa-solid fa-arrow-up-right-from-square" aria-hidden="true"></i></a>
+                        <a href="{{ PortfolioData::href($c['hero_cta2_link']) }}" class="btn btn--ghost" data-magnet><span data-pf="hero_cta2_label">{{ $c['hero_cta2_label'] }}</span> <i class="fa-solid fa-arrow-up-right-from-square" aria-hidden="true"></i></a>
                     @endif
                 </div>
             </div>
 
-            <div class="hero__visual" data-px="0.15">
+            <div class="hero__visual" data-px="0.12">
                 <div class="hero__frame">
                     <img src="{{ $heroImage }}" alt="{{ $c['about_name'] }} — {{ $c['about_role'] }}" class="hero__img" data-pf-img="hero_image" width="720" height="820" fetchpriority="high" decoding="async">
                 </div>
             </div>
 
-            <aside class="hero__side" data-px="-0.08">
+            <aside class="hero__side">
                 <p class="hero__tagline"><span data-pf="hero_subtitle">{!! $subtitle !!}</span></p>
                 @if ($stats->isNotEmpty())
                     <ul class="hero__stats" aria-label="Statistik">
@@ -85,7 +89,7 @@
                     <span class="deck__label" data-pf="hero_deck_label">{{ $c['hero_deck_label'] }}</span>
                     <a href="{{ route('portfolio.projects') }}">Semua project ({{ $projectTotal }}) <i class="fa-solid fa-arrow-right" aria-hidden="true"></i></a>
                 </div>
-                <div class="deck" aria-label="Project pilihan — geser untuk memutar" data-deck tabindex="0" data-px="0.12">
+                <div class="deck" aria-label="Project pilihan — geser untuk memutar" data-deck tabindex="0">
                     @php $ringText = Str::upper(trim((string) $c['hero_deck_label']) ?: 'Selected work'); @endphp
                     <svg class="deck__ring" viewBox="0 0 300 300" aria-hidden="true">
                         <defs><path id="deck-ring-path" d="M150,150 m-128,0 a128,128 0 1,1 256,0 a128,128 0 1,1 -256,0"/></defs>
@@ -114,9 +118,22 @@
 
     {{-- ================= ABOUT ================= --}}
     <section class="section about" id="about" aria-labelledby="about-title">
+        {{-- Cinematic band: the video only starts once this section scrolls into view,
+             drifts with parallax, and pauses again when it leaves. --}}
+        <div class="about__film" data-reveal>
+            <video class="about__video" data-about-video muted playsinline preload="metadata" poster="">
+                <source src="{{ asset('assets/front/media/about.webm') }}" type="video/webm">
+                <source src="{{ asset('assets/front/media/about.mp4') }}" type="video/mp4">
+            </video>
+            <div class="about__film-shade" aria-hidden="true"></div>
+            <div class="about__film-copy">
+                <p class="kicker" data-pf="about_title">{{ $c['about_title'] }}</p>
+                <p class="about__film-line"><span class="pill"><span class="pill__dot" aria-hidden="true"></span>{{ $c['about_available'] === '1' ? $c['about_available_text'] : 'Busy' }}</span></p>
+            </div>
+        </div>
         <div class="container about__grid">
             <div data-reveal>
-                <img src="{{ $photo }}" alt="Foto {{ $c['about_name'] }}" class="about__photo" data-px="0.08" data-pf-img="about_photo" width="520" height="650" loading="lazy" decoding="async">
+                <img src="{{ $photo }}" alt="Foto {{ $c['about_name'] }}" class="about__photo" data-pf-img="about_photo" width="520" height="650" loading="lazy" decoding="async">
                 <ul class="about__meta">
                     <li><small>Lokasi</small><span data-pf="about_location">{{ $c['about_location'] }}</span></li>
                     <li><small>Waktu lokal</small><time data-clock data-tz="{{ $c['about_timezone'] ?: 'Asia/Jakarta' }}">--:--</time></li>
@@ -131,10 +148,9 @@
             </div>
 
             <div data-reveal>
-                <p class="kicker" data-pf="about_title">{{ $c['about_title'] }}</p>
                 <h2 class="about__name" id="about-title" data-pf="about_name">{{ $c['about_name'] }}</h2>
                 <p class="about__role" data-pf="about_role">{{ $c['about_role'] }}</p>
-                <p class="about__bio" data-pf="about_bio">{{ $c['about_bio'] }}</p>
+                <p class="about__bio" data-pf="about_bio" data-words>{{ $c['about_bio'] }}</p>
                 @if ($c['about_level'])
                     <p class="about__level"><b data-pf="about_level">{{ $c['about_level'] }}</b><span data-pf="about_level_label">{{ $c['about_level_label'] }}</span></p>
                 @endif
@@ -262,7 +278,15 @@
 
     {{-- ================= TESTIMONIALS ================= --}}
     @if ($testimonials->isNotEmpty())
-        <section class="section" id="testimonials" aria-labelledby="testi-title">
+        <section class="section reviews" id="testimonials" aria-labelledby="testi-title">
+            {{-- Ambient video behind the reviews (ref. CreativaX): slowed to 0.7x, masked at the
+                 left/top/bottom so the cards and heading stay readable; plays only while in view. --}}
+            <div class="reviews__bg" aria-hidden="true">
+                <video class="reviews__video" data-ambient-video muted loop playsinline preload="metadata">
+                    <source src="{{ asset('assets/front/media/reviews.mp4') }}" type="video/mp4">
+                </video>
+                <span class="reviews__shade"></span>
+            </div>
             <div class="container">
                 @include('frontend.partials.heading', ['key' => 'testimonials', 'id' => 'testi-title', 'kicker' => 'Reviews', 'title' => $c['testimonials_title'], 'subtitle' => $c['testimonials_subtitle']])
                 <div class="testimonials">

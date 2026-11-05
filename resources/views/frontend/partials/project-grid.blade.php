@@ -14,7 +14,7 @@
         <article class="project" data-category="{{ $p->category?->slug }}" @if ($active && $p->category?->slug !== $active) hidden @endif data-reveal>
             <a href="{{ route('portfolio.project', $p->slug) }}" class="project__link" aria-label="{{ $p->title }}">
                 <div class="project__media">
-                    <img data-pf-img="projects.{{ $p->id }}.cover" src="{{ $p->cover_url }}" alt="{{ $p->title }}" width="800" height="600" loading="lazy" decoding="async" data-px="-0.08">
+                    <img data-pf-img="projects.{{ $p->id }}.cover" src="{{ $p->cover_url }}" alt="{{ $p->title }}" width="800" height="600" loading="lazy" decoding="async">
                     <span class="project__type">{{ \App\Models\Portfolio\Project::TYPES[$p->type] ?? 'Project' }}</span>
                     @if ($p->is_featured)<span class="project__featured">Featured</span>@endif
                 </div>
