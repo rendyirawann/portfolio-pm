@@ -708,6 +708,10 @@
     var x = m.querySelector('[data-mascot-close]');
     if (x) x.addEventListener('click', function () { m.classList.add('is-hidden'); try { sessionStorage.setItem('pf-mascot', 'off'); } catch (e) {} });
 
+    // Animasi masuk hanya sekali; setelah itu dilepas supaya tidak terulang saat drag dilepas.
+    m.addEventListener('animationend', function (e) { if (e.target === m) m.classList.add('is-in'); });
+    setTimeout(function () { m.classList.add('is-in'); }, 3000);
+
     // Seret robot ke mana saja; posisinya diingat untuk tab ini.
     var img = m.querySelector('.mascot__video');
     if (!img) return;

@@ -321,9 +321,9 @@ body.nav-open { overflow: hidden; }
 
 /* ---------- Floating mascot ---------- */
 .mascot { position: fixed; right: clamp(8px, 2vw, 28px); bottom: clamp(8px, 2vw, 24px); z-index: 95; width: clamp(150px, 15vw, 220px); aspect-ratio: 1; pointer-events: none; animation: mascot-in 1s var(--ease) 1.4s both; }
+.mascot.is-in { animation: none; }
 .mascot.is-hidden { display: none; }
 .mascot__video { cursor: grab; pointer-events: auto; }
-.mascot.is-dragging { animation: none; }
 .mascot.is-dragging .mascot__video { cursor: grabbing; animation: none; }
 .mascot.is-dragging .mascot__badge { pointer-events: none; }
 .mascot__aura { position: absolute; inset: 10%; border-radius: 50%; background: radial-gradient(circle, color-mix(in srgb, var(--accent) 35%, transparent), transparent 70%); filter: blur(30px); animation: mascot-pulse 7s ease-in-out infinite; }
