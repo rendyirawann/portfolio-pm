@@ -698,14 +698,15 @@
     window.addEventListener('scroll', update, { passive: true }); update();
 })();
 
-/* ---------- Maskot: tombol tutup (diingat per browser) ---------- */
+/* ---------- Maskot: tombol tutup (diingat per tab saja) ---------- */
 (function () {
     'use strict';
     var m = document.querySelector('[data-mascot]');
     if (!m) return;
-    try { if (localStorage.getItem('pf-mascot') === 'off') m.classList.add('is-hidden'); } catch (e) {}
+    // Tutup hanya berlaku di tab ini; tab/kunjungan baru menampilkannya lagi.
+    try { localStorage.removeItem('pf-mascot'); if (sessionStorage.getItem('pf-mascot') === 'off') m.classList.add('is-hidden'); } catch (e) {}
     var x = m.querySelector('[data-mascot-close]');
-    if (x) x.addEventListener('click', function () { m.classList.add('is-hidden'); try { localStorage.setItem('pf-mascot', 'off'); } catch (e) {} });
+    if (x) x.addEventListener('click', function () { m.classList.add('is-hidden'); try { sessionStorage.setItem('pf-mascot', 'off'); } catch (e) {} });
 })();
 
 /* ---------- Video About: diputar saat seksi terlihat, berhenti saat keluar ---------- */
