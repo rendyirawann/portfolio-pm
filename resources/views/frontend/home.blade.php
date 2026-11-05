@@ -118,20 +118,16 @@
 
     {{-- ================= ABOUT ================= --}}
     <section class="section about" id="about" aria-labelledby="about-title">
-        {{-- Cinematic band: the video only starts once this section scrolls into view,
-             drifts with parallax, and pauses again when it leaves. --}}
-        <div class="about__film" data-reveal>
-            <video class="about__video" data-about-video muted playsinline preload="metadata" poster="">
+        {{-- Full-section video backdrop (starts when the section scrolls in, pauses when out);
+             the content sits in a glass card so it stays readable over the footage. --}}
+        <div class="about__film" aria-hidden="true">
+            <video class="about__video" data-about-video muted playsinline preload="metadata">
                 <source src="{{ asset('assets/front/media/about.webm') }}" type="video/webm">
                 <source src="{{ asset('assets/front/media/about.mp4') }}" type="video/mp4">
             </video>
-            <div class="about__film-shade" aria-hidden="true"></div>
-            <div class="about__film-copy">
-                <p class="kicker" data-pf="about_title">{{ $c['about_title'] }}</p>
-                <p class="about__film-line"><span class="pill"><span class="pill__dot" aria-hidden="true"></span>{{ $c['about_available'] === '1' ? $c['about_available_text'] : 'Busy' }}</span></p>
-            </div>
+            <span class="about__film-shade"></span>
         </div>
-        <div class="container about__grid">
+        <div class="container"><div class="about__card about__grid" data-reveal>
             <div data-reveal>
                 <img src="{{ $photo }}" alt="Foto {{ $c['about_name'] }}" class="about__photo" data-pf-img="about_photo" width="520" height="650" loading="lazy" decoding="async">
                 <ul class="about__meta">
@@ -148,6 +144,7 @@
             </div>
 
             <div data-reveal>
+                <p class="kicker" data-pf="about_title">{{ $c['about_title'] }}</p>
                 <h2 class="about__name" id="about-title" data-pf="about_name">{{ $c['about_name'] }}</h2>
                 <p class="about__role" data-pf="about_role">{{ $c['about_role'] }}</p>
                 <p class="about__bio" data-pf="about_bio" data-words>{{ $c['about_bio'] }}</p>
@@ -165,7 +162,7 @@
                     @endif
                 </div>
             </div>
-        </div>
+        </div></div>
     </section>
 
     {{-- ================= SERVICES ================= --}}

@@ -645,8 +645,8 @@
         if (!deleting) {
             pos++; text.textContent = w.slice(0, pos);
             if (pos === w.length) {
-                if (words.length === 1) return;
-                deleting = true; return setTimeout(step, 2200);
+                // Satu kata pun tetap diulang: jeda lebih lama, hapus, ketik lagi.
+                deleting = true; return setTimeout(step, words.length === 1 ? 3600 : 2200);
             }
             return setTimeout(step, 90 + Math.random() * 70);
         }
@@ -713,7 +713,7 @@
     'use strict';
     var v = document.querySelector('[data-about-video]');
     if (!v || !('IntersectionObserver' in window)) return;
-    var wrap = v.closest('.about__film');
+    var wrap = v.closest('.about');
     var io = new IntersectionObserver(function (entries) {
         entries.forEach(function (en) {
             if (en.isIntersecting) {
