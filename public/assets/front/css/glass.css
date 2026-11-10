@@ -518,3 +518,6 @@ html.cursor-link .cursor svg path { fill: var(--lime); }
 .cursor::after { width: 26px; height: 26px; margin: -13px 0 0 -13px; background: none !important; backdrop-filter: none !important;
     border: 1.5px solid var(--lime); box-shadow: none !important; }
 html.cursor-drag .cursor::after { transform: scale(1.6); background: none !important; }
+/* Footer: one glass surface only — no inner cards */
+.footer__connect, .footer__grid { background: none !important; border: 0 !important; box-shadow: none !important; backdrop-filter: none !important; padding-inline: 0; }
+.footer__grid { border-top: 1px solid rgba(255, 255, 255, .16) !important; border-radius: 0; padding-top: 32px; }
