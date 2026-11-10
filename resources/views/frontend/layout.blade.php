@@ -21,7 +21,7 @@
     <link rel="stylesheet" href="{{ asset('assets/front/css/glass.css') }}?v={{ filemtime(public_path('assets/front/css/glass.css')) }}">
     @stack('head')
     {{-- Theme before first paint. Shares the admin's key so one choice applies everywhere; dark is the default. --}}
-    <script nonce="{{ $nonce }}">(function(){var d=document.documentElement,m='light';d.classList.replace('no-js','js');try{m=localStorage.getItem('data-bs-theme-mode')||localStorage.getItem('data-bs-theme')||'light';}catch(e){}var t=m==='system'?(matchMedia('(prefers-color-scheme: dark)').matches?'dark':'light'):(m==='light'?'light':'dark');d.setAttribute('data-theme',t);d.setAttribute('data-theme-mode',m);})();</script>
+    <script nonce="{{ $nonce }}">(function(){var d=document.documentElement,m='light';d.classList.replace('no-js','js');try{m=localStorage.getItem('data-bs-theme-mode')||localStorage.getItem('data-bs-theme')||'light';}catch(e){}var t=m==='system'?(matchMedia('(prefers-color-scheme: dark)').matches?'dark':'light'):(m==='light'?'light':'dark');d.setAttribute('data-theme',t);d.setAttribute('data-theme-mode',m);try{if(sessionStorage.getItem('pf-loaded'))d.classList.add('loader-quick');}catch(e){}})();</script>
 </head>
 <body class="@yield('body_class')">
     <a class="skip-link" href="#main">Lewati ke konten</a>

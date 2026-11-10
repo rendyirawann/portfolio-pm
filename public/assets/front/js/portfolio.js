@@ -589,10 +589,13 @@
     if (!el) return;
     var pct = el.querySelector('[data-loader-pct]'), status = el.querySelector('[data-loader-status]'), bar = el.querySelector('.loader__bar i');
     var msgs = ['Calibrating glass surfaces...', 'Refracting prismatic colour blobs...', 'Syncing portfolio content...', 'Crystal daylight UI ready!'];
-    var DUR = 2400, start = performance.now(), loaded = false, done = false;
+    // Full show only on the first page of a visit; later pages just fade.
+    var quick = document.documentElement.classList.contains('loader-quick');
+    try { sessionStorage.setItem('pf-loaded', '1'); } catch (e) {}
+    var DUR = quick ? 200 : 2400, start = performance.now(), loaded = false, done = false;
     function finish() {
         if (done) return; done = true;
-        setTimeout(function () { el.classList.add('is-done'); document.documentElement.classList.add('is-loaded'); }, 250);
+        setTimeout(function () { el.classList.add('is-done'); document.documentElement.classList.add('is-loaded'); }, quick ? 0 : 250);
     }
     function step(now) {
         var p = Math.min(1, (now - start) / DUR), n = Math.floor(p * 100);

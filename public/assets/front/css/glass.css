@@ -545,3 +545,6 @@ html.cursor-link .cursor__hand, html.cursor-drag .cursor__hand { opacity: 1; tra
 .expdlg__desc { color: rgba(255, 255, 255, .82) !important; }
 .expdlg__close { top: 22px; right: 22px; background: rgba(255, 255, 255, .18) !important; border: 1px solid rgba(255, 255, 255, .4) !important; backdrop-filter: blur(12px); }
 .expdlg__close:hover { background: #fff !important; color: #1c1714 !important; }
+
+html.loader-quick .loader__card { display: none; }
+html.loader-quick .loader { transition-duration: .3s; }
