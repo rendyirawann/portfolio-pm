@@ -83,7 +83,7 @@
                     @endphp
                     @if ($gauge)
                         <div class="gauge-card">
-                            <div class="gauge-card__head"><span data-pf="stats.{{ $gauge->id }}.label">{{ $gauge->label }}</span><span class="toggle is-on" aria-hidden="true"><i></i></span></div>
+                            <div class="gauge-card__head"><span data-pf="stats.{{ $gauge->id }}.label">{{ $gauge->label }}</span></div>
                             <div class="gauge" style="--p: {{ $gPct }}">
                                 <svg viewBox="0 0 120 120" aria-hidden="true">
                                     <circle class="gauge__ticks" cx="60" cy="60" r="44"/>
