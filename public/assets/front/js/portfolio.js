@@ -376,7 +376,9 @@
     if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
 
     var cur = document.createElement('div'); cur.className = 'cursor';
-    cur.innerHTML = '<svg viewBox="0 0 24 24"><path d="M4 3l6.5 17 2.6-6.9L20 10.5z" fill="#e5383b" stroke="#fff" stroke-width="1.6" stroke-linejoin="round"/></svg>';
+    // Two glyphs: arrow by default, pointing hand over anything clickable.
+    cur.innerHTML = '<svg class="cursor__arrow" viewBox="0 0 24 24"><path d="M4 3l6.5 17 2.6-6.9L20 10.5z" fill="#e5383b" stroke="#fff" stroke-width="1.6" stroke-linejoin="round"/></svg>'
+        + '<svg class="cursor__hand" viewBox="0 0 24 24"><path d="M9 11V4.5a1.5 1.5 0 0 1 3 0V10m0-1.5a1.5 1.5 0 0 1 3 0V11m0-1a1.5 1.5 0 0 1 3 0v4.5a6 6 0 0 1-6 6h-1.3a6 6 0 0 1-4.6-2.2L3.5 15a1.6 1.6 0 0 1 2.4-2.1L9 15.5" fill="#b6e33a" stroke="#1c1714" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>';
     document.body.appendChild(cur);
     var seen = false;
 

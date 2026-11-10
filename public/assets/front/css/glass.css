@@ -521,3 +521,11 @@ html.cursor-drag .cursor::after { transform: scale(1.6); background: none !impor
 /* Footer: one glass surface only — no inner cards */
 .footer__connect, .footer__grid { background: none !important; border: 0 !important; box-shadow: none !important; backdrop-filter: none !important; padding-inline: 0; }
 .footer__grid { border-top: 1px solid rgba(255, 255, 255, .16) !important; border-radius: 0; padding-top: 32px; }
+
+/* Cursor: arrow → pointing hand on clickables; no rings */
+.cursor::after { display: none !important; }
+.cursor svg { position: absolute; inset: 0; transition: opacity .15s, transform .2s var(--ease); }
+.cursor__hand { opacity: 0; transform: scale(.8); left: -6px !important; }
+html.cursor-link .cursor, html.cursor-drag .cursor { transform: var(--cur) !important; }
+html.cursor-link .cursor__arrow, html.cursor-drag .cursor__arrow { opacity: 0; }
+html.cursor-link .cursor__hand, html.cursor-drag .cursor__hand { opacity: 1; transform: scale(1.1); }
