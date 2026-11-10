@@ -74,10 +74,29 @@
             <aside class="hero__side">
                 <p class="hero__tagline"><span data-pf="hero_subtitle">{!! $subtitle !!}</span></p>
                 @if ($stats->isNotEmpty())
+                    @php
+                        // The first stat that reads as a percentage drives the gauge (ref. thermostat dial).
+                        $gauge = $stats->first(fn ($s) => str_contains($s->value, '%'));
+                        $gPct = $gauge ? max(0, min(100, (int) preg_replace('/\D/', '', $gauge->value))) : null;
+                        $rows = $stats->reject(fn ($s) => $gauge && $s->id === $gauge->id)->take(3);
+                        $icons = ['fa-bolt', 'fa-layer-group', 'fa-user-group', 'fa-shield-halved'];
+                    @endphp
+                    @if ($gauge)
+                        <div class="gauge-card">
+                            <div class="gauge-card__head"><span data-pf="stats.{{ $gauge->id }}.label">{{ $gauge->label }}</span><span class="toggle is-on" aria-hidden="true"><i></i></span></div>
+                            <div class="gauge" style="--p: {{ $gPct }}">
+                                <svg viewBox="0 0 120 120" aria-hidden="true">
+                                    <circle class="gauge__ticks" cx="60" cy="60" r="44"/>
+                                    <circle class="gauge__track" cx="60" cy="60" r="54"/>
+                                    <circle class="gauge__arc" cx="60" cy="60" r="54" pathLength="100"/>
+                                </svg>
+                                <b data-pf="stats.{{ $gauge->id }}.value">{{ $gauge->value }}</b>
+                            </div>
+                        </div>
+                    @endif
                     <ul class="hero__stats" aria-label="Statistik">
-                        @foreach ($stats->take(4) as $s)
-                            @php $sp = [['g-crimson','o-amber','fa-bolt'],['g-cobalt','o-cyan','fa-shield-halved'],['g-mint','o-cyan','fa-clock'],['g-indigo','o-amber','fa-users']][$loop->index % 4]; @endphp
-                            <li><span class="gi gi--sm" aria-hidden="true"><span class="gi__back {{ $sp[0] }}"></span><span class="gi__orb {{ $sp[1] }}"></span><span class="gi__front"><i class="fa-solid {{ $sp[2] }}"></i></span></span><b data-pf="stats.{{ $s->id }}.value">{{ $s->value }}</b><span data-pf="stats.{{ $s->id }}.label">{{ $s->label }}</span></li>
+                        @foreach ($rows as $s)
+                            <li><span class="ic" aria-hidden="true"><i class="fa-solid {{ $icons[$loop->index % 4] }}"></i></span><b data-pf="stats.{{ $s->id }}.value">{{ $s->value }}</b><span data-pf="stats.{{ $s->id }}.label">{{ $s->label }}</span></li>
                         @endforeach
                     </ul>
                 @endif
@@ -140,6 +159,25 @@
                 <h2 class="about__name" id="about-title" data-pf="about_name">{{ $c['about_name'] }}</h2>
                 <p class="about__role" data-pf="about_role">{{ $c['about_role'] }}</p>
                 <p class="about__bio" data-pf="about_bio" data-words>{{ $c['about_bio'] }}</p>
+                @php
+                    $perYear = $projects->filter(fn ($p) => $p->year)->countBy(fn ($p) => (string) $p->year)->sortKeys()->take(-6);
+                    $maxY = max(1, (int) $perYear->max());
+                    $lastY = $perYear->keys()->last();
+                @endphp
+                @if ($perYear->count() > 1)
+                    <div class="chart-card">
+                        <div class="chart-card__head"><span>Project per tahun</span><span class="seg"><b>Year</b><i>All</i></span></div>
+                        <div class="bars">
+                            @foreach ($perYear as $y => $n)
+                                <div class="bars__col{{ $y === $lastY ? ' is-hi' : '' }}">
+                                    @if ($y === $lastY)<em>{{ $n }}</em>@endif
+                                    <span style="--h: {{ round($n / $maxY * 100) }}"></span>
+                                    <small>{{ $y }}</small>
+                                </div>
+                            @endforeach
+                        </div>
+                    </div>
+                @endif
                 @if ($c['about_level'])
                     <p class="about__level"><b data-pf="about_level">{{ $c['about_level'] }}</b><span data-pf="about_level_label">{{ $c['about_level_label'] }}</span></p>
                 @endif

@@ -760,3 +760,13 @@
         });
     }, { threshold: 0.15 }).observe(sec);
 })();
+
+/* ---------- Gauge & grafik: animasi isi saat terlihat ---------- */
+(function () {
+    'use strict';
+    var els = document.querySelectorAll('.gauge, .bars');
+    if (!els.length) return;
+    if (!('IntersectionObserver' in window) || document.documentElement.classList.contains('is-preview')) { els.forEach(function (e) { e.classList.add('is-in'); }); return; }
+    var io = new IntersectionObserver(function (en) { en.forEach(function (x) { if (x.isIntersecting) { x.target.classList.add('is-in'); io.unobserve(x.target); } }); }, { threshold: .35 });
+    els.forEach(function (e) { io.observe(e); });
+})();
