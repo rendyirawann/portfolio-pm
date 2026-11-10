@@ -352,3 +352,94 @@ html:not([data-theme="light"]) .rows__text, html:not([data-theme="light"]) .time
 html[data-theme="light"] .rows__text, html[data-theme="light"] .timeline__body p:last-child, html[data-theme="light"] .hero__desc { color: #334155; }
 /* Progress / accent bars use a lime highlight like the reference, alongside the prismatic palette */
 .loader__bar i { background: linear-gradient(90deg, #a3e635, var(--a3), var(--a2)) !important; }
+
+/* ==========================================================================
+   Photo-backed glass (ref. dutkiewicz.studio, round 3).
+   Glass only reads as glass when something real sits behind it, so the
+   whole page now floats over a warm workspace photo; panels are tinted
+   frosted glass with white type, lime accents, white active pills.
+   Light = daylight photo, dark = the same photo dimmed.
+   ========================================================================== */
+html, html[data-theme="light"], html[data-theme="dark"] {
+    --text: #ffffff;
+    --muted: rgba(255, 255, 255, .74);
+    --dim: rgba(255, 255, 255, .52);
+    --ink: #ffffff;
+    --ink-contrast: #1c1714;
+    --line: rgba(255, 255, 255, .14);
+    --line-2: rgba(255, 255, 255, .26);
+    --lime: #b6e33a;
+    --glass: linear-gradient(135deg, rgba(255, 255, 255, .20), rgba(255, 255, 255, .06) 60%), rgba(92, 76, 64, .30);
+    --glass-strong: rgba(255, 255, 255, .16);
+    --glass-line: rgba(255, 255, 255, .26);
+    --glass-blur: 30px;
+    --glass-shadow: 0 30px 70px -30px rgba(0, 0, 0, .55), inset 0 1px 0 rgba(255, 255, 255, .28), inset 0 -1px 0 rgba(255, 255, 255, .06);
+    --mesh-opacity: 0;
+    color-scheme: dark;
+}
+html[data-theme="dark"] { --glass: linear-gradient(135deg, rgba(255, 255, 255, .14), rgba(255, 255, 255, .04) 60%), rgba(28, 24, 22, .45); }
+
+body { background: #2a231e url('../media/glass-bg.jpg') center / cover fixed no-repeat !important; color: #fff; }
+body::before { content: ''; position: fixed; inset: 0; z-index: 0; pointer-events: none;
+    background: linear-gradient(180deg, rgba(40, 30, 24, .18), rgba(40, 30, 24, .32)); }
+html[data-theme="dark"] body::before { background: linear-gradient(180deg, rgba(8, 8, 10, .62), rgba(8, 8, 10, .74)); }
+.mesh { display: none; }
+@media (max-width: 900px) { body { background-attachment: scroll; } }
+
+html[data-theme="light"] .rows__text, html[data-theme="light"] .timeline__body p:last-child, html[data-theme="light"] .hero__desc,
+.rows__text, .timeline__body p:last-child, .hero__desc, .section-sub, .testimonial blockquote, .about__bio, .about__meta li,
+.footer__links a, .field label, .hero__tagline, .hero__stats li span:last-child, .deck__head a, .direct small { color: rgba(255, 255, 255, .8) !important; }
+.section-title, .rows__title, .timeline__body h3, .about__name, .hero__title, .hero__stats b, .direct b, .testimonial figcaption b, .loader__name, .marquee__track span, .nav__brand { color: #fff !important; }
+.section-title__dim { background: linear-gradient(90deg, #fff, var(--lime)); -webkit-background-clip: text; background-clip: text; color: transparent !important; }
+.kicker, .skills__title { color: var(--lime) !important; }
+.kicker::before, .hero__eyebrow::before { background: var(--lime) !important; }
+.hero__eyebrow, .label, .project__meta, .timeline__period, .deck__label { color: rgba(255, 255, 255, .72) !important; }
+.hero__role, .about__role, .timeline__company, .project__index, .hl { color: var(--lime) !important; }
+
+.nav__pill, html[data-theme="light"] .nav__pill { background: var(--glass) !important; border-color: var(--glass-line) !important; }
+.nav__pill .nav__link, html[data-theme="light"] .nav__pill .nav__link { color: rgba(255, 255, 255, .75) !important; }
+.nav__pill .nav__link:hover, .nav__pill .nav__link.is-active { color: #fff !important; background: rgba(255, 255, 255, .14) !important; }
+.nav__pill .nav__cta, html[data-theme="light"] .nav__pill .nav__cta { background: #fff !important; color: #1c1714 !important; }
+.nav__pill .nav__cta:hover { background: var(--lime) !important; color: #1c1714 !important; }
+.nav__pill .nav__burger i, html[data-theme="light"] .nav__pill .nav__burger i { background: #fff !important; }
+.nav__menu { background: rgba(28, 23, 20, .55) !important; backdrop-filter: blur(40px) saturate(160%); }
+
+.btn--glow, html[data-theme="light"] .btn--glow { background: #fff !important; color: #1c1714 !important; border-color: #fff !important; }
+.btn--glow:hover { background: var(--lime) !important; border-color: var(--lime) !important; color: #1c1714 !important; }
+.btn--ghost, .btn--outline, html[data-theme="light"] .btn--ghost { background: rgba(255, 255, 255, .14) !important; border-color: rgba(255, 255, 255, .3) !important; color: #fff !important; }
+.chip.is-active { background: #fff !important; color: #1c1714 !important; }
+.chip:not(.is-active) { color: #fff !important; }
+
+.field input, .field select, .field textarea, .skill, .tags li, .chip:not(.is-active),
+html[data-theme="light"] .field input, html[data-theme="light"] .field select, html[data-theme="light"] .field textarea, html[data-theme="light"] .skill, html[data-theme="light"] .tags li {
+    background: rgba(255, 255, 255, .12) !important; border-color: rgba(255, 255, 255, .24) !important; color: #fff !important;
+}
+.field input::placeholder, .field textarea::placeholder { color: rgba(255, 255, 255, .5); }
+.field select option { background: #2a231e; color: #fff; }
+.field input:focus, .field select:focus, .field textarea:focus { border-color: var(--lime) !important; box-shadow: 0 0 0 3px rgba(182, 227, 58, .25) !important; }
+
+.gi__front, html[data-theme="light"] .gi__front { background: linear-gradient(135deg, rgba(255, 255, 255, .42), rgba(255, 255, 255, .12)); border-color: rgba(255, 255, 255, .6); color: #fff; }
+
+.hero__halftone { opacity: .12; }
+.marquee { background: rgba(255, 255, 255, .08); backdrop-filter: blur(20px); border-block: 1px solid rgba(255, 255, 255, .16) !important; }
+.marquee__track i { color: var(--lime); }
+.deck__ring text { fill: rgba(255, 255, 255, .7); }
+.timeline::before { background: linear-gradient(180deg, transparent, rgba(255, 255, 255, .5) 8%, var(--lime) 92%, transparent); }
+.timeline__marker::before, .timeline__marker--photo .timeline__frame { border-color: var(--lime); }
+.timeline__marker:hover::before { background: var(--lime); }
+.socials a { color: #fff !important; }
+.socials a:hover { background: var(--lime) !important; color: #1c1714 !important; border-color: var(--lime) !important; }
+.pill { background: rgba(255, 255, 255, .14); color: #fff; }
+.pill__dot { background: var(--lime); }
+.project__type { background: rgba(255, 255, 255, .9); color: #1c1714; }
+.project__featured { background: var(--lime); color: #1c1714; }
+.reviews__video { opacity: .35 !important; }
+.reviews__shade { display: none; }
+
+.loader { background: rgba(40, 30, 24, .35) !important; backdrop-filter: blur(24px) saturate(150%); }
+.loader__card { background: var(--glass) !important; }
+.loader__core { background: rgba(255, 255, 255, .22) !important; border-color: rgba(255, 255, 255, .7) !important; }
+.loader__core small, .loader__text, .loader__foot, .loader__tag { color: rgba(255, 255, 255, .82) !important; }
+.loader__tag, .loader__bar { background: rgba(255, 255, 255, .14) !important; border-color: rgba(255, 255, 255, .26) !important; }
+.loader__bar i { background: var(--lime) !important; }
+.loader__tag b { background: var(--lime); }
