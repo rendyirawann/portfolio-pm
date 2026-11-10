@@ -99,12 +99,12 @@
     {{-- Preloader: frosted glass card with prism spinner, brand, progress (portfolio.js hides it on load) --}}
     <div class="loader" data-loader aria-hidden="true">
         <div class="loader__card">
-            <span class="loader__tag"><b></b>Prismatic glass</span>
-            <span class="loader__ring"><i></i><em></em><b></b><b></b><img src="{{ $brandLogo ? Media::url($brandLogo) : $brand['logo_url'] }}" alt="" width="92" height="92"></span>
-            <span class="loader__name">{{ $c['brand_name'] }}</span>
-            <span class="loader__text">Loading<b>.</b><b>.</b><b>.</b></span>
+            <span class="loader__tag"><b></b>Prismatic glass engine</span>
+            <span class="loader__ring"><i></i><em></em><b></b><b></b><span class="loader__core"><strong>{{ collect(preg_split('/\s+/', trim((string) ($c['about_name'] ?: $c['brand_name']))))->take(2)->map(fn ($x) => mb_substr($x, 0, 1))->implode('') }}</strong><small data-loader-pct>0%</small></span></span>
+            <span class="loader__name">{{ $c['about_name'] ?: $c['brand_name'] }}</span>
+            <span class="loader__text" data-loader-status>Calibrating glass surfaces...</span>
             <span class="loader__bar"><i></i></span>
-            <span class="loader__foot"><span>Crystal daylight UI</span><span>Portfolio</span></span>
+            <span class="loader__foot"><span>Crystal daylight UI</span><span>PM portfolio</span></span>
         </div>
     </div>
 

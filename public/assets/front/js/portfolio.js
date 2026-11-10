@@ -579,20 +579,29 @@
 })();
 
 /* ---------- Preloader ----------
-   Tirai dengan nama brand + garis progres; hilang begitu halaman termuat
-   (minimal 450 ms supaya tidak berkedip, maksimal 2,5 s apa pun yang terjadi). */
+   Kartu kaca: persen naik 0 sampai 100 dalam +-2,4 s dengan status berganti,
+   lalu memudar setelah halaman termuat (maks. 4,5 s apa pun yang terjadi). */
 (function () {
     'use strict';
     var el = document.querySelector('[data-loader]');
     if (!el) return;
-    var started = performance.now(), done = false;
+    var pct = el.querySelector('[data-loader-pct]'), status = el.querySelector('[data-loader-status]'), bar = el.querySelector('.loader__bar i');
+    var msgs = ['Calibrating glass surfaces...', 'Refracting prismatic colour blobs...', 'Syncing portfolio content...', 'Crystal daylight UI ready!'];
+    var DUR = 2400, start = performance.now(), loaded = false, done = false;
     function finish() {
         if (done) return; done = true;
-        var wait = Math.max(0, 2400 - (performance.now() - started));
-        setTimeout(function () { el.classList.add('is-done'); document.documentElement.classList.add('is-loaded'); }, wait);
+        setTimeout(function () { el.classList.add('is-done'); document.documentElement.classList.add('is-loaded'); }, 250);
     }
-    if (document.readyState === 'complete') finish();
-    else window.addEventListener('load', finish);
+    function step(now) {
+        var p = Math.min(1, (now - start) / DUR), n = Math.floor(p * 100);
+        if (pct) pct.textContent = n + '%';
+        if (bar) bar.style.transform = 'scaleX(' + p + ')';
+        if (status) status.textContent = msgs[n < 30 ? 0 : n < 65 ? 1 : n < 95 ? 2 : 3];
+        if (p < 1) requestAnimationFrame(step); else if (loaded) finish();
+    }
+    requestAnimationFrame(step);
+    function onLoad() { loaded = true; if (performance.now() - start >= DUR) finish(); }
+    if (document.readyState === 'complete') onLoad(); else window.addEventListener('load', onLoad);
     setTimeout(finish, 4500);
 })();
 

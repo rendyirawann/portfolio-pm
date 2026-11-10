@@ -76,7 +76,8 @@
                 @if ($stats->isNotEmpty())
                     <ul class="hero__stats" aria-label="Statistik">
                         @foreach ($stats->take(4) as $s)
-                            <li><b data-pf="stats.{{ $s->id }}.value">{{ $s->value }}</b><span data-pf="stats.{{ $s->id }}.label">{{ $s->label }}</span></li>
+                            @php $sp = [['g-crimson','o-amber','fa-bolt'],['g-cobalt','o-cyan','fa-shield-halved'],['g-mint','o-cyan','fa-clock'],['g-indigo','o-amber','fa-users']][$loop->index % 4]; @endphp
+                            <li><span class="gi gi--sm" aria-hidden="true"><span class="gi__back {{ $sp[0] }}"></span><span class="gi__orb {{ $sp[1] }}"></span><span class="gi__front"><i class="fa-solid {{ $sp[2] }}"></i></span></span><b data-pf="stats.{{ $s->id }}.value">{{ $s->value }}</b><span data-pf="stats.{{ $s->id }}.label">{{ $s->label }}</span></li>
                         @endforeach
                     </ul>
                 @endif
@@ -98,8 +99,8 @@
                     </svg>
                     @foreach ($deck as $p)
                         <a href="{{ route('portfolio.project', $p->slug) }}" class="deck__card" aria-label="{{ $p->title }}" draggable="false">
-                            <span class="deck__card-inner">
-                                <img src="{{ $p->cover_url }}" alt="" width="300" height="400" loading="eager" decoding="async" draggable="false">
+                            <span class="deck__card-inner dk-{{ $loop->index % 6 }}">
+                                <span class="deck__thumb"><img src="{{ $p->cover_url }}" alt="" width="300" height="300" loading="eager" decoding="async" draggable="false"><em>{{ \App\Models\Portfolio\Project::TYPES[$p->type] ?? 'Project' }}</em></span>
                                 <span class="deck__caption"><b>{{ Str::limit($p->title, 32) }}</b><span>{{ $p->category?->name ?: (\App\Models\Portfolio\Project::TYPES[$p->type] ?? 'Project') }}</span></span>
                             </span>
                         </a>
