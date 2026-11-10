@@ -531,3 +531,17 @@ html.cursor-link .cursor__arrow, html.cursor-drag .cursor__arrow { opacity: 0; }
 html.cursor-link .cursor__hand, html.cursor-drag .cursor__hand { opacity: 1; transform: scale(1.1); }
 /* Project type badge: dark glass so the label reads on any cover */
 .project__type, html[data-theme="light"] .project__type { background: rgba(28, 23, 20, .62) !important; color: #fff !important; backdrop-filter: blur(10px); border: 1px solid rgba(255, 255, 255, .25) !important; }
+/* Experience dialog as glass: frosted panel, image inset with rounded corners, glass close button */
+.expdlg { background: linear-gradient(135deg, rgba(255, 255, 255, .22), rgba(255, 255, 255, .06) 60%), rgba(60, 48, 40, .35) !important;
+    backdrop-filter: blur(34px) saturate(170%); -webkit-backdrop-filter: blur(34px) saturate(170%);
+    border: 1px solid rgba(255, 255, 255, .3) !important; border-radius: 34px !important; padding: 12px !important;
+    box-shadow: 0 40px 90px -30px rgba(0, 0, 0, .7), inset 0 1px 0 rgba(255, 255, 255, .35) !important; }
+.expdlg::backdrop { background: rgba(20, 14, 10, .35); backdrop-filter: blur(10px); }
+.expdlg__img { border-radius: 24px; }
+.expdlg__body { padding: 22px 18px 16px; }
+.expdlg__period { color: rgba(255, 255, 255, .7); }
+.expdlg__body h3 { color: #fff; }
+.expdlg__company { color: var(--lime) !important; }
+.expdlg__desc { color: rgba(255, 255, 255, .82) !important; }
+.expdlg__close { top: 22px; right: 22px; background: rgba(255, 255, 255, .18) !important; border: 1px solid rgba(255, 255, 255, .4) !important; backdrop-filter: blur(12px); }
+.expdlg__close:hover { background: #fff !important; color: #1c1714 !important; }
