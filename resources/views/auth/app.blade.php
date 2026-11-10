@@ -30,6 +30,7 @@
     <link href="{{ asset('assets/css/app-auth.css') }}" rel="stylesheet" type="text/css" />
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Oswald:wght@600;700&family=Inter:wght@400;500;600&family=Chakra+Petch:wght@500;600&family=Playfair+Display:wght@600&display=swap" />
     <link href="{{ asset('assets/css/app-auth-pf.css') }}?v={{ filemtime(public_path('assets/css/app-auth-pf.css')) }}" rel="stylesheet" type="text/css" />
+    <link href="{{ asset('assets/css/app-glass.css') }}?v={{ filemtime(public_path('assets/css/app-glass.css')) }}" rel="stylesheet" type="text/css" />
 
     <style>
         :root {
@@ -51,6 +52,7 @@
 </head>
 
 <body class="auth-body">
+    <div class="g-mesh" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i></div>
 
     {{-- Light / dark — shares the admin's theme key. --}}
     <button type="button" class="auth-theme-toggle" id="auth-theme-toggle" aria-label="Ganti tema terang / gelap" title="Tema terang / gelap">

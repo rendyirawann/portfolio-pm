@@ -41,7 +41,7 @@
             root.setAttribute('data-theme', t);
             root.setAttribute('data-theme-mode', m);
             if (persist) { try { localStorage.setItem('data-bs-theme-mode', m); localStorage.setItem('data-bs-theme', t); } catch (e) {} }
-            if (meta) meta.setAttribute('content', t === 'light' ? '#e9e9e7' : '#0d0d0f');
+            if (meta) meta.setAttribute('content', t === 'light' ? '#f2f6fc' : '#090b14');
             buttons.forEach(function (b) {
                 var on = b.getAttribute('data-theme-set') === m;
                 b.classList.toggle('is-active', on);

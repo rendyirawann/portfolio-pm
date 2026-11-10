@@ -47,7 +47,7 @@
         <div class="hero__halftone" aria-hidden="true"></div>
 
         <div class="container hero__stage">
-            <div class="hero__copy">
+            <div class="hero__copy"><div class="hero__copy-card">
                 <p class="hero__eyebrow" data-pf="hero_eyebrow">{{ $c['hero_eyebrow'] }}</p>
                 <h1 class="hero__title" id="hero-title">
                     <span class="hero__line" data-pf="hero_title_1">{{ $c['hero_title_1'] }}</span>
@@ -63,7 +63,7 @@
                         <a href="{{ PortfolioData::href($c['hero_cta2_link']) }}" class="btn btn--ghost" data-magnet><span data-pf="hero_cta2_label">{{ $c['hero_cta2_label'] }}</span> <i class="fa-solid fa-arrow-up-right-from-square" aria-hidden="true"></i></a>
                     @endif
                 </div>
-            </div>
+            </div></div>
 
             <div class="hero__visual" data-px="0.12">
                 <div class="hero__frame">
@@ -169,7 +169,8 @@
                                 <h3 class="rows__title" data-pf="services.{{ $svc->id }}.title">{{ $svc->title }}</h3>
                                 <p class="rows__text" data-pf="services.{{ $svc->id }}.description">{{ $svc->description }}</p>
                             </div>
-                            <span class="rows__icon" aria-hidden="true"><i class="{{ $svc->icon ?: 'fa-solid fa-circle' }}" data-pf-icon="services.{{ $svc->id }}.icon"></i></span>
+                            @php $pal = [['g-crimson','o-amber'],['g-cobalt','o-cyan'],['g-indigo','o-sky'],['g-mint','o-cyan'],['g-amber','o-orange'],['g-cyan','o-mint']][$i % 6]; @endphp
+                            <span class="rows__icon gi" aria-hidden="true"><span class="gi__back {{ $pal[0] }}"></span><span class="gi__orb {{ $pal[1] }}"></span><span class="gi__front"><i class="{{ $svc->icon ?: 'fa-solid fa-circle' }}" data-pf-icon="services.{{ $svc->id }}.icon"></i></span></span>
                         </li>
                     @endforeach
                 </ol>
@@ -286,7 +287,8 @@
                                 @if ($t->avatar)
                                     <img src="{{ Media::url($t->avatar) }}" alt="" width="40" height="40" loading="lazy">
                                 @else
-                                    <span class="testimonial__avatar" aria-hidden="true">{{ Str::upper(Str::substr($t->name, 0, 1)) }}</span>
+                                    @php $tp = [['g-amber','o-orange'],['g-cobalt','o-cyan'],['g-indigo','o-amber']][$loop->index % 3]; @endphp
+                                    <span class="gi gi--sm" aria-hidden="true"><span class="gi__back {{ $tp[0] }}"></span><span class="gi__orb {{ $tp[1] }}"></span><span class="gi__front"><span style="font-weight:800;font-size:.8rem">{{ Str::upper(Str::substr($t->name, 0, 1)) }}</span></span></span>
                                 @endif
                                 <span><b data-pf="testimonials.{{ $t->id }}.name">{{ $t->name }}</b><small data-pf="testimonials.{{ $t->id }}.position">{{ $t->position }}</small></span>
                             </figcaption>
@@ -315,22 +317,22 @@
                 <div class="contact__direct">
                     @if ($waLink)
                         <a href="{{ $waLink }}" class="direct" target="_blank" rel="noopener">
-                            <i class="fa-brands fa-whatsapp" aria-hidden="true"></i><span><b>WhatsApp</b><small>Chat langsung</small></span>
+                            <span class="gi gi--sm" aria-hidden="true"><span class="gi__back g-mint"></span><span class="gi__orb o-cyan"></span><span class="gi__front"><i class="fa-brands fa-whatsapp"></i></span></span><span><b>WhatsApp</b><small>Chat langsung</small></span>
                         </a>
                     @endif
                     @if ($c['contact_linkedin'])
                         <a href="{{ $c['contact_linkedin'] }}" class="direct" target="_blank" rel="noopener">
-                            <i class="fa-brands fa-linkedin-in" aria-hidden="true"></i><span><b>LinkedIn</b><small>Terhubung profesional</small></span>
+                            <span class="gi gi--sm" aria-hidden="true"><span class="gi__back g-cobalt"></span><span class="gi__orb o-sky"></span><span class="gi__front"><i class="fa-brands fa-linkedin-in"></i></span></span><span><b>LinkedIn</b><small>Terhubung profesional</small></span>
                         </a>
                     @endif
                     @if ($c['contact_email'])
                         <a href="mailto:{{ $c['contact_email'] }}" class="direct">
-                            <i class="fa-solid fa-envelope" aria-hidden="true"></i><span><b>Email</b><small data-pf="contact_email">{{ $c['contact_email'] }}</small></span>
+                            <span class="gi gi--sm" aria-hidden="true"><span class="gi__back g-crimson"></span><span class="gi__orb o-amber"></span><span class="gi__front"><i class="fa-solid fa-envelope"></i></span></span><span><b>Email</b><small data-pf="contact_email">{{ $c['contact_email'] }}</small></span>
                         </a>
                     @endif
                     @if ($c['contact_address'])
                         <span class="direct">
-                            <i class="fa-solid fa-location-dot" aria-hidden="true"></i><span><b>Lokasi</b><small data-pf="contact_address">{{ $c['contact_address'] }}</small></span>
+                            <span class="gi gi--sm" aria-hidden="true"><span class="gi__back g-indigo"></span><span class="gi__orb o-amber"></span><span class="gi__front"><i class="fa-solid fa-location-dot"></i></span></span><span><b>Lokasi</b><small data-pf="contact_address">{{ $c['contact_address'] }}</small></span>
                         </span>
                     @endif
                 </div>

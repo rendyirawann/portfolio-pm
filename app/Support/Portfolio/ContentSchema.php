@@ -168,7 +168,7 @@ class ContentSchema
                     'seo_keywords' => ['Keywords', 'text', 'dormansyah pasaribu, portfolio, project manager, project, produk'],
                     'seo_og_image' => ['Gambar share (1200×630)', 'image', null],
                     'seo_robots' => ['Robots', 'select', 'index, follow', ['index, follow', 'noindex, nofollow', 'index, nofollow', 'noindex, follow']],
-                    'seo_theme_color' => ['Warna tema browser', 'color', '#0d0d0f'],
+                    'seo_theme_color' => ['Warna tema browser', 'color', '#f2f6fc'],
                     'seo_google_verification' => ['Google site verification', 'text', ''],
                 ],
             ],

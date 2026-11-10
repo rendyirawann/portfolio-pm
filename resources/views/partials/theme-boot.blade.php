@@ -2,15 +2,15 @@
     Resolves the colour theme before any CSS is parsed, so the first paint is
     already correct and there is no flash of the wrong theme.
 
-    Dark is the default (portfolio palette). The choice lives in the same localStorage key that
+    Light (crystal glass) is the default. The choice lives in the same localStorage key that
     the admin panel's theme switcher writes, so picking dark there carries
     over to the sign-in and error screens.
 --}}
 <script>
     (function () {
         var KEY = 'data-bs-theme';
-        var MIGRATED = 'app:theme-default-dark';
-        var mode = 'dark';
+        var MIGRATED = 'app:theme-default-light-glass';
+        var mode = 'light';
 
         try {
             // Earlier builds forced dark on the sign-in screens, which left a
@@ -31,7 +31,7 @@
                 mode = window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
             }
         } catch (e) {
-            /* Private mode / storage disabled — dark it is. */
+            /* Private mode / storage disabled — light it is. */
         }
 
         document.documentElement.setAttribute('data-bs-theme', mode === 'dark' ? 'dark' : 'light');

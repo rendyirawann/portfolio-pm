@@ -18,6 +18,7 @@
         integrity="sha512-SnH5WK+bZxgPHs44uWIX+LLJAJ9/2PkPKZ5QiAj6Ta86w+fsb2TkcmfRyVX3pBnMFcV7oQPJkl9QevSCWr3W6A=="
         crossorigin="anonymous" referrerpolicy="no-referrer">
     <link rel="stylesheet" href="{{ asset('assets/front/css/portfolio.css') }}?v={{ filemtime(public_path('assets/front/css/portfolio.css')) }}">
+    <link rel="stylesheet" href="{{ asset('assets/front/css/glass.css') }}?v={{ filemtime(public_path('assets/front/css/glass.css')) }}">
     @stack('head')
     {{-- Theme before first paint. Shares the admin's key so one choice applies everywhere; dark is the default. --}}
     <script nonce="{{ $nonce }}">(function(){var d=document.documentElement,m='light';d.classList.replace('no-js','js');try{m=localStorage.getItem('data-bs-theme-mode')||localStorage.getItem('data-bs-theme')||'light';}catch(e){}var t=m==='system'?(matchMedia('(prefers-color-scheme: dark)').matches?'dark':'light'):(m==='light'?'light':'dark');d.setAttribute('data-theme',t);d.setAttribute('data-theme-mode',m);})();</script>
@@ -95,16 +96,22 @@
         </nav>
     </header>
 
-    {{-- Preloader: logo in a spinning ring, brand name, progress bar (portfolio.js hides it on load) --}}
+    {{-- Preloader: frosted glass card with prism spinner, brand, progress (portfolio.js hides it on load) --}}
     <div class="loader" data-loader aria-hidden="true">
-        <span class="loader__ring"><i></i><img src="{{ $brandLogo ? Media::url($brandLogo) : $brand['logo_url'] }}" alt="" width="96" height="96"></span>
-        <span class="loader__name">{{ $c['brand_name'] }}</span>
-        <span class="loader__text">Loading<b>.</b><b>.</b><b>.</b></span>
-        <span class="loader__bar"><i></i></span>
+        <div class="loader__card">
+            <span class="loader__tag"><b></b>Prismatic glass</span>
+            <span class="loader__ring"><i></i><em></em><b></b><b></b><img src="{{ $brandLogo ? Media::url($brandLogo) : $brand['logo_url'] }}" alt="" width="92" height="92"></span>
+            <span class="loader__name">{{ $c['brand_name'] }}</span>
+            <span class="loader__text">Loading<b>.</b><b>.</b><b>.</b></span>
+            <span class="loader__bar"><i></i></span>
+            <span class="loader__foot"><span>Crystal daylight UI</span><span>Portfolio</span></span>
+        </div>
     </div>
 
     {{-- Persistent film grain (ref. motionsite): SVG fractal noise, very faint. --}}
     <div class="grain" aria-hidden="true"></div>
+    {{-- Ambient prismatic mesh blobs, refracted by every glass surface --}}
+    <div class="mesh" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i></div>
 
     {{-- Floating mascot (ref. "Assist." robot companion): aura, orbit ring, glass badges. --}}
     @if (($c['mascot_enabled'] ?? '1') === '1')
@@ -141,7 +148,8 @@
                     @endif
                 </a>
                 <p class="footer__kicker" data-pf="footer_about">{{ $c['footer_about'] }}</p>
-                <h2 class="footer__cta-title" data-pf="footer_cta_title">{{ $c['footer_cta_title'] }}</h2>
+                @php $fw = preg_split('/\s+/', trim((string) $c['footer_cta_title'])) ?: []; $fl = count($fw) > 2 ? array_splice($fw, -2) : []; @endphp
+                <h2 class="footer__cta-title"><span data-pf="footer_cta_title">{{ implode(' ', $fw) }}</span>@if ($fl) <span>{{ implode(' ', $fl) }}</span>@endif</h2>
                 <a href="{{ request()->routeIs('home') ? '#contact' : route('home') . '#contact' }}" class="btn btn--glow btn--lg" data-magnet>
                     {{ $c['hero_cta_label'] }} <i class="fa-solid fa-arrow-right" aria-hidden="true"></i>
                 </a>

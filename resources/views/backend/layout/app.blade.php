@@ -26,6 +26,7 @@
     <link href="{{ asset('assets/css/app-shell.css') }}" rel="stylesheet" type="text/css" />
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Oswald:wght@600;700&family=Playfair+Display:wght@600&display=swap" />
     <link href="{{ asset('assets/css/app-theme-pf.css') }}?v={{ filemtime(public_path('assets/css/app-theme-pf.css')) }}" rel="stylesheet" type="text/css" />
+    <link href="{{ asset('assets/css/app-glass.css') }}?v={{ filemtime(public_path('assets/css/app-glass.css')) }}" rel="stylesheet" type="text/css" />
     <!--end::Global Stylesheets Bundle-->
 
     <style>
@@ -135,6 +136,7 @@
 </head>
 
 <body id="kt_body" class="app-blank">
+    <div class="g-mesh" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i></div>
 
     @if (request()->boolean('welcome'))
         {{-- Rendered server-side so the dashboard never flashes before the
