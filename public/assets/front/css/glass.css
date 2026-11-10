@@ -529,3 +529,5 @@ html.cursor-drag .cursor::after { transform: scale(1.6); background: none !impor
 html.cursor-link .cursor, html.cursor-drag .cursor { transform: var(--cur) !important; }
 html.cursor-link .cursor__arrow, html.cursor-drag .cursor__arrow { opacity: 0; }
 html.cursor-link .cursor__hand, html.cursor-drag .cursor__hand { opacity: 1; transform: scale(1.1); }
+/* Project type badge: dark glass so the label reads on any cover */
+.project__type, html[data-theme="light"] .project__type { background: rgba(28, 23, 20, .62) !important; color: #fff !important; backdrop-filter: blur(10px); border: 1px solid rgba(255, 255, 255, .25) !important; }
