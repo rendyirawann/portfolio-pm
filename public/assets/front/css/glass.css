@@ -298,3 +298,57 @@ html:not([data-theme="light"]) .loader__core { background: rgba(15, 23, 42, .55)
 .dk-5 { background: linear-gradient(180deg, rgba(253, 186, 116, .95), rgba(239, 68, 68, .9)) !important; }
 .dk-1 .deck__caption, .dk-4 .deck__caption, .dk-5 .deck__caption { color: #fff; }
 .dk-1 .deck__caption > span, .dk-4 .deck__caption > span, .dk-5 .deck__caption > span { color: rgba(255, 255, 255, .8); }
+
+/* ==========================================================================
+   Transparent tinted glass (ref. dutkiewicz.studio): panels let the
+   background show through, only blurred; a soft diagonal sheen, hairline
+   highlight edge, nested inner panels a touch lighter, round translucent
+   icon buttons and white "active" pills.
+   ========================================================================== */
+:root {
+    --glass: linear-gradient(135deg, rgba(255, 255, 255, .14), rgba(255, 255, 255, .05));
+    --glass-strong: rgba(255, 255, 255, .12);
+    --glass-line: rgba(255, 255, 255, .18);
+    --glass-blur: 28px;
+    --glass-shadow: 0 30px 60px -30px rgba(0, 0, 0, .55), inset 0 1px 0 rgba(255, 255, 255, .22), inset 0 -1px 0 rgba(255, 255, 255, .05);
+}
+html[data-theme="light"] {
+    --glass: linear-gradient(135deg, rgba(255, 255, 255, .42), rgba(255, 255, 255, .14));
+    --glass-strong: rgba(255, 255, 255, .38);
+    --glass-line: rgba(255, 255, 255, .65);
+    --glass-shadow: 0 30px 60px -30px rgba(15, 23, 42, .28), inset 0 1px 0 rgba(255, 255, 255, .85), inset 0 -1px 0 rgba(255, 255, 255, .25);
+    --mesh-opacity: .7;
+}
+.glass, .nav__pill, .about__card, .rows__item, .project__media, .timeline__body, .testimonial, .form, .direct, .stats li,
+.skills__group, .hud-panel, .card, .mascot__badge, .expdlg, .nav__dd-menu, .detail__cover, .files a,
+.hero__stats li, .hero__tagline, .hero__copy-card, .loader__card {
+    background: var(--glass) !important;
+    backdrop-filter: blur(var(--glass-blur)) saturate(160%) brightness(1.04); -webkit-backdrop-filter: blur(var(--glass-blur)) saturate(160%) brightness(1.04);
+}
+/* Bigger, softer corners like the reference panels */
+.hero__copy-card, .form, .about__card { border-radius: 32px; }
+.rows__item, .testimonial, .timeline__body, .skills__group, .hero__stats li, .direct { border-radius: 26px; }
+/* Nested inner panels: inputs, chips, skill tags sit on a lighter frosted layer */
+.field input, .field select, .field textarea, .skill, .chip:not(.is-active), .theme-switch, .tags li {
+    background: rgba(255, 255, 255, .16) !important; border: 1px solid rgba(255, 255, 255, .28) !important; backdrop-filter: blur(12px);
+}
+html[data-theme="light"] .field input, html[data-theme="light"] .field select, html[data-theme="light"] .field textarea,
+html[data-theme="light"] .skill, html[data-theme="light"] .chip:not(.is-active), html[data-theme="light"] .tags li { background: rgba(255, 255, 255, .45) !important; border-color: rgba(255, 255, 255, .8) !important; }
+.field input, .field select, .field textarea { border-radius: 16px !important; }
+/* Round translucent icon buttons; active = solid white disc (ref. play / flame buttons) */
+.nav__toggle, .socials a, .theme-switch button, .mascot__close { border-radius: 50% !important; background: rgba(255, 255, 255, .14) !important; border: 1px solid rgba(255, 255, 255, .25) !important; backdrop-filter: blur(12px); }
+.theme-switch button.is-active { background: #fff !important; color: #0f172a !important; box-shadow: 0 6px 16px -6px rgba(0, 0, 0, .35); }
+.btn--ghost i, .btn--outline i { background: #fff; color: #0f172a; }
+.btn--ghost, .btn--outline { background: rgba(255, 255, 255, .16) !important; border: 1px solid rgba(255, 255, 255, .35) !important; backdrop-filter: blur(14px); }
+html[data-theme="light"] .btn--ghost, html[data-theme="light"] .btn--outline { background: rgba(255, 255, 255, .45) !important; border-color: rgba(255, 255, 255, .85) !important; }
+/* Sheen: a faint top-left light on every big panel */
+.hero__copy-card, .form, .rows__item, .testimonial, .timeline__body, .skills__group, .hero__stats li, .direct, .about__card { isolation: isolate; }
+.hero__copy-card::after, .form::after, .rows__item::after, .testimonial::after, .timeline__body::after, .skills__group::after, .hero__stats li::after, .direct::after {
+    content: ''; position: absolute; inset: 0; border-radius: inherit; pointer-events: none; z-index: -1;
+    background: radial-gradient(120% 80% at 0% 0%, rgba(255, 255, 255, .22), transparent 55%);
+}
+/* Readability on transparent panels (dark theme): white text, soft secondary */
+html:not([data-theme="light"]) .rows__text, html:not([data-theme="light"]) .timeline__body p:last-child, html:not([data-theme="light"]) .hero__desc { color: rgba(255, 255, 255, .72); }
+html[data-theme="light"] .rows__text, html[data-theme="light"] .timeline__body p:last-child, html[data-theme="light"] .hero__desc { color: #334155; }
+/* Progress / accent bars use a lime highlight like the reference, alongside the prismatic palette */
+.loader__bar i { background: linear-gradient(90deg, #a3e635, var(--a3), var(--a2)) !important; }
