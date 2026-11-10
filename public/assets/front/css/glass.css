@@ -379,7 +379,7 @@ html, html[data-theme="light"], html[data-theme="dark"] {
 }
 html[data-theme="dark"] { --glass: linear-gradient(135deg, rgba(255, 255, 255, .14), rgba(255, 255, 255, .04) 60%), rgba(28, 24, 22, .45); }
 
-body { background: #2a231e url('../media/glass-bg.jpg') center / cover fixed no-repeat !important; color: #fff; }
+body { background: #2a231e url('../media/glass-bg.jpg?v=2') center / cover fixed no-repeat !important; color: #fff; }
 body::before { content: ''; position: fixed; inset: 0; z-index: 0; pointer-events: none;
     background: linear-gradient(180deg, rgba(40, 30, 24, .18), rgba(40, 30, 24, .32)); }
 html[data-theme="dark"] body::before { background: linear-gradient(180deg, rgba(8, 8, 10, .62), rgba(8, 8, 10, .74)); }
@@ -453,19 +453,6 @@ body { background-position: center 40% !important; }
 body::before { background: linear-gradient(180deg, rgba(36, 26, 20, .30), rgba(36, 26, 20, .42)) !important; }
 html[data-theme="dark"] body::before { background: linear-gradient(180deg, rgba(8, 8, 10, .66), rgba(8, 8, 10, .78)) !important; }
 
-/* Icons: one translucent disc, thin white glyph; hover = solid white disc */
-.gi { width: 46px; height: 46px; }
-.gi__back, .gi__orb { display: none !important; }
-.gi__front, html[data-theme="light"] .gi__front {
-    width: 100%; height: 100%; border-radius: 50%; transform: none !important;
-    background: rgba(255, 255, 255, .16) !important; border: 1px solid rgba(255, 255, 255, .32) !important;
-    box-shadow: inset 0 1px 0 rgba(255, 255, 255, .35) !important; color: #fff !important; backdrop-filter: blur(10px);
-    transition: background .25s, color .25s;
-}
-.gi__front::after { display: none; }
-.gi__front i { font-weight: 400; font-size: .95rem; }
-:is(.rows__item, .direct, .testimonial):hover .gi__front, .gi:hover .gi__front { background: #fff !important; color: #1c1714 !important; }
-.rows__icon.gi { width: 52px; height: 52px; }
 .ic { width: 40px; height: 40px; border-radius: 50%; display: grid; place-items: center; background: rgba(255, 255, 255, .16); border: 1px solid rgba(255, 255, 255, .3); color: #fff; font-size: .85rem; transition: background .25s, color .25s; }
 .hero__stats li:hover .ic { background: #fff; color: #1c1714; }
 .hero__stats li { grid-template-columns: auto auto 1fr; }
