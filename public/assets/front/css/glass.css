@@ -514,3 +514,7 @@ html[data-theme="dark"] body::before { background: linear-gradient(180deg, rgba(
 html.cursor-link .cursor::after { transform: scale(1); opacity: 1; }
 html.cursor-drag .cursor::after { transform: scale(1.5); opacity: 1; background: rgba(182, 227, 58, .25); }
 html.cursor-link .cursor svg path { fill: var(--lime); }
+/* Hover cursor, refined: no frosted blob over the text — just a thin lime outline ring at the tip */
+.cursor::after { width: 26px; height: 26px; margin: -13px 0 0 -13px; background: none !important; backdrop-filter: none !important;
+    border: 1.5px solid var(--lime); box-shadow: none !important; }
+html.cursor-drag .cursor::after { transform: scale(1.6); background: none !important; }
